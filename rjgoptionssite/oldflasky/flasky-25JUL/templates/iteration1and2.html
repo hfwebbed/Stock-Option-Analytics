@@ -1,0 +1,50 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block active1 %}
+    class="active"
+{%endblock%}
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post">
+                <div class="panel">
+                    <label for="tickers">Stocks:</label>
+                    <input name="tickers" id="tickers" value="{{tickers or ''}}">
+
+                    <label for="from_date" >From:</label>
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}">
+
+                    <label for="till_date">Till:</label>
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}">
+
+                    <button name="submit" >Fetch!</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+
+    {% if error == none %}
+        error: {{error}}<br>
+    {% endif %}
+
+    {% if ticker_data is not none %}
+        {% for ticker in ticker_data %}
+            <h4>{{ticker_headers[ticker]['name']}}</h4>
+            <div class="panel panel-default">
+                {%if ticker_data[ticker] is not none%}
+                    <div class="panel-body">
+                        {{ticker_data[ticker].to_html(classes="table") | safe }}
+                    </div>
+                {%else%}
+                    <div class="panel-body">
+                        No data found
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

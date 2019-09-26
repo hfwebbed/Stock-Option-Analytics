@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Issues With Pickle Module &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Issues With Expat Library" href="issues-with-expat-library.html"/>
+        <link rel="prev" title="Assorted Tips And Tricks" href="assorted-tips-and-tricks.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Issues With Pickle Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#packing-and-script-reloading">Packing And Script Reloading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unpacking-and-module-names">Unpacking And Module Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#summary-of-limitations">Summary Of Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Issues With Pickle Module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/issues-with-pickle-module.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="issues-with-pickle-module">
+<h1>Issues With Pickle Module<a class="headerlink" href="#issues-with-pickle-module" title="Permalink to this headline">¶</a></h1>
+<p>This article describes various limitations on what data can be stored using
+the &#8220;pickle&#8221; module from a WSGI application script file. This arises due
+to the fact that a WSGI application script file is not treated exactly the
+same as a standard Python module.</p>
+<p>Note that these limitations only apply to the WSGI application script file
+which is the target of the WSGIScriptAlias, AddHandler or Action
+directives. Any standard Python modules or packages which make up an
+application and which are being imported from directories located in
+<code class="docutils literal"><span class="pre">sys.path</span></code> using the &#8216;import&#8217; statement are not affected.</p>
+<div class="section" id="packing-and-script-reloading">
+<h2>Packing And Script Reloading<a class="headerlink" href="#packing-and-script-reloading" title="Permalink to this headline">¶</a></h2>
+<p>The first source of problems and limitations is how the operation of the
+&#8220;pickle&#8221; serialisation routine is affected by the ability of mod_wsgi to
+automatically reload WSGI application script files. The particular types of
+data which are known to be affected are function objects and class objects.</p>
+<p>To illustrate the problems and where they arise, consider the following
+output from an interactive Python session:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">a</span><span class="p">():</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">&#39;c__main__\na\np0\n.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="go">&#39;c__main__\na\np0\n.&#39;</span>
+</pre></div>
+</div>
+<p>As can be seen, it is possible to pickle a function object. This can be
+done even through a copy of the function object by reference, although in
+that case the pickled object still refers to the original function object.</p>
+<p>If now the original function object is deleted however, and the copy of the
+function object is pickled, a failure will occur:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="gp">... </span><span class="o">&lt;</span><span class="n">deleted</span><span class="o">&gt;</span>
+<span class="go">pickle.PicklingError: Can&#39;t pickle &lt;function a at 0x612b0&gt;: it&#39;s not found as __main__.a</span>
+<span class="gt">Traceback (most recent call last):</span>
+</pre></div>
+</div>
+<p>The exception has been raised because the original function object was
+deleted from where it was created. It occurs because the copy of the
+original function object is still internally identified by the name which
+it was assigned at the point of creation. The &#8220;pickle&#8221; serialisation
+routine will check that the original object as identified by the name still
+exists. If it doesn&#8217;t exist, it will refuse to serialise the object.</p>
+<p>Creating a new function object in place of the original function object
+does not eliminate the problem, although it does result in a different sort
+of exception:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">a</span><span class="p">():</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="gp">... </span><span class="o">&lt;</span><span class="n">deleted</span><span class="o">&gt;</span>
+<span class="go">pickle.PicklingError: Can&#39;t pickle &lt;function a at 0x612b0&gt;: it&#39;s not the same object as __main__.a</span>
+<span class="gt">Traceback (most recent call last):</span>
+</pre></div>
+</div>
+<p>In this case, the &#8220;pickle&#8221; serialisation routine recognises that &#8220;a&#8221; exists
+but realises that it is actually a different function object from which the
+&#8220;z&#8221; copy was originally made.</p>
+<p>Where the problems start occuring with mod_wsgi is if the function object
+being saved was itself a copy of some function object which is held outside
+of the module the function object was defined in. If the module holding the
+original function object was actually the WSGI application script file and
+it was reloaded because of the automatic script reloading mechanism, an
+attempt to pickle the object will fail. This is because the original
+function object which had been copied from will have been replaced by a new
+one when the script was reloaded.</p>
+<p>This sort of problem, although it will not occur for an instance of a
+class, will occur for the class object itself:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">B</span><span class="p">:</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">=</span><span class="n">B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">&#39;(i__main__\nB\np0\n(dp1\nb.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">B</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">&#39;(i__main__\nB\np0\n(dp1\nb.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">B</span><span class="p">:</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="go">&#39;c__main__\nB\np0\n.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">B</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="go">&#39;c__main__\nB\np0\n.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">B</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="gp">... </span><span class="o">&lt;</span><span class="n">deleted</span><span class="o">&gt;</span>
+<span class="go">pickle.PicklingError: Can&#39;t pickle &lt;class __main__.B at 0x53ab0&gt;: it&#39;s not found as __main__.B</span>
+<span class="gt">Traceback (most recent call last):</span>
+</pre></div>
+</div>
+<p>Note though that for the case of a class instance, an appropriate class
+object must exist at the same location when the serialised object is being
+restored:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">B</span><span class="p">:</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="go">&lt;__main__.B instance at 0x41e40&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">B</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="gp">... </span><span class="o">&lt;</span><span class="n">delete</span><span class="o">&gt;</span>
+<span class="go">AttributeError: &#39;module&#39; object has no attribute &#39;B&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unpacking-and-module-names">
+<h2>Unpacking And Module Names<a class="headerlink" href="#unpacking-and-module-names" title="Permalink to this headline">¶</a></h2>
+<p>The second problem derives from how the mod_wsgi script loading mechanism
+does not make use of the standard Python module importing mechanism. This
+is necessary as the standard Python module importing mechanism requires
+every loaded module to have a unique name, with each module residing in
+<code class="docutils literal"><span class="pre">sys.modules</span></code> under that name. Further, that name must be able to be
+used to import the module.</p>
+<p>The mod_wsgi script loading mechanism does not place modules in
+<code class="docutils literal"><span class="pre">sys.modules</span></code> under their original name so as to allow multiple modules
+with the same name in different directories and also to avoid having to use
+the &#8221;.py&#8221; extension for script files.</p>
+<p>The consequence though of modules not residing in <code class="docutils literal"><span class="pre">sys.modules</span></code> under
+their original name is that function objects and class objects within such
+a module may not be able to converted back into objects from their
+serialised form. This is because &#8220;pickle&#8221; when attempting to import a
+module automatically if the module isn&#8217;t already loaded will not be
+able to load the WSGI application script file.</p>
+<p>The problem can be seen in the following output from an interactive Python
+session:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exec</span> <span class="s2">&quot;class C: pass&quot;</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">__dict__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">C</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">&#39;(im\nC\np0\n(dp1\nb.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+<span class="go">&lt;m.C instance at 0x9a0d0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+<span class="gp">... </span><span class="o">&lt;</span><span class="n">deleted</span><span class="o">&gt;</span>
+<span class="go">ImportError: No module named m</span>
+<span class="gt">Traceback (most recent call last):</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary-of-limitations">
+<h2>Summary Of Limitations<a class="headerlink" href="#summary-of-limitations" title="Permalink to this headline">¶</a></h2>
+<p>Although the first problem described above could be avoided by disabling
+script reloading, there is no way to work around the second problem
+resulting from how mod_wsgi names modules when stored in <code class="docutils literal"><span class="pre">sys.modules</span></code>.</p>
+<p>In practice, what this means is that neither function objects, class
+objects or instances of classes which are defined in a WSGI application
+script file should be stored using the &#8220;pickle&#8221; module.</p>
+<p>In order to ensure that no strange problems at all are likely to occur, it
+is suggested that only basic builtin Python types, ie., scalars, tuples,
+lists and dictionaries, be stored using the &#8220;pickle&#8221; module from a WSGI
+application script file. That is, avoid any type of object which has user
+defined code associated with it.</p>
+<p>Note that this limitation only applies to the WSGI application script file,
+it doesn&#8217;t apply to normal Python modules imported using the Python &#8220;import&#8221;
+statement.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="issues-with-expat-library.html" class="btn btn-neutral float-right" title="Issues With Expat Library" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="assorted-tips-and-tricks.html" class="btn btn-neutral" title="Assorted Tips And Tricks" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

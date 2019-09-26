@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 4.1.0 &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Release Notes" href="../release-notes.html"/>
+        <link rel="next" title="Version 4.0" href="version-4.0.html"/>
+        <link rel="prev" title="Version 4.1.1" href="version-4.1.1.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release-notes.html">Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.17.html">Version 4.5.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.16.html">Version 4.5.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.15.html">Version 4.5.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.14.html">Version 4.5.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.13.html">Version 4.5.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.12.html">Version 4.5.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.11.html">Version 4.5.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.10.html">Version 4.5.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.9.html">Version 4.5.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.8.html">Version 4.5.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.7.html">Version 4.5.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.6.html">Version 4.5.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.5.html">Version 4.5.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.4.html">Version 4.5.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.3.html">Version 4.5.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.2.html">Version 4.5.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.1.html">Version 4.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.0.html">Version 4.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.23.html">Version 4.4.23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.22.html">Version 4.4.22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.21.html">Version 4.4.21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.20.html">Version 4.4.20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.19.html">Version 4.4.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.18.html">Version 4.4.18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.17.html">Version 4.4.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.16.html">Version 4.4.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.15.html">Version 4.4.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.14.html">Version 4.4.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.13.html">Version 4.4.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.12.html">Version 4.4.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.11.html">Version 4.4.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.10.html">Version 4.4.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.9.html">Version 4.4.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.8.html">Version 4.4.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.7.html">Version 4.4.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.6.html">Version 4.4.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.5.html">Version 4.4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.4.html">Version 4.4.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.3.html">Version 4.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.2.html">Version 4.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.1.html">Version 4.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.0.html">Version 4.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.2.html">Version 4.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.1.html">Version 4.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.0.html">Version 4.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.8.html">Version 4.2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.7.html">Version 4.2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.6.html">Version 4.2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.5.html">Version 4.2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.4.html">Version 4.2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.3.html">Version 4.2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.2.html">Version 4.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.1.html">Version 4.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.0.html">Version 4.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.3.html">Version 4.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.2.html">Version 4.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.1.html">Version 4.1.1</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 4.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bugs-fixed">Bugs Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-removed">Features Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-changed">Features Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.0.html">Version 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.5.html">Version 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.4.html">Version 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.3.html">Version 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.2.html">Version 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.1.html">Version 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.0.html">Version 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.8.html">Version 2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.7.html">Version 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.6.html">Version 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.5.html">Version 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.4.html">Version 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.3.html">Version 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.2.html">Version 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.1.html">Version 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.0.html">Version 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.6.html">Version 1.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.5.html">Version 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.4.html">Version 1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../release-notes.html">Release Notes</a> &raquo;</li>
+      
+    <li>Version 4.1.0</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/release-notes/version-4.1.0.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-4-1-0">
+<h1>Version 4.1.0<a class="headerlink" href="#version-4-1-0" title="Permalink to this headline">¶</a></h1>
+<p>With version 4.1.0 of mod_wsgi, a switch to a X.Y.Z version numbering
+scheme from the existing X.Y scheme is being made. This is to enable a
+much quicker release cycle with more incremental changes.</p>
+<p>Version 4.1.0 of mod_wsgi can be obtained from:</p>
+<blockquote>
+<div><a class="reference external" href="https://github.com/GrahamDumpleton/mod_wsgi/archive/4.1.0.tar.gz">https://github.com/GrahamDumpleton/mod_wsgi/archive/4.1.0.tar.gz</a></div></blockquote>
+<p>Note that mod_wsgi 4.1.0 was originally derived from mod_wsgi 3.1. It has
+though all changes from later releases in the 3.X branch. Thus also see:</p>
+<ul class="simple">
+<li><a class="reference internal" href="version-3.2.html"><span class="doc">Version 3.2</span></a></li>
+<li><a class="reference internal" href="version-3.3.html"><span class="doc">Version 3.3</span></a></li>
+<li><a class="reference internal" href="version-3.4.html"><span class="doc">Version 3.4</span></a></li>
+<li><a class="reference internal" href="version-3.5.html"><span class="doc">Version 3.5</span></a></li>
+</ul>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<p>1. The makefiles for building mod_wsgi on Windows are currently broken and
+need updating. As most new changes relate to mod_wsgi daemon mode, which is
+not supported under Windows, you should keep using the last available
+binary for version 3.X on Windows instead.</p>
+</div>
+<div class="section" id="bugs-fixed">
+<h2>Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permalink to this headline">¶</a></h2>
+<p>1. If a UNIX signal received by daemon mode process while still being
+initialised to signal that it should be shutdown, the process could crash
+rather than shutdown properly due to not registering the signal pipe
+prior to registering signal handler.</p>
+<p>2. Python doesn&#8217;t initialise codecs in sub interpreters automatically which
+in some cases could cause code running in WSGI script to fail due to lack
+of encoding for Unicode strings when converting them. The error message
+in this case was:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">LookupError</span><span class="p">:</span> <span class="n">no</span> <span class="n">codec</span> <span class="n">search</span> <span class="n">functions</span> <span class="n">registered</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t find encoding</span>
+</pre></div>
+</div>
+<p>The &#8216;ascii&#8217; encoding is now forcibly loaded when initialising sub interpreters
+to get Python to initialise codecs.</p>
+<p>3. Fixed reference counting bug under Python 3 in SSL <code class="docutils literal"><span class="pre">var_lookup()</span></code>
+function which can be used from an auth handler to look up SSL variables.</p>
+<p>4. The <code class="docutils literal"><span class="pre">WWW-Authenticate</span></code> headers returned from a WSGI application when
+run under daemon mode are now always preserved as is.</p>
+<p>Because of previously using an internal routine of Apache, way back in time
+the values of multiple <code class="docutils literal"><span class="pre">WWW-Authenticate</span></code> headers would be merged when
+there was more than one. This would cause an issue with some browsers.</p>
+<p>A workaround was subsequently implemented above the Apache routine to break
+apart the merged header to create separate ones again, however, if the
+value of a header validly had a &#8216;,&#8217; in it, this would cause the header
+value to be broken apart where it wasn&#8217;t meant to. This could issues with
+some type of <code class="docutils literal"><span class="pre">WWW-Authenticate</span></code> headers.</p>
+</div>
+<div class="section" id="features-removed">
+<h2>Features Removed<a class="headerlink" href="#features-removed" title="Permalink to this headline">¶</a></h2>
+<p>1. No longer support the use of mod_python in conjunction with mod_wsgi.
+When this is attempted an error is forced and Apache will not be able to
+start. An error message is logged in main Apache error log.</p>
+<p>2. No longer support the use of Apache 1.3. Minimum requirement is now
+Apache 2.0.</p>
+</div>
+<div class="section" id="features-changed">
+<h2>Features Changed<a class="headerlink" href="#features-changed" title="Permalink to this headline">¶</a></h2>
+<p>1. Use of kernel <code class="docutils literal"><span class="pre">sendfile()</span></code> function by <code class="docutils literal"><span class="pre">wsgi.file_wrapper</span></code> is now
+off by default. This was originally always on for embedded mode and
+completely disabled for daemon mode. Use of this feature can be enabled for
+either mode using <code class="docutils literal"><span class="pre">WSGIEnableSendfile</span></code> directive, setting it to <code class="docutils literal"><span class="pre">On</span></code> to
+enable it.</p>
+<p>The default is now off because kernel <code class="docutils literal"><span class="pre">sendfile()</span></code> is not always able to
+work on all file objects. Some instances where it will not work are
+described for the Apache <code class="docutils literal"><span class="pre">EnableSendfile</span></code> directive.</p>
+<blockquote>
+<div><a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/core.html#enablesendfile">http://httpd.apache.org/docs/2.2/mod/core.html#enablesendfile</a></div></blockquote>
+<p>Although Apache has use of <code class="docutils literal"><span class="pre">sendfile()</span></code> enabled by default for static
+files, they are moving to having it off by default in future version of
+Apache. This change is being made because of the problems which arise and
+users not knowing how to debug it and solve it.</p>
+<p>Thus also erring on side of caution and having it off by default but
+allowing more knowledgeable users to enable it where they know always using
+file objects which will work with <code class="docutils literal"><span class="pre">sendfile()</span></code>.</p>
+<p>2. The <code class="docutils literal"><span class="pre">HTTPS</span></code> variable is no longer set within the WSGI environment. The
+authoritative indicator of whether a SSL connection is used is
+<code class="docutils literal"><span class="pre">wsgi.url_scheme</span></code> and a WSGI compliant application should check for
+<code class="docutils literal"><span class="pre">wsgi.url_scheme</span></code>. The only reason that <code class="docutils literal"><span class="pre">HTTPS</span></code> was supplied at all was
+because early Django versions supporting WSGI interface weren&#8217;t correctly
+using <code class="docutils literal"><span class="pre">wsgi.url_scheme</span></code>. Instead they were expecting to see <code class="docutils literal"><span class="pre">HTTPS</span></code> to
+exist.</p>
+<p>This change will cause non conformant WSGI applications to finally break.
+This possibly includes some Django versions prior to Django version 1.0.</p>
+<p>Note that you can still set <code class="docutils literal"><span class="pre">HTTPS</span></code> in Apache configuration using the
+<code class="docutils literal"><span class="pre">SetEnv</span></code> or <code class="docutils literal"><span class="pre">SetEnvIf</span></code> directive, or via a rewrite rule. In that case,
+that will override what <code class="docutils literal"><span class="pre">wsgi.url_scheme</span></code> is set to and once
+<code class="docutils literal"><span class="pre">wsgi.url_scheme</span></code> is set appropriately, the <code class="docutils literal"><span class="pre">HTTPS</span></code> variable will be
+removed from the set of variables passed through to the WSGI environment.</p>
+<p>3. The <code class="docutils literal"><span class="pre">wsgi.version</span></code> variable has been reverted to 1.0 to conform to the
+WSGI PEP 3333 specification. It was originally set to 1.1 on expectation
+that revised specification would use 1.1 but that didn&#8217;t come to be.</p>
+<p>4. The <code class="docutils literal"><span class="pre">inactivity-timeout</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> now only
+results in the daemon process being restarted after the idle timeout period
+where there are no active requests. Previously it would also interrupt a
+long running request. See the new <code class="docutils literal"><span class="pre">request-timeout</span></code> option for a way of
+interrupting long running, potentially blocked requests and restarting
+the process.</p>
+<p>5. If the <code class="docutils literal"><span class="pre">home</span></code> option is used with <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code>, in addition
+to that directory being made the current working directory for the process,
+an empty string will be added to the start of the Python module search
+path. This causes Python to look in the current working directory for
+Python modules when they are being imported.</p>
+<p>This behaviour brings things into line with what happens when running the
+Python interpreter from the command line. You must though be using the
+<code class="docutils literal"><span class="pre">home</span></code> option for this to come into play.</p>
+<p>Do not that if your application then changes the working directory, it
+will start looking in the new current working directory and not that which
+is specified by the <code class="docutils literal"><span class="pre">home</span></code> option. This again mirrors what the normal
+Python command line interpreter does.</p>
+</div>
+<div class="section" id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
+<p>1. Add <code class="docutils literal"><span class="pre">supplementary-groups</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow
+group membership to be overridden and specified comma separate list of
+groups used instead.</p>
+<p>2. Add a <code class="docutils literal"><span class="pre">graceful-timeout</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code>. This option
+is applied in a number of circumstances.</p>
+<p>When <code class="docutils literal"><span class="pre">maximum-requests</span></code> and this option are used together, when maximum
+requests is reached, rather than immediately shutdown, potentially
+interupting active requests if they don&#8217;t finished with shutdown timeout,
+can specify a separate graceful shutdown period. If the all requests are
+completed within this time frame then will shutdown immediately, otherwise
+normal forced shutdown kicks in. In some respects this is just allowing a
+separate shutdown timeout on cases where requests could be interrupted and
+could avoid it if possible.</p>
+<p>When <code class="docutils literal"><span class="pre">cpu-time-limit</span></code> and this option are used together, when CPU time
+limit reached, rather than immediately shutdown, potentially interupting
+active requests if they don&#8217;t finished with shutdown timeout, can specify a
+separate graceful shutdown period.</p>
+<p>3. Add potentially graceful process restart option for daemon processes
+when sent a graceful restart signal. Signal is usually <code class="docutils literal"><span class="pre">SIGUSR1</span></code> but is
+platform dependent as using same signal as Apache would use. If the
+<code class="docutils literal"><span class="pre">graceful-timeout</span></code> option had been provided to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code>,
+then the process will attempt graceful shutdown first based on the that
+timeout, otherwise normal shutdown procedure used as if received a
+<code class="docutils literal"><span class="pre">SIGTERM</span></code>.</p>
+<p>4. Add <code class="docutils literal"><span class="pre">memory-limit</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow memory
+usage of daemon processes to be restricted. This will have no affect on
+some platforms as <code class="docutils literal"><span class="pre">RLIMIT_AS</span></code>/<code class="docutils literal"><span class="pre">RLIMIT_DATA</span></code> with <code class="docutils literal"><span class="pre">setrlimit()</span></code> isn&#8217;t
+always implemented. For example MacOS X and older Linux kernel versions do
+not implement this feature. You will need to test whether this feature
+works or not before depending on it.</p>
+<p>5. Add <code class="docutils literal"><span class="pre">virtual-memory-limit</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow
+virtual memory usage of daemon processes to be restricted. This will have
+no affect on some platforms as <code class="docutils literal"><span class="pre">RLIMIT_VMEM</span></code> with <code class="docutils literal"><span class="pre">setrlimit()</span></code> isn&#8217;t
+always implemented. You will need to test whether this feature works or not
+before depending on it.</p>
+<p>6. Access, authentication and authorisation hooks now have additional keys
+in the environ dictionary for <code class="docutils literal"><span class="pre">mod_ssl.is_https</span></code> and
+<code class="docutils literal"><span class="pre">mod_ssl.var_lookup</span></code>. These equate to callable functions provided by
+<code class="docutils literal"><span class="pre">mod_ssl</span></code> for determining if the client connection to Apache used SSL and
+what the values of variables specified in the SSL certifcates, server or
+client, are. These are only available if Apache 2.0 or later is being used.</p>
+<p>7. For Python 2.6 and above, the <code class="docutils literal"><span class="pre">WSGIDontWriteBytecode</span></code> directive can be
+used at global scope in Apache configuration to disable writing of all byte
+code files, ie., .pyc, by the Python interpreter when it imports Python
+code files. To disable writing of byte code files, set directive to <code class="docutils literal"><span class="pre">On</span></code>.</p>
+<p>Note that this doesn&#8217;t prevent existing byte code files on disk being used
+in preference to the corresponding Python code files. Thus you should first
+remove <code class="docutils literal"><span class="pre">.pyc</span></code> files from web application directories if relying on this
+option to ensure that <code class="docutils literal"><span class="pre">.py</span></code> file is always used.</p>
+<p>8. Add <code class="docutils literal"><span class="pre">request-timeout</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow a
+separate timeout to be applied on how long a request is allowed to run for
+before the daemon process is automatically restarted to interrupt the
+request.</p>
+<p>This is to counter the possibility that a request may become blocked on
+some backend service, thereby using up available requests threads and
+preventing other requests to be handled.</p>
+<p>In the case of a single threaded process, then the timeout will happen at
+the specified time duration from the start of the request being handled.</p>
+<p>Applying such a timeout in the case of a multithreaded process is more
+problematic as doing a restart when a single requests exceeds the timeout
+could unduly interfere with with requests which just commenced.</p>
+<p>In the case of a multi threaded process, what is instead done is to take
+the total of the current running time of all requests and divide that by
+the number of threads handling requests in that process. When this average
+time exceeds the time specified, then the process will be restarted.</p>
+<p>This strategy for a multithreaded process means that individual requests
+can actually run longer than the specified timeout and a restart will only
+be performed when the overall capacity of the processes appears to be
+getting consumed by a number of concurrent long running requests, or when
+a specific requests has been blocked for an excessively long time.</p>
+<p>The intent of this is to allow the process to still keep handling requests
+and only perform a restart when the available capacity of the process to
+handle more requests looks to be potentially on the decline.</p>
+<p>9. Add <code class="docutils literal"><span class="pre">connect-timeout</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow a
+timeout to be specified on how long the Apache child worker processes should
+wait on being able to obtain a connection to the mod_wsgi daemon process.</p>
+<p>As UNIX domain sockets are used, connections should always succeed, however
+there have been some incidences seen which could only be explained by the
+operating system hanging on the initial connect call without being added to
+the daemon process socket listener queue. As such the timeout has been
+added. The timeout defaults to 15 seconds.</p>
+<p>This timeout also now dictates how long the Apache child worker process
+will attempt to get a connection to the daemon process when the connection
+is refused due to the daemon socket listener queue being full. Previously
+how long connection attempts were tried was based on an internal retry
+count rather than a configurable timeout.</p>
+<p>10. Add <code class="docutils literal"><span class="pre">socket-timeout</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow the
+timeout on indvidual read/writes on the socket connection between the
+Apache child worker and the daemon process to be specified separately to
+the Apache <code class="docutils literal"><span class="pre">Timeout</span></code> directive.</p>
+<p>If this option is not specified, it will default to the value of the Apache
+<code class="docutils literal"><span class="pre">Timeout</span></code> directive.</p>
+<p>11. Add <code class="docutils literal"><span class="pre">queue-timeout</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow a
+request to be aborted if it never got handed off to a mod_wsgi daemon
+process within the specified time. When this occurs a &#8216;503 Service
+Unavailable&#8217; response will be returned.</p>
+<p>This is to allow one to control what to do when backlogging of requests
+occurs. If the daemon process is overloaded and getting behind, then it is
+more than likely that a user will have given up on the request anyway if
+they have to wait too long. This option allows you to specify that a
+request that was queued up waiting for too long is discarded, allowing any
+transient backlog to be quickly discarded and not simply cause the daemon
+process to become even more backlogged.</p>
+<p>12. Add <code class="docutils literal"><span class="pre">listen-backlog</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to allow the
+daemon process socket listener backlog size to be specified. By default
+this limit is 100, although this is actually a hint, as different operating
+systems can have different limits on the maximum value or otherwise treat
+it in special ways.</p>
+<p>13. Add <code class="docutils literal"><span class="pre">WSGIPythonHashSeed</span></code> directive to allow Python behaviour related
+to initial hash seed to be overridden when the interpreter supports it.</p>
+<p>This is equivalent to setting the <code class="docutils literal"><span class="pre">PYTHONHASHSEED</span></code> environment variable
+and should be set to either <code class="docutils literal"><span class="pre">random</span></code> or a number in the range in range
+<code class="docutils literal"><span class="pre">[0;</span> <span class="pre">4294967295]</span></code>.</p>
+<p>14. Implemented a new streamlined way of installing mod_wsgi as a Python
+package using a setup.py file or from PyPi. This includes a
+<code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> script that can then be used to start up
+Apache/mod_wsgi with an auto generated configuration on port 8000.</p>
+<p>This makes it easy to run up Apache for development without interfering
+with the main Apache on the system and without having to worry about
+configuring Apache. Command line options can be used to override behaviour.</p>
+<p>Once the <code class="docutils literal"><span class="pre">mod_wsgi</span></code> package has been installed into your Python
+installation, you can run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="o">-</span><span class="n">express</span> <span class="n">start</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+</div>
+<p>Then open your browser on the listed URL. This will verify that everything
+is working. Enter CTRL-C to exit the server and shut it down.</p>
+<p>You can now point it at a specific WSGI application script file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="o">-</span><span class="n">express</span> <span class="n">start</span><span class="o">-</span><span class="n">server</span> <span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>For options run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="o">-</span><span class="n">express</span> <span class="n">start</span><span class="o">-</span><span class="n">server</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>If you already have another web server running on port 8000, you can
+override the port to be used using the <code class="docutils literal"><span class="pre">--port</span></code> option:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="o">-</span><span class="n">express</span> <span class="n">start</span><span class="o">-</span><span class="n">server</span> <span class="n">wsgi</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">port</span> <span class="mi">8001</span>
+</pre></div>
+</div>
+<p>15. Implemented a Django application plugin to add a <code class="docutils literal"><span class="pre">runmodwsgi</span></code> command
+to the Django management command script. This allows the automatic run up
+of the new mod_wsgi express script, with it hosting the Django web site the
+plugin was added to.</p>
+<p>To enable, once the <code class="docutils literal"><span class="pre">mod_wsgi</span></code> package has been installed into your
+Python installation, add <code class="docutils literal"><span class="pre">mod_wsgi.server</span></code> to the <code class="docutils literal"><span class="pre">INSTALLED_APPS</span></code>
+setting in your Django settings file.</p>
+<p>After having run the <code class="docutils literal"><span class="pre">collectstatic</span></code> Django management command, you
+can then run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runmodwsgi</span>
+</pre></div>
+</div>
+<p>For options run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runmodwsgi</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>To enable automatic code reloading in a development setting, use the
+option:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runmodwsgi</span> <span class="o">--</span><span class="n">reload</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">changes</span>
+</pre></div>
+</div>
+<p>16. The maximum size that a response header/value can be that is returned
+from a WSGI application under daemon mode can now be configured. The
+default size has also now been increased from 8192 bytes to 32768 bytes.
+The name of the option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to set the buffer size used
+is <code class="docutils literal"><span class="pre">header-buffer-size</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="version-4.0.html" class="btn btn-neutral float-right" title="Version 4.0" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="version-4.1.1.html" class="btn btn-neutral" title="Version 4.1.1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

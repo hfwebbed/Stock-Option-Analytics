@@ -1,0 +1,131 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block stock_game_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    {% if ticker_data is not none %}
+        <div class="row panel panel-default">
+            <div class="panel-body">
+
+                        <form id="gameweeks" method="post" action="/stock_game">
+                             Choose length:
+                            <select name="weeks" id="weeks" class="selectpicker" onchange="change();">
+
+                                {% for week in [6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51] %}
+                                     {%if week == selected_week%}
+                                        <option selected>{{week}}</option>
+                                    {% else %}
+                                        <option>{{week}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            View prediction for:
+                            <select name="show_img" id="show_img" class="selectpicker" onchange="change();">
+                                {% if img_for is none%}
+                                    <option selected>{{img_for}}</option>
+                                {% endif %}
+                                {%for index, row in ticker_data.iterrows()%}
+                                    {%if row["ticker"] == img_for %}
+                                        <option selected>{{row["ticker"]}}</option>
+                                    {% else %}
+                                        <option>{{row["ticker"]}}</option>
+                                    {% endif %}
+                                {%endfor%}
+
+                            </select>
+
+                            <!-- <button name="submit" >Simulate!</button> -->
+
+                        </form>
+                        <script>
+                            function change(){
+                                document.getElementById("gameweeks").submit();
+                            }
+                        </script>
+
+                <table border="1" class="dataframe table">
+                    <thead>
+                        <th>rank</th>
+                        <th>ticker</th>
+                        <th>start</th>
+                        <th>high</th>
+                        <th>last</th>
+                        <th>slope</th>
+                        <th>r_squared</th>
+                        <th>delete</th>
+                    </thead>
+                    {% for index, row in ticker_data.iterrows() %}
+                    <tr>
+                        <td>{{row["rank"]}}</td>
+                        <td>{{row["ticker"]}}</td>
+                        <td>{{"{:.2f}".format(row["start"])}}</td>
+                        <td>{{"{:.2f}".format(row["high"])}}</td>
+                        <td>{{"{:.2f}".format(row["last"])}}</td>
+                        <td>{{"{:.4f}".format(row["slope"])}}</td>
+
+                        {% if row["r_squared"] > 0.66%}
+                            <td bgcolor="green">{{"{:.5f}".format(row["r_squared"])}}</td>
+                        {% else %}
+                            {% if row["r_squared"] < 0.33%}
+                                <td bgcolor="red">{{"{:.5f}".format(row["r_squared"])}}</td>
+                            {% else %}
+                                <td bgcolor="yellow">{{"{:.5f}".format(row["r_squared"])}}</td>
+                            {% endif %}
+                        {% endif %}
+
+                        <td>{{row["delete_link"] | safe }}</td>
+                    </tr>
+
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+    {% else %}
+        no data yet
+    {% endif %}
+
+    <div class="row panel panel-default">
+        <form name="add_industry" action="/stock_game/add" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <input name="new_ticker" id="new_ticker" value="" placeholder="add new ticker">
+                    </td>
+                    <td>
+                        <input type="submit" value="add" class="btn btn-success btn-xs">
+                    </td>
+                    <td width="15%">
+                        &nbsp
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </form>
+     </div>
+
+    {% if ticker_data is not none %}
+       <div class="panel-body" >
+            {% for row in images %}
+                <div class="panel panel-default">
+                    <h2>Predictive Simulation for the next year - <b>{{row['ticker']}}</b></h2>
+                    <img src="{{row['image1']}}" width="100%">
+                </div>
+                <div class="panel panel-default">
+                    <h2>Simulation of the price at Week {{selected_week}} for - <b>{{row['ticker']}}</b> </h2>
+                    <img src="{{row['image2']}}" width="100%">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+{% endblock %}
+

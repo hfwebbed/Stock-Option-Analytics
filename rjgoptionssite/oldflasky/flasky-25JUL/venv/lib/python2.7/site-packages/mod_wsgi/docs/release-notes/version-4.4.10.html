@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 4.4.10 &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Release Notes" href="../release-notes.html"/>
+        <link rel="next" title="Version 4.4.9" href="version-4.4.9.html"/>
+        <link rel="prev" title="Version 4.4.11" href="version-4.4.11.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release-notes.html">Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.17.html">Version 4.5.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.16.html">Version 4.5.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.15.html">Version 4.5.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.14.html">Version 4.5.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.13.html">Version 4.5.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.12.html">Version 4.5.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.11.html">Version 4.5.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.10.html">Version 4.5.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.9.html">Version 4.5.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.8.html">Version 4.5.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.7.html">Version 4.5.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.6.html">Version 4.5.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.5.html">Version 4.5.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.4.html">Version 4.5.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.3.html">Version 4.5.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.2.html">Version 4.5.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.1.html">Version 4.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.0.html">Version 4.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.23.html">Version 4.4.23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.22.html">Version 4.4.22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.21.html">Version 4.4.21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.20.html">Version 4.4.20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.19.html">Version 4.4.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.18.html">Version 4.4.18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.17.html">Version 4.4.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.16.html">Version 4.4.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.15.html">Version 4.4.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.14.html">Version 4.4.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.13.html">Version 4.4.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.12.html">Version 4.4.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.11.html">Version 4.4.11</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 4.4.10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bugs-fixed">Bugs Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-changed">Features Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.9.html">Version 4.4.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.8.html">Version 4.4.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.7.html">Version 4.4.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.6.html">Version 4.4.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.5.html">Version 4.4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.4.html">Version 4.4.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.3.html">Version 4.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.2.html">Version 4.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.1.html">Version 4.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.0.html">Version 4.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.2.html">Version 4.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.1.html">Version 4.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.0.html">Version 4.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.8.html">Version 4.2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.7.html">Version 4.2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.6.html">Version 4.2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.5.html">Version 4.2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.4.html">Version 4.2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.3.html">Version 4.2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.2.html">Version 4.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.1.html">Version 4.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.0.html">Version 4.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.3.html">Version 4.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.2.html">Version 4.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.1.html">Version 4.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.0.html">Version 4.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.0.html">Version 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.5.html">Version 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.4.html">Version 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.3.html">Version 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.2.html">Version 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.1.html">Version 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.0.html">Version 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.8.html">Version 2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.7.html">Version 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.6.html">Version 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.5.html">Version 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.4.html">Version 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.3.html">Version 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.2.html">Version 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.1.html">Version 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.0.html">Version 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.6.html">Version 1.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.5.html">Version 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.4.html">Version 1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../release-notes.html">Release Notes</a> &raquo;</li>
+      
+    <li>Version 4.4.10</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/release-notes/version-4.4.10.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-4-4-10">
+<h1>Version 4.4.10<a class="headerlink" href="#version-4-4-10" title="Permalink to this headline">¶</a></h1>
+<p>Version 4.4.10 of mod_wsgi can be obtained from:</p>
+<blockquote>
+<div><a class="reference external" href="https://codeload.github.com/GrahamDumpleton/mod_wsgi/tar.gz/4.4.10">https://codeload.github.com/GrahamDumpleton/mod_wsgi/tar.gz/4.4.10</a></div></blockquote>
+<p>For details on the availability of Windows binaries see:</p>
+<blockquote>
+<div><a class="reference external" href="https://github.com/GrahamDumpleton/mod_wsgi/tree/master/win32">https://github.com/GrahamDumpleton/mod_wsgi/tree/master/win32</a></div></blockquote>
+<div class="section" id="bugs-fixed">
+<h2>Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permalink to this headline">¶</a></h2>
+<p>1. Fixed a reference counting bug which would cause a daemon process to
+crash if both <code class="docutils literal"><span class="pre">home</span></code> and <code class="docutils literal"><span class="pre">python-path</span></code> options were specified at the
+same time with the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive.</p>
+<p>2. When using <code class="docutils literal"><span class="pre">--https-only</span></code> option with <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>, the
+redirection from the <code class="docutils literal"><span class="pre">http</span></code> address to the <code class="docutils literal"><span class="pre">https</span></code> address was not
+setting the correct port for <code class="docutils literal"><span class="pre">https</span></code>.</p>
+</div>
+<div class="section" id="features-changed">
+<h2>Features Changed<a class="headerlink" href="#features-changed" title="Permalink to this headline">¶</a></h2>
+<p>1. Changed the default Apache log level for <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> to
+<code class="docutils literal"><span class="pre">warn</span></code> instead of <code class="docutils literal"><span class="pre">info</span></code>. This has been done avoid very noisy logs
+when enabling secure HTTP connections. To set back to <code class="docutils literal"><span class="pre">info</span></code> level use
+the <code class="docutils literal"><span class="pre">--log-level</span></code> option.</p>
+<p>2. When specifying a service script with the <code class="docutils literal"><span class="pre">--service-script</span></code> option of
+<code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>, the home directory for the process will now be set to
+the same home directory as used for the hosted WGSI application. Python
+modules from the WSGI application will therefore be automatically found
+when imported. Any directory paths added using <code class="docutils literal"><span class="pre">--python-path</span></code> option
+will also be added as search directories for Python module imports, with
+any <code class="docutils literal"><span class="pre">.pth</span></code> files in those directories also being handled. In addition,
+the language locale and Python eggs directory used by the hosted WSGI
+application will also be used for the service script.</p>
+<p>3. When specifying <code class="docutils literal"><span class="pre">--python-path</span></code> option, when paths are now setup for
+the WSGI application, they will be added in such a way that they appear at
+the head of <code class="docutils literal"><span class="pre">sys.path</span></code> and any <code class="docutils literal"><span class="pre">.pth</span></code> files in those directories are
+also handled.</p>
+</div>
+<div class="section" id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
+<p>1. Added the <code class="docutils literal"><span class="pre">--directory-listing</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> to
+allow automatic directory listings to be enabled when using the static file
+application type and no explicit directory index file has been specified.</p>
+<p>2. In addition to the convenience function of <code class="docutils literal"><span class="pre">--ssl-certificate</span></code> for
+<code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>, which allowed the SSL certificate and private key
+file to be specified using one option by specifying the command file
+name up to the extension, separate <code class="docutils literal"><span class="pre">--ssl-certificate-file</span></code> and
+<code class="docutils literal"><span class="pre">--ssl-certificate-key-file</span></code> options are now also provided. These
+would either both need to be specified, or the existing
+<code class="docutils literal"><span class="pre">--ssl-certificate</span></code> option used, when specifying that secure HTTPS
+connections should be used through having specified <code class="docutils literal"><span class="pre">--https-port</span></code>.</p>
+<p>3. Added the <code class="docutils literal"><span class="pre">--ssl-ca-certificate-file</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>.
+If specified this should give the location of the file with any CA
+certificates to be used for client authentication. As soon as this option
+is provided, the client authentication will be required for the whole site.
+This would generally be used in conjunction with the <code class="docutils literal"><span class="pre">--https-only</span></code>
+option so that only a secure communication channel is being used.</p>
+<p>If you do not wish for the whole site to required client authentication,
+you can use the <code class="docutils literal"><span class="pre">--ssl-verify-client</span></code> option to specify sub URLs for
+which client authentication should be performed.</p>
+<p>4. Added the <code class="docutils literal"><span class="pre">--ssl-environment</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> to enable
+the passing of standard SSL variables in the WSGI environ dictionary passed
+to the WSGI application.</p>
+<p>5. Added the <code class="docutils literal"><span class="pre">WSGITrustedProxies</span></code> directive and corresponding option of
+<code class="docutils literal"><span class="pre">--trust-proxy</span></code> to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. This works in conjunction with
+the <code class="docutils literal"><span class="pre">WSGITrustedProxyHeaders</span></code> directive and <code class="docutils literal"><span class="pre">--trust-proxy-header</span></code>
+option of <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. When trusted proxies are specified, then
+proxy headers will only be trusted if the request originated with a trusted
+proxy. Further, any IP addresses corresponding to a proxy listed in the
+<code class="docutils literal"><span class="pre">X-Forwarded-For</span></code> header will only be trusted if specified. When
+determining the value for <code class="docutils literal"><span class="pre">REMOTE_ADDR</span></code> the IP preceding the last
+recognised proxy the request passed through will be used and not simply the
+first IP listed in the header. The header will be rewritten to reflect what
+was honoured with client IPs of dubious origin discarded.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="version-4.4.9.html" class="btn btn-neutral float-right" title="Version 4.4.9" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="version-4.4.11.html" class="btn btn-neutral" title="Version 4.4.11" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

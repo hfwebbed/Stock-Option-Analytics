@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>WSGICaseSensitivity &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Configuration" href="../configuration.html"/>
+        <link rel="next" title="WSGIDaemonProcess" href="WSGIDaemonProcess.html"/>
+        <link rel="prev" title="WSGICallableObject" href="WSGICallableObject.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuration.html">Configuration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="WSGIAcceptMutex.html">WSGIAcceptMutex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAccessScript.html">WSGIAccessScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIApplicationGroup.html">WSGIApplicationGroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAuthGroupScript.html">WSGIAuthGroupScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAuthUserScript.html">WSGIAuthUserScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGICallableObject.html">WSGICallableObject</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WSGICaseSensitivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIDaemonProcess.html">WSGIDaemonProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIImportScript.html">WSGIImportScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGILazyInitialization.html">WSGILazyInitialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPassAuthorization.html">WSGIPassAuthorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIProcessGroup.html">WSGIProcessGroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonEggs.html">WSGIPythonEggs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonHome.html">WSGIPythonHome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonOptimize.html">WSGIPythonOptimize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonPath.html">WSGIPythonPath</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictEmbedded.html">WSGIRestrictEmbedded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictProcess.html">WSGIRestrictProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictSignal.html">WSGIRestrictSignal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictStdin.html">WSGIRestrictStdin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictStdout.html">WSGIRestrictStdout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptAlias.html">WSGIScriptAlias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptAliasMatch.html">WSGIScriptAliasMatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptReloading.html">WSGIScriptReloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGISocketPrefix.html">WSGISocketPrefix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../configuration.html">Configuration</a> &raquo;</li>
+      
+    <li>WSGICaseSensitivity</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/configuration-directives/WSGICaseSensitivity.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="wsgicasesensitivity">
+<h1>WSGICaseSensitivity<a class="headerlink" href="#wsgicasesensitivity" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Define whether file system is case sensitive.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Syntax:</th><td class="field-body"><code class="docutils literal"><span class="pre">WSGICaseSensitivity</span> <span class="pre">On|Off</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Context:</th><td class="field-body">server config</td>
+</tr>
+</tbody>
+</table>
+<p>When mod_wsgi is used on the Windows and MacOS X platforms, it will assume
+that the filesystem in use is case insensitive. This is necessary to ensure
+that the module caching system works correctly and only one module is
+retained in memory where paths with different case are used to identify the
+same script file. On other platforms it will always be assumed that a case
+sensitive file system is used.</p>
+<p>The WSGICaseSensitivity directive can be used explicitly to specify for a
+particular WSGI application whether the file system the script file is
+stored in is case sensitive or not, thus overriding the default for any
+platform. A value of On indicates that the filesystem is case sensitive.</p>
+<p>Because it is set in the main server config it will apply to the whole
+site. All paths therefore would need to be located in a filesystem with the
+same case convention.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="WSGIDaemonProcess.html" class="btn btn-neutral float-right" title="WSGIDaemonProcess" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="WSGICallableObject.html" class="btn btn-neutral" title="WSGICallableObject" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

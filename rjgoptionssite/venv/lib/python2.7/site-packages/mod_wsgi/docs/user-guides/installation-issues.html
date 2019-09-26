@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation Issues &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Configuration Issues" href="configuration-issues.html"/>
+        <link rel="prev" title="Configuration Guidelines" href="configuration-guidelines.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#missing-python-header-files">Missing Python Header Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lack-of-python-shared-library">Lack Of Python Shared Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-python-versions">Multiple Python Versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-modpython-and-modwsgi">Using ModPython and ModWsgi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-patch-level-mismatch">Python Patch Level Mismatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mixing-32-bit-and-64-bit-packages">Mixing 32 Bit And 64 Bit Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unable-to-find-python-shared-library">Unable To Find Python Shared Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gnu-c-stack-smashing-extensions">GNU C Stack Smashing Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#undefined-forkpty-on-fedora-7">Undefined &#8216;forkpty&#8217; On Fedora 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#missing-include-files-on-suse">Missing Include Files On SUSE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apache-maintainer-mode">Apache Maintainer Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Installation Issues</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/installation-issues.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-issues">
+<h1>Installation Issues<a class="headerlink" href="#installation-issues" title="Permalink to this headline">¶</a></h1>
+<p>Although mod_wsgi is not a large package in itself, it depends on both
+Apache and Python to get it compiled and installed. Because Apache and
+Python are complicated systems in their own right, various problems can
+come up during installation of mod_wsgi. These problems can arise for
+various reasons, including an incomplete or suboptimal Python installation
+or presence of multiple Python versions.</p>
+<p>The purpose of this document is to capture all the known problems that can
+arise regarding installation, including workarounds if available.</p>
+<p>If you are having a problem which doesn&#8217;t seem to be covered by this
+document, also make sure you see <a class="reference internal" href="configuration-issues.html"><span class="doc">Configuration Issues</span></a>
+and <a class="reference internal" href="application-issues.html"><span class="doc">Application Issues</span></a>.</p>
+<div class="section" id="missing-python-header-files">
+<h2>Missing Python Header Files<a class="headerlink" href="#missing-python-header-files" title="Permalink to this headline">¶</a></h2>
+<p>In order to compile mod_wsgi from source code you must have installed the
+full Python distribution, including header files. On a Linux distribution
+where binary Python packages are split into a runtime package and a
+developer package, the developer package is often not installed by default.
+This means that you will be missing the header files required to compile
+mod_wsgi from source code. An example of the error messages you will see
+if the developer package is not installed are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">113</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">Python</span><span class="o">.</span><span class="n">h</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">114</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="nb">compile</span><span class="o">.</span><span class="n">h</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">115</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">h</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">116</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">osdefs</span><span class="o">.</span><span class="n">h</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">119</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="c1">#error Sorry, mod_wsgi requires at least Python 2.3.0.</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">123</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="c1">#error Sorry, mod_wsgi requires that Python supporting thread.</span>
+</pre></div>
+</div>
+<p>To remedy the problem, install the developer package for Python
+corresponding to the Python runtime package you have installed. What the
+name of the developer package is can vary from one Linux distribution to
+another. Normally it has the same name as the Python runtime package with
+<code class="docutils literal"><span class="pre">-dev</span></code> appended to the package name. You will need to lookup up list of
+available packages in your packaging system to determine actual name of
+package to install.</p>
+</div>
+<div class="section" id="lack-of-python-shared-library">
+<h2>Lack Of Python Shared Library<a class="headerlink" href="#lack-of-python-shared-library" title="Permalink to this headline">¶</a></h2>
+<p>In the optimal case, when mod_wsgi is compiled the resulting Apache module
+should be less than 250 Kbytes in size. If this is not the case and the
+module is over 1MB in size, it indicates that the version of Python being
+used was not originally configured so as to produce a Python shared library
+and is instead only producing a static library.</p>
+<p>Although the existance of only a static library for Python doesn&#8217;t normally
+cause compilation of mod_wsgi to fail, it does mean that when &#8216;libtool&#8217; is
+used to generate the mod_wsgi Apache module, that it has to embed the
+actual static library objects into the Apache module instead of it being
+used as a shared library.</p>
+<p>The consequences of this are that when the mod_wsgi Apache module is loaded
+by Apache, the operating system dynamic linker has to perform address
+relocations on the Python library component of the mod_wsgi Apache module.
+Because these relocations require memory to be modified, the full Python
+library then becomes private memory to the process and not shared.</p>
+<p>On a Linux system this need to perform the address relocations at runtime
+will immediately cause each Apache child process to bloat out in size by
+between 1 and 2MB. On a Solaris system, depending on which compiler is
+being used and which options, the amount of additional memory used can be
+5MB or more.</p>
+<p>To determine whether the compiled mod_wsgi module is making use of a
+shared library for Python, many UNIX systems provide the &#8216;ldd&#8217;
+program. The output from running this on the &#8216;mod_wsgi.so&#8217; file would
+be something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ldd mod_wsgi.so
+ linux-vdso.so.1 =&gt;  (0x00007fffeb3fe000)
+ libpython2.5.so.1.0 =&gt; /usr/local/lib/libpython2.5.so.1.0 (0x00002adebf94d000)
+ libpthread.so.0 =&gt; /lib/libpthread.so.0 (0x00002adebfcba000)
+ libdl.so.2 =&gt; /lib/libdl.so.2 (0x00002adebfed6000)
+ libutil.so.1 =&gt; /lib/libutil.so.1 (0x00002adec00da000)
+ libc.so.6 =&gt; /lib/libc.so.6 (0x00002adec02dd000)
+ libm.so.6 =&gt; /lib/libm.so.6 (0x00002adec0635000)
+ /lib64/ld-linux-x86-64.so.2 (0x0000555555554000)
+</pre></div>
+</div>
+<p>Note how there is a dependency listed on the &#8216;.so&#8217; file for Python. If
+this is not present then mod_wsgi is using a static Python library.</p>
+<p>Although mod_wsgi will still work when compiled against a version of Python
+which only provides a static library, you are highly encouraged to ensure
+that your Python installation has been configured and compiled with the
+<code class="docutils literal"><span class="pre">--enable-shared</span></code> option to enable the production and use of a shared
+library for Python.</p>
+<p>If rebuilding Python to generate a shared library, do make sure that the
+Python shared library, or a symlink to it appears in the Python &#8216;config&#8217;
+directory of your Python installation. If the shared library doesn&#8217;t appear
+here next to the static version of the library, &#8216;libtool&#8217; will not be able
+to find it and will still use the static version of the library. It is
+understood that the Python build process may not actually do this, so you
+may have to do it by hand.</p>
+<p>To check, go to the Python &#8216;config&#8217; directory of your Python installation
+and do a directory listing:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ls -las
+
+   4 drwxr-sr-x  2 root staff    4096 2007-11-29 23:26 .
+  20 drwxr-sr-x 21 root staff   20480 2007-11-29 23:26 ..
+   4 -rw-r--r--  1 root staff    2078 2007-11-29 23:26 config.c
+   4 -rw-r--r--  1 root staff    1446 2007-11-29 23:26 config.c.in
+   8 -rwxr-xr-x  1 root staff    7122 2007-11-29 23:26 install-sh
+7664 -rw-r--r--  1 root staff 7833936 2007-11-29 23:26 libpython2.5.a
+  40 -rw-r--r--  1 root staff   38327 2007-11-29 23:26 Makefile
+   8 -rwxr-xr-x  1 root staff    7430 2007-11-29 23:26 makesetup
+   8 -rw-r--r--  1 root staff    6456 2007-11-29 23:26 python.o
+  20 -rw-r--r--  1 root staff   17862 2007-11-29 23:26 Setup
+   4 -rw-r--r--  1 root staff     368 2007-11-29 23:26 Setup.config
+   4 -rw-r--r--  1 root staff      41 2007-11-29 23:26 Setup.local
+</pre></div>
+</div>
+<p>If you only see a &#8216;.a&#8217; file for Python library, then either Python wasn&#8217;t
+installed with the shared library, or the shared library was placed
+elsewhere. What appears to normally happen is that the shared library is
+actually placed in the &#8216;lib&#8217; directory two levels above the Python &#8216;config&#8217;
+directory. In that case you need to create a symlink in the &#8216;config&#8217;
+directory to where the shared library is actually installed:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ln -s ../../libpython2.5.so .
+</pre></div>
+</div>
+<p>Apart from the additional memory consumption when using a static library,
+it is also preferable that a shared library be used where it is possible
+that you will upgrade your Python installation to a newer patch revision.
+This is because if you upgrade Python to a newer patch revision but do
+not recompile mod_wsgi, mod_wsgi will still incorporate the older static
+Python library and will not pick up any changes from the newer version
+of Python. This will result in undefined behaviour as the Python library
+code may not match up with the Python code modules or external modules
+in the Python installation. If a Python shared library is used, this will
+not be a problem.</p>
+</div>
+<div class="section" id="multiple-python-versions">
+<h2>Multiple Python Versions<a class="headerlink" href="#multiple-python-versions" title="Permalink to this headline">¶</a></h2>
+<p>Where there are multiple versions of Python installed on a system and it is
+necessary to ensure that a specific version is used, the <code class="docutils literal"><span class="pre">--with-python</span></code>
+option can be supplied to &#8216;configure&#8217; when installing mod_wsgi:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">python</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>This may be necessary where for example the default Python version supplied
+with the system is an older version of Python. More specifically, it would
+be required where it isn&#8217;t possible to replace the older version of Python
+outright due to operating system management scripts being dependent on the
+older version of Python and not working with newer versions of Python.</p>
+<p>Where multiple versions of Python are present and are installed under the
+same directory, this should generally be all that is required. If however
+the newer version of Python you wish to use is in a different location, for
+example under &#8216;/usr/local&#8217;, it is possible that when Apache is started that
+it will not be able find the Python library files for the version of Python
+you wish to use.</p>
+<p>This can occur because the Python library when initialised determines where
+the Python installation resides by looking through directories specified in
+the &#8216;PATH&#8217; environment variable for the &#8216;python&#8217; executable and using that
+as base location for calculating installation prefix. Specifically, the
+directory above the directory containing the &#8216;python&#8217; executable is taken
+as being the installation prefix.</p>
+<p>When the Python which should be used is installed in a non standard
+location, then that &#8216;bin&#8217; directory is unlikely to be in the &#8216;PATH&#8217; used by
+Apache when it is started. As such, rather than find
+&#8216;/usr/local/bin/python&#8217; it would instead find &#8216;/usr/bin/python&#8217; and so use
+&#8216;/usr&#8217; rather than the directory &#8216;/usr/local/&#8217; as the installation prefix.</p>
+<p>When this occurs, if under &#8216;/usr&#8217; there was no Python installation of the
+same version number as Python which should be used, then normally:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;import site&#39;</span> <span class="n">failed</span><span class="p">;</span> <span class="n">use</span> <span class="o">-</span><span class="n">v</span> <span class="k">for</span> <span class="n">traceback</span>
+</pre></div>
+</div>
+<p>would appear in the Apache error log file when Python is first being
+initialised within Apache. Any attempt to make a request against a WSGI
+application would also result in errors as no modules at all except for
+inbuilt modules, would be able to be found when an attempt is made to
+import them.</p>
+<p>Alternatively, if there was a Python installation of the same version,
+albeit not the desired installation, then there may be no obvious issues on
+startup, but at run time you may find modules cannot be found when being
+imported as they are installed into a different location than that which
+was being used. Even if equivalent module is found, it could fail at run
+time in subtle ways if the two Python installations are of same version but at
+the different locations are compiled in different ways, or if it is a third
+party module and they are different versions and so API is different.</p>
+<p>In this situation it will be necessary to explicitly tell mod_wsgi
+where the Python executable for the version of Python which should be
+used, is located. This can be done using the WSGIPythonHome directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIPythonHome</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span>
+</pre></div>
+</div>
+<p>The value given to the WSGIPythonHome directive should be a normalised
+path corresponding to that defined by the Python {{{sys.prefix}}} variable
+for the version of Python being used and passed to the <code class="docutils literal"><span class="pre">--with-python</span></code>
+option when configuring mod_wsgi:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span>
+<span class="go">&#39;/usr/local&#39;</span>
+</pre></div>
+</div>
+<p>An alternative, although less desirable way of achieving this is to set the
+&#8216;PATH&#8217; environment variable in the startup scripts for Apache. For a standard
+Apache installation using ASF structure, this can be done by editing the
+&#8216;envvars&#8217; file in same directory as the Apache executable and adding the
+alternate bin directory to the head of the &#8216;PATH&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>PATH=/usr/local/bin:$PATH
+export PATH
+</pre></div>
+</div>
+<p>If there are any concerns over what Python installation directory is being
+used and you want to verify what it is, then use a small test WSGI script
+which outputs the values of &#8216;sys.prefix&#8217; and &#8216;sys.path&#8217;. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;sys.prefix = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;sys.path = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-modpython-and-modwsgi">
+<h2>Using ModPython and ModWsgi<a class="headerlink" href="#using-modpython-and-modwsgi" title="Permalink to this headline">¶</a></h2>
+<p>Using mod_python and mod_wsgi together is no longer supported and recent
+versions of mod_wsgi will cause the startup of Apache to be aborted if both
+are loaded at the same time.</p>
+</div>
+<div class="section" id="python-patch-level-mismatch">
+<h2>Python Patch Level Mismatch<a class="headerlink" href="#python-patch-level-mismatch" title="Permalink to this headline">¶</a></h2>
+<p>If the Python package is upgraded to a newer patch level revision, one
+will likely see the following warning messages in the Apache error log
+when Python is being initialised:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="p">:</span> <span class="n">Compiled</span> <span class="k">for</span> <span class="n">Python</span><span class="o">/</span><span class="mf">2.4</span><span class="o">.</span><span class="mf">1.</span>
+<span class="n">mod_wsgi</span><span class="p">:</span> <span class="n">Runtime</span> <span class="n">using</span> <span class="n">Python</span><span class="o">/</span><span class="mf">2.4</span><span class="o">.</span><span class="mf">2.</span>
+</pre></div>
+</div>
+<p>The warning is indicating that a newer version of Python is now being
+used than what mod_wsgi was originally compiled for.</p>
+<p>This would generally not be a problem provided that both versions of Python
+were originally installed with the <code class="docutils literal"><span class="pre">--enable-shared</span></code> option supplied to
+&#8216;configure&#8217;. If this option is used then the Python library will be linked
+in dynamically at runtime and so an upgrade to the Python version will be
+automatically used.</p>
+<p>If <code class="docutils literal"><span class="pre">--enable-shared</span></code> was however not used and the Python library is
+therefore embedded into the actual mod_wsgi Apache module, then there is a
+risk of undefined behaviour. This is because the version of the Python
+library embedded into the mod_wsgi Apache module will be older than the
+corresponding Python code modules and extension modules being used from the
+Python library directory.</p>
+<p>Thus, if a shared library is not being used for Python it will be necessary
+to rebuild mod_wsgi against the newer patch level revision of mod_wsgi and
+reinstall it.</p>
+</div>
+<div class="section" id="mixing-32-bit-and-64-bit-packages">
+<h2>Mixing 32 Bit And 64 Bit Packages<a class="headerlink" href="#mixing-32-bit-and-64-bit-packages" title="Permalink to this headline">¶</a></h2>
+<p>When attempting to compile mod_wsgi on a Linux system using an X86 64 bit
+processor, the following error message can arise:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>/bin/sh /usr/lib64/apr/build/libtool --silent --mode=link gcc -o \
+  mod_wsgi.la -I/usr/local/include/python2.4 -DNDEBUG  -rpath \
+  /usr/lib64/httpd/modules -module -avoid-version mod_wsgi.lo \
+  -L/usr/local/lib/python2.4/config -lpython2.4 -lpthread -ldl -lutil
+/usr/bin/ld: /usr/local/lib/python2.4/config/
+libpython2.4.a(abstract.o): relocation R_X86_64_32 against `a local
+symbol&#39; can not be used when making a shared object; recompile with -fPIC
+/usr/local/lib/python2.4/config/libpython2.4.a: could not read symbols: Bad value
+collect2: ld returned 1 exit status
+apxs:Error: Command failed with rc=65536
+.
+make: *** [mod_wsgi.la] Error 1
+</pre></div>
+</div>
+<p>This error is believed to be result of the version of Python being used
+having been originally compiled for the generic X86 32 bit architecture
+whereas mod_wsgi is being compiled for X86 64 bit architecture. The actual
+error arises in this case because &#8216;libtool&#8217; would appear to be unable to
+generate a dynamically loadable module for the X86 64 bit architecture from
+a X86 32 bit static library. Alternatively, the problem is due to &#8216;libtool&#8217;
+on this platform not being able to create a loadable module from a X86 64
+bit static library in all cases.</p>
+<p>If the first issue, the only solution to this problem is to recompile
+Python for the X86 64 bit architecture. When doing this, it is preferable,
+and may actually be necessary, to ensure that the <code class="docutils literal"><span class="pre">--enable-shared</span></code> option
+is provided to the &#8216;configure&#8217; script for Python when it is being compiled
+and installed.</p>
+<p>If rebuilding Python to generate a shared library, do make sure that the
+Python shared library, or a symlink to it appears in the Python &#8216;config&#8217;
+directory of your Python installation. If the shared library doesn&#8217;t appear
+here next to the static version of the library, &#8216;libtool&#8217; will not be able
+to find it and will still use the static version of the library. It is
+understood that the Python build process may not actually do this, so you
+may have to do it by hand.</p>
+<p>If the version of Python being used was compiled for X86 64 bit
+architecture and a shared library does exist, but not in the &#8216;config&#8217;
+directory, then adding the missing symlink may be all that is required.</p>
+</div>
+<div class="section" id="unable-to-find-python-shared-library">
+<h2>Unable To Find Python Shared Library<a class="headerlink" href="#unable-to-find-python-shared-library" title="Permalink to this headline">¶</a></h2>
+<p>When mod_wsgi is built against a version of Python providing a shared
+library, the Python shared library must be in a directory which is searched
+for libraries at runtime by Apache. If this isn&#8217;t the case the Python
+shared library will not be able to be found when loading the mod_wsgi
+module in to Apache. The error in this situation will be similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="k">while</span> <span class="n">loading</span> <span class="n">shared</span> <span class="n">libraries</span><span class="p">:</span> <span class="n">libpython2</span><span class="o">.</span><span class="mf">4.</span><span class="n">so</span><span class="o">.</span><span class="mf">1.0</span><span class="p">:</span> \
+ <span class="n">cannot</span> <span class="nb">open</span> <span class="n">shared</span> <span class="nb">object</span> <span class="n">file</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+</pre></div>
+</div>
+<p>A number of alternatives exist for resolving this problem. The preferred
+solution would be to copy the Python shared library into a directory which
+is searched for dynamic libraries at run time. Directories which would
+generally always be searched are &#8216;/lib&#8217; and &#8216;/usr/lib&#8217;.</p>
+<p>For some systems the directory &#8216;/usr/local/lib&#8217; may also be searched, but
+this may depend on the directory having been explicitly added to the
+approrpiate system file listing the directories to be searched. The name
+and location of this configuration file differs between platforms. On Linux
+systems it is often called &#8216;/etc/ld.so.conf&#8217;. If changes are made to the
+file on Linux systems the &#8216;ldconfig&#8217; command also needs to be run. See the
+manual page for &#8216;ldconfig&#8217; for further details.</p>
+<p>Rather than changing the system wide list of directories to search for
+shared libraries, additional search directories can be specified just
+for Apache. On Linux this would entail setting the &#8216;LD_LIBRARY_PATH&#8217;
+environment variable to include the directory where the Python shared
+library is installed.</p>
+<p>The setting and exporting of the environment variable would be placed in
+the Apache &#8216;envvars&#8217; file, for a standard Apache installation, located in
+the same directory as the Apache web server executable. If using a
+customised Apache installation, such as on Red Hat, the &#8216;envvars&#8217; file may
+not exist. In this case you would need to add this into the actual startup
+script for Apache. For Red Hat this is &#8216;/etc/sysconfig/httpd&#8217;.</p>
+<p>A final alternative on some systems is to embed the directory to search
+for the Python shared library into the mod_wsgi Apache module itself. On
+Linux systems this can be done by setting the environment variable
+&#8216;LD_RUN_PATH&#8217; to the directory containing the Python shared library when
+initially building the mod_wsgi source code.</p>
+</div>
+<div class="section" id="gnu-c-stack-smashing-extensions">
+<h2>GNU C Stack Smashing Extensions<a class="headerlink" href="#gnu-c-stack-smashing-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Various Linux distributions are starting to ship with a version of the GNU
+C compiler which incorporates an extension which implements protection for
+stack-smashing. In some instances where such a compiler is used to build
+mod_wsgi, the module is unable to then be loaded by Apache. The specific
+problem is that the symbol <code class="docutils literal"><span class="pre">__stack_chk_fail_local</span></code> is being flagged as
+undefined:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ invoke-rc.d apache2 reload
+apache2: Syntax error on line 190 of /etc/apache2/apache2.conf: \
+ Cannot load /usr/lib/apache2/modules/mod_wsgi.so into server: \
+ /usr/lib/apache2/modules/mod_wsgi.so: \
+ undefined symbol: __stack_chk_fail_local failed!
+invoke-rc.d: initscript apache2, action &quot;reload&quot; failed.
+</pre></div>
+</div>
+<p>The exact reason for this is not known but it is speculated to be caused
+when the system libraries or Apache itself has not been compiled with a
+version of the GNU C compiler incorporating the extension.</p>
+<p>To workaround the problem, modify the &#8216;Makefile&#8217; for mod_wsgi and change
+the value of &#8216;CFLAGS&#8217; to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CFLAGS</span> <span class="o">=</span> <span class="o">-</span><span class="n">Wc</span><span class="p">,</span><span class="o">-</span><span class="n">fno</span><span class="o">-</span><span class="n">stack</span><span class="o">-</span><span class="n">protector</span>
+</pre></div>
+</div>
+<p>Perform a &#8216;clean&#8217; in the directory and then rebuild and reinstall the
+mod_wsgi module.</p>
+</div>
+<div class="section" id="undefined-forkpty-on-fedora-7">
+<h2>Undefined &#8216;forkpty&#8217; On Fedora 7<a class="headerlink" href="#undefined-forkpty-on-fedora-7" title="Permalink to this headline">¶</a></h2>
+<p>On Fedora 7, the provided binary version of Apache is not linked against
+the &#8216;libutil&#8217; system library. This causes problems when Python is initialised
+and the &#8216;posix&#8217; module imported for the first time. This is because the
+&#8216;posix&#8217; module requires functions from &#8216;libutil&#8217; but they will not be present.
+The error encountered would be similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">httpd</span><span class="p">:</span> <span class="n">Syntax</span> <span class="n">error</span> <span class="n">on</span> <span class="n">line</span> <span class="mi">54</span> <span class="n">of</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span> <span class="n">Cannot</span> \
+ <span class="n">load</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span> <span class="n">into</span> <span class="n">server</span><span class="p">:</span> \
+ <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span><span class="p">:</span> <span class="n">undefined</span> <span class="n">symbol</span><span class="p">:</span> <span class="n">forkpty</span>
+</pre></div>
+</div>
+<p>This problem can be fixed by adding <code class="docutils literal"><span class="pre">-lutil</span></code> to the list of libraries to
+link mod_wsgi against when it is being built. This can be done by adding
+<code class="docutils literal"><span class="pre">-lutil</span></code> to the &#8216;LDLIBS&#8217; variable in the mod_wsgi &#8216;Makefile&#8217; after having
+run &#8216;configure&#8217;.</p>
+<p>An alternative method which may work is to edit the &#8216;envvars&#8217; file, if it
+exists and is used, located in the same directory as the Apache &#8216;httpd&#8217;
+executable, or the Apache startup script, and add:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LD_PRELOAD</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libutil</span><span class="o">.</span><span class="n">so</span>
+<span class="n">export</span> <span class="n">LD_PRELOAD</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="missing-include-files-on-suse">
+<h2>Missing Include Files On SUSE<a class="headerlink" href="#missing-include-files-on-suse" title="Permalink to this headline">¶</a></h2>
+<p>SUSE Linux follows a slightly different convention to other Linux
+distributions and has split their Apache &#8220;dev&#8221; packages in a way as to
+allow packages for different Apache MPMs to be installed at the same time.
+Although the resultant mod_wsgi module isn&#8217;t strictly MPM specific, it
+does indirectly include the MPM specific header file &#8220;mpm.h&#8221;. Because the
+header file is MPM specific, when configuring mod_wsgi, it is necessary to
+reference the version of &#8220;apxs&#8221; from the MPM specific &#8220;dev&#8221; package else
+the &#8220;mpm.h&#8221; header file will not be found at compile time. These errors
+are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="n">file</span> <span class="n">included</span> <span class="kn">from</span> <span class="nn">mod_wsgi.c</span><span class="p">:</span><span class="mi">4882</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">include</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">mpm_common</span><span class="o">.</span><span class="n">h</span><span class="p">:</span><span class="mi">46</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">mpm</span><span class="o">.</span><span class="n">h</span><span class="p">:</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span>
+<span class="o">...</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span> <span class="n">In</span> <span class="n">function</span> <span class="s1">&#39;wsgi_set_accept_mutex&#39;</span><span class="p">:</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">5200</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="s1">&#39;ap_accept_lock_mech&#39;</span> <span class="n">undeclared</span> <span class="p">(</span><span class="n">first</span> <span class="n">use</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">function</span><span class="p">)</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">5200</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="p">(</span><span class="n">Each</span> <span class="n">undeclared</span> <span class="n">identifier</span> <span class="ow">is</span> <span class="n">reported</span> <span class="n">only</span> <span class="n">once</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">5200</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="k">for</span> <span class="n">each</span> <span class="n">function</span> <span class="n">it</span> <span class="n">appears</span> <span class="ow">in</span><span class="o">.</span><span class="p">)</span>
+<span class="n">apxs</span><span class="p">:</span><span class="n">Error</span><span class="p">:</span> <span class="n">Command</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">rc</span><span class="o">=</span><span class="mi">65536</span>
+</pre></div>
+</div>
+<p>To avoid this problem, when configuring mod_wsgi, it is necessary to use
+the <code class="docutils literal"><span class="pre">--with-apxs</span></code> option to designate that either &#8220;apxs2-worker&#8221; or
+&#8220;apxs2-prefork&#8221; should be used. Thus:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">apxs</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">apxs2</span><span class="o">-</span><span class="n">worker</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">apxs</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">apxs2</span><span class="o">-</span><span class="n">prefork</span>
+</pre></div>
+</div>
+<p>Although which is used is not important, since mod_wsgi when compiled isn&#8217;t
+specific to either, best to use that which corresponds to the version of
+Apache being used.</p>
+</div>
+<div class="section" id="apache-maintainer-mode">
+<h2>Apache Maintainer Mode<a class="headerlink" href="#apache-maintainer-mode" title="Permalink to this headline">¶</a></h2>
+<p>When building mod_wsgi from source code, on UNIX systems there should be
+minimal if no compiler warnings. If you see a lot of warnings, especially
+complaints about <code class="docutils literal"><span class="pre">ap_strstr</span></code>, then your Apache installation has been
+configured for maintainer mode:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span> <span class="n">In</span> <span class="n">function</span> <span class="s1">&#39;wsgi_process_group&#39;</span><span class="p">:</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">722</span><span class="p">:</span> <span class="n">warning</span><span class="p">:</span> <span class="n">passing</span> <span class="n">argument</span> <span class="mi">1</span> <span class="n">of</span> <span class="s1">&#39;ap_strstr&#39;</span> <span class="n">discards</span>
+<span class="n">qualifiers</span> <span class="kn">from</span> <span class="nn">pointer</span> <span class="n">target</span> <span class="nb">type</span>
+<span class="n">mod_wsgi</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">740</span><span class="p">:</span> <span class="n">warning</span><span class="p">:</span> <span class="n">passing</span> <span class="n">argument</span> <span class="mi">1</span> <span class="n">of</span> <span class="s1">&#39;ap_strstr&#39;</span> <span class="n">discards</span>
+<span class="n">qualifiers</span> <span class="kn">from</span> <span class="nn">pointer</span> <span class="n">target</span> <span class="nb">type</span>
+</pre></div>
+</div>
+<p>Specifically, whoever built the version of Apache being used supplied the
+option <code class="docutils literal"><span class="pre">--enable-maintainer-mode</span></code> when configuring Apache prior to
+installation. You would be able to tell at the time of compiling mod_wsgi
+if this has been done as the option <code class="docutils literal"><span class="pre">-DAP_DEBUG</span></code> would be supplied to the
+compiler when mod_wsgi source code is compiled.</p>
+<p>These warnings can be ignored, but in general you shouldn&#8217;t run Apache in
+maintainer mode.</p>
+<p>A further reason for not running Apache in maintainer mode is that certain
+situations can cause Apache to fail an internal assertion check when using
+mod_wsgi. The specific error message is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">crit</span><span class="p">]</span> <span class="n">file</span> <span class="n">http_filters</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">line</span> <span class="mi">346</span><span class="p">,</span> <span class="n">assertion</span> <span class="s2">&quot;readbytes &gt; 0&quot;</span> <span class="n">failed</span>
+<span class="p">[</span><span class="n">notice</span><span class="p">]</span> <span class="n">child</span> <span class="n">pid</span> <span class="mi">18551</span> <span class="n">exit</span> <span class="n">signal</span> <span class="n">Aborted</span> <span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This occurs because the Apache code has an overly agressive assertion
+check, which is arguably incorrect. This particular assertion check will
+fail when a zero length read is perform on the Apache &#8216;HTTP_IN&#8217; input
+filter.</p>
+<p>This scenario can arise in mod_wsgi due to a workaround in place to get
+around a bug in Apache related to generation of &#8216;100-continue&#8217; response.
+The Apache bug is described in:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://issues.apache.org/bugzilla/show_bug.cgi?id=38014">https://issues.apache.org/bugzilla/show_bug.cgi?id=38014</a></li>
+</ul>
+</div></blockquote>
+<p>The scenario can also be triggered as a result of a WSGI application
+performing a zero length read on &#8216;wsgi.input&#8217;.</p>
+<p>Changes to mod_wsgi are being investigated to see if zero length reads can
+be ignored, but due to the workaround for the bug, this would only be able
+to be done for Apache 2.2.8 or later.</p>
+<p>The prefered solution is simply not to use Apache with maintainer mode
+enabled for systems where you are running real code. Unfortunately, it
+looks like some Linux distributions, eg. SUSE, accidentally released Apache
+binary packages with this mode enabled by default. You should update to a
+Apache binary package that doesn&#8217;t have the mode enabled, or compile from
+source code.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuration-issues.html" class="btn btn-neutral float-right" title="Configuration Issues" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuration-guidelines.html" class="btn btn-neutral" title="Configuration Guidelines" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

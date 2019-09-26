@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+
+        <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body background="https://ak5.picdn.net/shutterstock/videos/1658731/thumb/1.jpg">
+
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li {% block summary_analysis_active %}{% endblock %}>
+                            <a href="/summary_analysis" role="button">
+                                Summary Analysis
+                            </a>
+                        </li>
+                        <li {% block recommendation_active %}{% endblock %}>
+                            <a href="/recommendation" role="button">
+                                Recommendation
+                            </a>
+                        </li>
+
+
+                        <li {% block prediction_active %}{% endblock %}>
+                            <a href="/prediction" role="button">
+                                Prediction
+                            </a>
+                        </li>
+
+                        <li {% block options_active %}{% endblock %}>
+                            <a href="/options" role="button">
+                                Options
+                            </a>
+                        </li>
+
+                        <li {% block profit_active %}{% endblock %}>
+                            <a href="/profit" role="button">
+                                Profit
+                            </a>
+                        </li>
+
+                        <!--
+                        <li {% block active4 %}{% endblock %}>
+                            <a href="/download" role="button">
+                                Downloadable
+                            </a>
+                        </li>
+                        -->
+
+                        <li {% block industry_active %}{% endblock %}>
+                            <a href="/industry" role="button">
+                                Industry
+                            </a>
+                        </li>
+
+
+                        <li {% block raw_data_active %}{% endblock %}>
+                            <a href="/raw_data" role="button">
+                                Raw Data
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
+

@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>WSGIDaemonProcess &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Configuration" href="../configuration.html"/>
+        <link rel="next" title="WSGIImportScript" href="WSGIImportScript.html"/>
+        <link rel="prev" title="WSGICaseSensitivity" href="WSGICaseSensitivity.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuration.html">Configuration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="WSGIAcceptMutex.html">WSGIAcceptMutex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAccessScript.html">WSGIAccessScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIApplicationGroup.html">WSGIApplicationGroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAuthGroupScript.html">WSGIAuthGroupScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAuthUserScript.html">WSGIAuthUserScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGICallableObject.html">WSGICallableObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGICaseSensitivity.html">WSGICaseSensitivity</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WSGIDaemonProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIImportScript.html">WSGIImportScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGILazyInitialization.html">WSGILazyInitialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPassAuthorization.html">WSGIPassAuthorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIProcessGroup.html">WSGIProcessGroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonEggs.html">WSGIPythonEggs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonHome.html">WSGIPythonHome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonOptimize.html">WSGIPythonOptimize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonPath.html">WSGIPythonPath</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictEmbedded.html">WSGIRestrictEmbedded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictProcess.html">WSGIRestrictProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictSignal.html">WSGIRestrictSignal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictStdin.html">WSGIRestrictStdin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictStdout.html">WSGIRestrictStdout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptAlias.html">WSGIScriptAlias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptAliasMatch.html">WSGIScriptAliasMatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptReloading.html">WSGIScriptReloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGISocketPrefix.html">WSGISocketPrefix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../configuration.html">Configuration</a> &raquo;</li>
+      
+    <li>WSGIDaemonProcess</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/configuration-directives/WSGIDaemonProcess.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="wsgidaemonprocess">
+<h1>WSGIDaemonProcess<a class="headerlink" href="#wsgidaemonprocess" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Configure a distinct daemon process for running applications.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Syntax:</th><td class="field-body"><code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> <em>name</em> <code class="docutils literal"><span class="pre">[</span></code> <em>options</em> <code class="docutils literal"><span class="pre">]</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Context:</th><td class="field-body">server config, virtual host</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive can be used to specify that distinct
+daemon processes should be created to which the running of WSGI
+applications can be delegated. Where Apache has been started as the
+<code class="docutils literal"><span class="pre">root</span></code> user, the daemon processes can be run as a user different to that
+which the Apache child processes would normally be run as.</p>
+<p>When distinct daemon processes are enabled and used, the process is
+dedicated to mod_wsgi and the only thing that the processes do is run the
+WSGI applications assigned to that process group. Any other Apache modules
+such as PHP or activities such as serving up static files continue to be
+run in the standard Apache child processes.</p>
+<p>Note that having denoted that daemon processes should be created by
+using the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive, the <code class="docutils literal"><span class="pre">WSGIProcessGroup</span></code>
+directive, or the <code class="docutils literal"><span class="pre">process-group</span></code> option of <code class="docutils literal"><span class="pre">WSGIScriptAlias</span></code> still
+needs to be used to delegate specific WSGI applications to execute within
+those daemon processes.</p>
+<p>Also note that the name of the daemon process group must be unique for the
+whole server. That is, it is not possible to use the same daemon process
+group name in different virtual hosts.</p>
+<p>Options which can be supplied to the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive are:</p>
+<dl class="docutils">
+<dt><strong>processes=num</strong></dt>
+<dd><p class="first">Defines the number of daemon processes that should be started in this
+process group. If not defined then only one process will be run in this
+process group.</p>
+<p class="last">Note that if this option is defined as <code class="docutils literal"><span class="pre">processes=1</span></code>, then the WSGI
+environment attribute called <code class="docutils literal"><span class="pre">wsgi.multiprocess</span></code> will be set to be
+<code class="docutils literal"><span class="pre">True</span></code> whereas not providing the option at all will result in the
+attribute being set to be <code class="docutils literal"><span class="pre">False</span></code>. This distinction is to allow for
+where some form of load balancing is used across process groups in the
+same Apache instance, or separate Apache instances. If you need to
+ensure that <code class="docutils literal"><span class="pre">wsgi.multiprocess</span></code> is <code class="docutils literal"><span class="pre">False</span></code> so that interactive
+debuggers will work, simply do not specify the <code class="docutils literal"><span class="pre">processes</span></code> option and
+allow the default single daemon process to be created in the process
+group.</p>
+</dd>
+<dt><strong>threads=num</strong></dt>
+<dd><p class="first">Defines the number of threads to be created to handle requests in each
+daemon process within the process group.</p>
+<p>If this option is not defined then the default will be to create 15
+threads in each daemon process within the process group.</p>
+<p class="last">Do not get carried away and set this to a very large number in the
+belief that it will somehow magically enable you to handle many more
+concurrent users. Any sort of increased value would only be appropriate
+where your code is I/O bound. If you code is CPU bound, you are better
+of using at most 3 to 5 threads per process and using more processes.</p>
+</dd>
+<dt><strong>display-name=value</strong></dt>
+<dd><p class="first">Defines a different name to show for the daemon process when using the
+<code class="docutils literal"><span class="pre">ps</span></code> command to list processes. If the value is <code class="docutils literal"><span class="pre">%{GROUP}</span></code> then the
+name will be <code class="docutils literal"><span class="pre">(wsgi:group)</span></code> where <code class="docutils literal"><span class="pre">group</span></code> is replaced with the name
+of the daemon process group.</p>
+<p>Note that only as many characters of the supplied value can be displayed
+as were originally taken up by <code class="docutils literal"><span class="pre">argv0</span></code> of the executing process.
+Anything in excess of this will be truncated.</p>
+<p class="last">This feature may not work as described on all platforms. Typically it
+also requires a <code class="docutils literal"><span class="pre">ps</span></code> program with BSD heritage. Thus on some versions
+of Solaris UNIX the <code class="docutils literal"><span class="pre">/usr/bin/ps</span></code> program doesn&#8217;t work, but
+<code class="docutils literal"><span class="pre">/usr/ucb/ps</span></code> does. Other programs which can display this value
+include <code class="docutils literal"><span class="pre">htop</span></code>.</p>
+</dd>
+<dt><strong>home=directory</strong></dt>
+<dd><p class="first">Defines an absolute path of a directory which should be used as the
+initial current working directory of the daemon processes within the
+process group.</p>
+<p class="last">If this option is not defined the initial current working directory
+will be set to be the home directory of the user that the daemon
+process is configured to run as using the <code class="docutils literal"><span class="pre">user</span></code> option to the
+<code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive. Otherwise the current working
+directory of Apache when started will be used, which if Apache is being
+started from system init scripts, would usually be the system root
+directory.</p>
+</dd>
+<dt><strong>user=name | user=#uid</strong></dt>
+<dd><p class="first">Defines the UNIX user <em>name</em> or numeric user <em>uid</em> of the user that
+the daemon processes should be run as. If this option is not supplied
+the daemon processes will be run as the same user that Apache would
+run child processes, as defined by the <a class="reference external" href="http://httpd.apache.org/docs/2.4/mod/mod_unixd.html#user">User</a> directive, and it is
+not necessary to set this to the Apache user yourself.</p>
+<p>Note that this option is ignored if Apache wasn&#8217;t started as the root
+user, in which case no matter what the settings, the daemon processes
+will be run as the user that Apache was started as.</p>
+<p class="last">Also be aware that mod_wsgi will not allow you to run a daemon process
+group as the root user due to the security risk of running a web
+application as root.</p>
+</dd>
+<dt><strong>group=name | group=#gid</strong></dt>
+<dd><p class="first">Defines the UNIX group <em>name</em> or numeric group <em>gid</em> of the primary
+group that the daemon processes should be run as. If this option is not
+supplied the daemon processes will be run as the same group that Apache
+would run child processes, as defined by the <a class="reference external" href="http://httpd.apache.org/docs/2.4/mod/mod_unixd.html#group">Group</a> directive, and it
+is not necessary to set this to the Apache group yourself.</p>
+<p class="last">Note that this option is ignored if Apache wasn&#8217;t started as the root
+user, in which case no matter what the settings, the daemon processes
+will be run as the group that Apache was started as.</p>
+</dd>
+<dt><strong>supplementary-groups=group1 | supplementary-groups=group1,group2</strong></dt>
+<dd>Defines a list of additional UNIX groups that the user the daemon
+process group runs as, should be added to, in addition to primary
+UNIX group associated with that user. When specifying more than one
+group, separate the names of the groups with a comma.</dd>
+<dt><strong>umask=0nnn</strong></dt>
+<dd><p class="first">Defines a value to be used for the umask of the daemon processes within
+the process group. The value must be provided as an octal number.</p>
+<p class="last">If this option is not defined then the umask of the user that Apache is
+initially started as will be inherited by the process. Typically the
+inherited umask would be &#8216;0022&#8217;.</p>
+</dd>
+<dt><strong>lang=locale</strong></dt>
+<dd><p class="first">Set the current language locale. This is the same as having set the
+<code class="docutils literal"><span class="pre">LANG</span></code> environment variable.</p>
+<p>You will need to set this on many Linux systems where Apache when
+started up from system init scripts uses the default C locale, meaning
+that the default system encoding is ASCII. Unless you need a special
+language locale, set this to <code class="docutils literal"><span class="pre">en_US.UTF-8</span></code>.</p>
+<p class="last">Whether the <code class="docutils literal"><span class="pre">lang</span></code> or <code class="docutils literal"><span class="pre">locale</span></code> option works best can depend on the
+system being used. Set both if you aren&#8217;t sure which is appropriate.</p>
+</dd>
+<dt><strong>locale=locale</strong></dt>
+<dd><p class="first">Set the current language locale. This is the same as having set the
+<code class="docutils literal"><span class="pre">LC_ALL</span></code> environment variable.</p>
+<p>You will need to set this on many Linux systems where Apache when
+started up from system init scripts uses the default C locale, meaning
+that the default system encoding is ASCII. Unless you need a special
+language locale, set this to <code class="docutils literal"><span class="pre">en_US.UTF-8</span></code>.</p>
+<p class="last">Whether the <code class="docutils literal"><span class="pre">lang</span></code> or <code class="docutils literal"><span class="pre">locale</span></code> option works best can depend on the
+system being used. Set both if you aren&#8217;t sure which is appropriate.</p>
+</dd>
+<dt><strong>chroot=directory</strong></dt>
+<dd>Run the daemon process group process within a chroot jail. Use of a
+chroot jail is now deprecated due to the difficulty in setting up a
+chroot environment. It is recommended that you use more modern
+containerisation technologies such as Docker or runC.</dd>
+<dt><strong>script-user=name | script-user=#uid</strong></dt>
+<dd><p class="first">Sets the user that must be the owner of any WSGI script file delegated
+to be run in the daemon process group. If the owner doesn&#8217;t match a
+HTTP Forbidden response will be returned for any request.</p>
+<p>Note that this doesn&#8217;t change what user the daemon process group runs
+as at any time. If you want to set the user that the daemon process
+group runs as, use the <code class="docutils literal"><span class="pre">user</span></code> option.</p>
+<p class="last">Only one of <code class="docutils literal"><span class="pre">script-user</span></code> or <code class="docutils literal"><span class="pre">script-group</span></code> option can be used at
+the same time.</p>
+</dd>
+<dt><strong>script-group=name | scrip-group=#gid</strong></dt>
+<dd><p class="first">Sets the group that must be the group of any WSGI script file delegated
+to be run in the daemon process group. If the group doesn&#8217;t match a
+HTTP Forbidden response will be returned for any request.</p>
+<p>Note that this doesn&#8217;t change what group the daemon process group runs
+as at any time. If you want to set the group that the daemon process
+group runs as, use the <code class="docutils literal"><span class="pre">group</span></code> option.</p>
+<p class="last">Only one of <code class="docutils literal"><span class="pre">script-user</span></code> or <code class="docutils literal"><span class="pre">script-group</span></code> option can be used at
+the same time.</p>
+</dd>
+<dt><strong>python-home=directory</strong></dt>
+<dd><p class="first">Set the location of the Python virtual environment to be used by the
+daemon processes. The directory to use is that which <code class="docutils literal"><span class="pre">sys.prefix</span></code> is
+set to for the Python virtual environment. The virtual environment can
+have been created by <code class="docutils literal"><span class="pre">virtualenv</span></code>, <code class="docutils literal"><span class="pre">pyvenv</span></code> or <code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code>.</p>
+<p class="last">Note that the Python virtual environment must have been created using
+the same base Python version as was used to compile the mod_wsgi
+module. You can&#8217;t use this to force mod_wsgi to somehow use a different
+Python version than it was compiled for. If you want to use a different
+version of Python, you will need to reinstall mod_wsgi, compiling it
+for the version you want. It is not possible for the one mod_wsgi
+instance to run applications for both Python 2 and 3 at the same time.</p>
+</dd>
+<dt><strong>python-path=directory | python-path=directory:directory</strong></dt>
+<dd><p class="first">List of colon separated directories to add to the Python module search
+path, ie., <code class="docutils literal"><span class="pre">sys.path</span></code>.</p>
+<p>Note that this is not strictly the same as having set the <code class="docutils literal"><span class="pre">PYTHONPATH</span></code>
+environment variable when running normal command line Python. When this
+option is used, the directories are added by calling
+<code class="docutils literal"><span class="pre">site.addsitedir()</span></code>. As well as adding the directory to
+<code class="docutils literal"><span class="pre">sys.path</span></code> this function has the effect of opening and interpreting
+any <code class="docutils literal"><span class="pre">.pth</span></code> files located in the specified directories.</p>
+<p>If using a Python virtual environment, rather than use this option to
+refer to the <code class="docutils literal"><span class="pre">site-packages</span></code> directory of the Python virtual
+environment, you should use the <code class="docutils literal"><span class="pre">python-home</span></code> option to specify the
+root of the Python virtual environment instead.</p>
+<p class="last">In all cases, if the directory contains Python packages which have C
+extension components, those packages must have been installed using the
+same base Python version as was used to compile the mod_wsgi module.
+You should not mix packages from different Python versions or
+installations.</p>
+</dd>
+<dt><strong>python-eggs=directory</strong></dt>
+<dd><p class="first">Directory to be used as the Python egg cache directory. This is
+equivalent to having set the <code class="docutils literal"><span class="pre">PYTHON_EGG_CACHE</span></code> environment
+variable.</p>
+<p class="last">Note that the directory specified must exist and be writable by the
+user that the daemon process run as.</p>
+</dd>
+<dt><strong>restart-interval=nnn</strong></dt>
+<dd><p class="first">Defines a time limit on how long a daemon process should run before
+being restarted.</p>
+<p>This might be use to periodically force restart the WSGI application
+processes when you have issues related to Python object reference count
+cycles, or incorrect use of in memory caching, which causes constant
+memory growth.</p>
+<p>If this option is not defined, or is defined to be 0, then the daemon
+process will be persistent and will continue to service requests until
+Apache itself is restarted or shutdown.</p>
+<p>Avoid setting this too low. This is because the constant restarting and
+reloading of your WSGI application may cause unecessary load on your
+system and affect performance.</p>
+<p class="last">You can use the <code class="docutils literal"><span class="pre">graceful-timeout</span></code> option in conjunction with this
+option to reduce the chances that an active request will be interrupted
+when a restart occurs due to the use of this option.</p>
+</dd>
+<dt><strong>maximum-requests=nnn</strong></dt>
+<dd><p class="first">Defines a limit on the number of requests a daemon process should
+process before it is shutdown and restarted.</p>
+<p>This might be use to periodically force restart the WSGI application
+processes when you have issues related to Python object reference count
+cycles, or incorrect use of in memory caching, which causes constant
+memory growth.</p>
+<p>If this option is not defined, or is defined to be 0, then the daemon
+process will be persistent and will continue to service requests until
+Apache itself is restarted or shutdown.</p>
+<p>Avoid setting this to a low number of requests on a site which handles
+a lot of traffic. This is because the constant restarting and reloading
+of your WSGI application may cause unecessary load on your system and
+affect performance. Only use this option if you have no other choice
+due to a memory usage issue. Stop using it as soon as any memory issue
+has been resolved.</p>
+<p class="last">You can use the <code class="docutils literal"><span class="pre">graceful-timeout</span></code> option in conjunction with this
+option to reduce the chances that an active request will be interrupted
+when a restart occurs due to the use of this option.</p>
+</dd>
+<dt><strong>inactivity-timeout=sss</strong></dt>
+<dd><p class="first">Defines the maximum number of seconds allowed to pass before the
+daemon process is shutdown and restarted when the daemon process has
+entered an idle state. For the purposes of this option, being idle
+means there are no currently active requests and no new requests are
+being received.</p>
+<p>This option exists to allow infrequently used applications running in
+a daemon process to be restarted, thus allowing memory being used to
+be reclaimed, with process size dropping back to the initial startup
+size before any application had been loaded or requests processed.</p>
+<p>Note that after any restart of the WSGI application process, the WSGI
+application will need to be reloaded. This can mean that the first
+request received by a process after the process was restarted can be
+slower. If you WSGI application has a very high startup cost on CPU and
+time, it may not be a good idea to use the option.</p>
+<p>See also the <code class="docutils literal"><span class="pre">request-timeout</span></code> option for forcing a process restart
+when requests block for a specified period of time.</p>
+<p class="last">Note that similar functionality to that of the <code class="docutils literal"><span class="pre">request-timeout</span></code>
+option, for forcing a restart when requests blocked, was part of what
+was implemented by the <code class="docutils literal"><span class="pre">inactivity-timeout</span></code> option. The request
+timeout was broken out into a separate feature in version 4.1.0 of
+mod_wsgi.</p>
+</dd>
+<dt><strong>request-timeout=sss</strong></dt>
+<dd><p class="first">Defines the maximum number of seconds that a request is allowed to run
+before the daemon process is restarted. This can be used to recover
+from a scenario where a request blocks indefinitely, and where if all
+request threads were consumed in this way, would result in the whole
+WSGI application process being blocked.</p>
+<p>How this option is seen to behave is different depending on whether a
+daemon process uses only one thread, or more than one thread for
+handling requests, as set by the <code class="docutils literal"><span class="pre">threads</span></code> option.</p>
+<p>If there is only a single thread, and so the process can only handle
+one request at a time, as soon as the timeout has passed, a restart of
+the process will be initiated.</p>
+<p class="last">If there is more than one thread, the request timeout is applied to
+the average running time for any requests, across all threads. This
+means that a request can run longer than the request timeout. This is
+done to reduce the possibility of interupting other running requests,
+and causing a user to see a failure. So where there is still capacity
+to handle more requests, restarting of the process will be delayed
+if possible.</p>
+</dd>
+<dt><strong>deadlock-timeout=sss</strong></dt>
+<dd><p class="first">Defines the maximum number of seconds allowed to pass before the
+daemon process is shutdown and restarted after a potential deadlock on
+the Python GIL has been detected. The default is 300 seconds.</p>
+<p class="last">This option exists to combat the problem of a daemon process freezing
+as the result of a rouge Python C extension module which doesn&#8217;t
+properly release the Python GIL when entering into a blocking or long
+running operation.</p>
+</dd>
+<dt><strong>startup-timeout=sss</strong></dt>
+<dd><p class="first">Defines the maximum number of seconds allowed to pass waiting to see if
+a WSGI script file can be loaded successfully by a daemon process. When
+the timeout is passed, the process will be restarted.</p>
+<p class="last">This can be used to force the reloading of a process when a transient
+issue occurs on the first attempt to load the WSGI script file, but
+subsequent attempts still fail because a Python package that was loaded
+has retained state that prevents attempts to run initialisation a
+second time within the same process. The Django package can cause this
+scenario as the initialisation of Django itself can no longer be
+attempted more than once in the same process.</p>
+</dd>
+<dt><strong>graceful-timeout=sss</strong></dt>
+<dd>When <code class="docutils literal"><span class="pre">maximum-requests</span></code> is used and the maximum has been reached,
+or <code class="docutils literal"><span class="pre">cpu-time-limit</span></code> is used and the CPU limit reached, or
+<code class="docutils literal"><span class="pre">restart-interval</span></code> is used and the time limit reached, if
+<code class="docutils literal"><span class="pre">graceful-timeout</span></code> is set, then the process will continue to run for
+the number of second specified by this option, while still accepting
+new requests, to see if the process reaches an idle state. If the
+process reaches an idle state, it will then be resarted immediately. If
+the process doesn&#8217;t reach an idle state and the graceful restart
+timeout expires, the process will be restarted, even if it means that
+requests may be interrupted.</dd>
+<dt><strong>eviction-timeout=sss</strong></dt>
+<dd><p class="first">When a daemon process is sent the graceful restart signal, usually
+<code class="docutils literal"><span class="pre">SIGUSR1</span></code>, to restart a process, this timeout controls how many
+seconds the process will wait, while still accepting new requests,
+before it reaches an idle state with no active requests and shutdown.</p>
+<p class="last">If this timeout is not specified, then the value of the
+<code class="docutils literal"><span class="pre">graceful-timeout</span></code> will instead be used. If the <code class="docutils literal"><span class="pre">graceful-timeout</span></code>
+is not specified, then the restart when sent the graceful restart
+signal will instead happen immediately, with the process being forcibly
+killed, if necessary, when the shutdown timeout has expired.</p>
+</dd>
+<dt><strong>shutdown-timeout=sss</strong></dt>
+<dd><p class="first">Defines the maximum number of seconds allowed to pass when waiting for
+a daemon process to shutdown. When this timeout has been reached the
+daemon process will be forced to exited even if there are still active
+requests or it is still running Python exit functions. The shutdown
+timeout is applied after any graceful restart timeout or eviction
+timeout if they have been specified. No new requests are accepted
+during the shutdown timeout is being applied.</p>
+<p class="last">If this option is not defined, then the shutdown timeout will be set
+to 5 seconds. Note that this option does not change the shutdown
+timeout applied to daemon processes when Apache itself is being stopped
+or restarted. That timeout value is defined internally to Apache as 3
+seconds and cannot be overridden.</p>
+</dd>
+<dt><strong>connect-timeout=sss</strong></dt>
+<dd>Defines the maximum amount of time for an Apache child process to wait
+trying to get a successful connection to the mod_wsgi daemon processes.
+This defaults to 15 seconds.</dd>
+<dt><strong>socket-timeout=sss</strong></dt>
+<dd>Defines the timeout on individual reads/writes on the socket connection
+between the Apache child processes and the mod_wsgi daemon processes.
+If this is not specified, the number of seconds specified by the
+Apache <a class="reference external" href="http://httpd.apache.org/docs/2.4/mod/core.html#timeout">Timeout</a> directive will be used instead.</dd>
+<dt><strong>queue-timeout=sss</strong></dt>
+<dd><p class="first">Defines the timeout on how long to wait for a mod_wsgi daemon process
+to accept a request for processing.</p>
+<p class="last">This option is to allow one to control what to do when backlogging of
+requests occurs. If the daemon process is overloaded and getting
+behind, then it is more than likely that a user will have given up on
+the request anyway if they have to wait too long. This option allows
+you to specify that a request that was queued up waiting for too long
+is discarded, allowing any transient backlog to be quickly discarded
+and not simply cause the daemon process to become even more backlogged.
+When this occurs the user will recieve a 504 Gateway Time Out response.</p>
+</dd>
+<dt><strong>listen-backlog=nnn</strong></dt>
+<dd><p class="first">Defines the depth of the daemon process socket listener queue. By
+default the limit is 100, although this is actually a hint, as
+different operating systems can have different limits on the maximum
+value or otherwise treat it in special ways.a</p>
+<p class="last">This option can be set, along with <code class="docutils literal"><span class="pre">queue-timeout</span></code> to try and better
+handle back logging when the WGSI application gets overloaded.</p>
+</dd>
+<dt><strong>socket-user=name | socket-user=#uid</strong></dt>
+<dd><p class="first">Set the owner of the UNIX listener socket for the daemon process group.</p>
+<p>This can be used when using the Apache <a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_privileges.html#privilegesmode">PrivilegesMode</a> directive with
+value of <code class="docutils literal"><span class="pre">SECURE</span></code> to change the owner of the socket from the default
+Apache user, to the user under which the Apache child process which is
+attempting to connect to the daemon process group, will run when
+handling requests. This is necessary otherwise the Apache child worker
+process will not be able to connect to the listener socket for the
+mod_wsgi daemon process to proxy the request to the WSGI application.</p>
+<p class="last">This option can also be used when using third party Apache modules such
+as mod_ruid, mod_ruid2, mod_suid as well as the ITK MPM for Apache.</p>
+</dd>
+<dt><strong>cpu-time-limit=sss</strong></dt>
+<dd><p class="first">Define the maximum amount of CPU time a daemon process is allowed to
+consume before a shutdown is triggered and the daemon process
+restarted. The point of this is to provide some means of controlling
+potentially run away processes due to bad code that gets stuck in heavy
+processing loops.</p>
+<p class="last">Note that CPU time used is recorded from when the daemon process is
+first created. This means that a process will eventually reach the
+limit in normal use and would be restarted. You can use the
+<code class="docutils literal"><span class="pre">graceful-timeout</span></code> option to reduce the chances that an active
+request will be interrupted.</p>
+</dd>
+<dt><strong>cpu-priority=num</strong></dt>
+<dd>Sets the scheduling priority set to the daemon processes. This can be
+a number of the range -20 to 20. The default priority is 0. A lower
+priority gives more favourable scheduling.</dd>
+<dt><strong>memory-limit=num</strong></dt>
+<dd>Sets the maximum amount of memory a daemon process can use. This will
+have no affect on some platforms as <code class="docutils literal"><span class="pre">RLIMIT_AS</span></code>/<code class="docutils literal"><span class="pre">RLIMIT_DATA</span></code> with
+<code class="docutils literal"><span class="pre">setrlimit()</span></code> isn&#8217;t always implemented. For example MacOS X and older
+Linux kernel versions do not implement this feature. You will need to
+test whether this feature works or not before depending on it.</dd>
+<dt><strong>virtual-memory-limit=num</strong></dt>
+<dd>Sets the maximum amount of virtual memory a daemon process can use.
+This will have no affect on some platforms as <code class="docutils literal"><span class="pre">RLIMIT_VMEM</span></code> with
+<code class="docutils literal"><span class="pre">setrlimit()</span></code> isn&#8217;t always implemented. You will need to test whether
+this feature works or not before depending on it.</dd>
+<dt><strong>stack-size=nnn</strong></dt>
+<dd><p class="first">The amount of virtual memory in bytes to be allocated for the stack
+corresponding to each thread created by mod_wsgi in a daemon process.</p>
+<p class="last">This option would be used when running Linux in a VPS system which has
+been configured with a quite low &#8216;Memory Limit&#8217; in relation to the
+&#8216;Context RSS&#8217; and &#8216;Max RSS Memory&#8217; limits. In particular, the default
+stack size for threads under Linux is 8MB is quite excessive and could
+for such a VPS result in the &#8216;Memory Limit&#8217; being exceeded before the
+RSS limits were exceeded. In this situation, the stack size should be
+dropped down to be in the region of 512KB (524288 bytes).</p>
+</dd>
+<dt><strong>receive-buffer-size=nnn</strong></dt>
+<dd><p class="first">Defines the UNIX socket buffer size for data being received by the
+daemon process from the Apache child process.</p>
+<p>This option may need to be used to override small default values set by
+certain operating systems and would help avoid possibility of deadlock
+between Apache child process and daemon process when the WSGI
+application generates large responses but doesn&#8217;t consume request
+content. In general such deadlock problems would not arise with well
+behaved WSGI applications, but some spam bots attempting to post data
+to web sites are known to trigger the problem.</p>
+<p class="last">The maximum possible value that can be set for the buffer size is
+operating system dependent and will need to be calculated through trial
+and error.</p>
+</dd>
+<dt><strong>send-buffer-size=nnn</strong></dt>
+<dd><p class="first">Defines the UNIX socket buffer size for data being sent in the
+direction daemon process back to Apache child process.</p>
+<p>This option may need to be used to override small default values set by
+certain operating systems and would help avoid possibility of deadlock
+between Apache child process and daemon process when the WSGI
+application generates large responses but doesn&#8217;t consume request
+content. In general such deadlock problems would not arise with well
+behaved WSGI applications, but some spam bots attempting to post data
+to web sites are known to trigger the problem.</p>
+<p class="last">The maximum possible value that can be set for the buffer size is
+operating system dependent and will need to be calculated through trial
+and error.</p>
+</dd>
+<dt><strong>header-buffer-size=nnn</strong></dt>
+<dd>Defines the maximum size that a response header/value can be that is
+returned from a WSGI application. The default size is 32768 bytes. This
+might need to be overridden where excessively large response headers
+are returned, such as in custom authentication challenge schemes which
+use the <code class="docutils literal"><span class="pre">WWW-Authenticate</span></code> header.</dd>
+<dt><strong>response-buffer-size=nnn</strong></dt>
+<dd>Defines the maximum number of bytes that will be buffered for a
+response in the Apache child processes when proxying the response body
+from the WSGI application. The default size is 65536 bytes. Be careful
+increasing this to provide extra buffering of responses as it
+contributes to the runtime memory size of the Apache child processes.</dd>
+<dt><strong>response-socket-timeout=nnn</strong></dt>
+<dd>Defines the maximum number of seconds allowed to pass before timing out
+on a write operation back to the HTTP client when the response buffer
+has filled and data is being forcibly flushed. Defaults to 0 seconds
+indicating that it will default to the value of the <code class="docutils literal"><span class="pre">socket-timeout</span></code>
+option.</dd>
+</dl>
+<p>To delegate a particular WSGI application to run in a named set of daemon
+processes, the <code class="docutils literal"><span class="pre">WSGIProcessGroup</span></code> directive should be specified in
+appropriate context for that application, or the <code class="docutils literal"><span class="pre">process-group</span></code> option
+used on the <code class="docutils literal"><span class="pre">WSGIScriptAlias</span></code> directive. If neither is used to delegate
+the WSGI application to run in a daemon process group, the application will
+be run within the standard Apache child processes.</p>
+<p>If the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive is specified outside of all virtual
+host containers, any WSGI application can be delegated to be run within
+that daemon process group. If the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive is
+specified within a virtual host container, only WSGI applications
+associated with virtual hosts with the same server name as that virtual
+host can be delegated to that set of daemon processes.</p>
+<p>In the case where you have two separate <code class="docutils literal"><span class="pre">VirtualHost</span></code> definitions for
+the same <code class="docutils literal"><span class="pre">ServerName</span></code>, but where one is for port 80 and the other for
+port 443, specify the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive in the
+first <code class="docutils literal"><span class="pre">VirtualHost</span></code>. You can then refer to that daemon process group
+by name from the second <code class="docutils literal"><span class="pre">VirtualHost</span></code>. Using one daemon process group
+across the two virtual hosts in this case is preferred as then you do not
+have two whole separate instances of your application for port 80 and 443.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+<span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+
+<span class="n">WSGIDaemonProcess</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span> <span class="n">user</span><span class="o">=</span><span class="n">joe</span> <span class="n">group</span><span class="o">=</span><span class="n">joe</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">25</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+
+<span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">443</span><span class="o">&gt;</span>
+<span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+
+<span class="n">WSGIProcessGroup</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+
+<span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>When <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> is associated with a virtual host, the error log
+associated with that virtual host will be used for all Apache error log
+output from mod_wsgi rather than it appear in the main Apache error log.</p>
+<p>For example, if a server is hosting two virtual hosts and it is desired
+that the WSGI applications related to each virtual host run in distinct
+processes of their own and as a user which is the owner of that virtual
+host, the following could be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+<span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+<span class="n">CustomLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">access_log</span> <span class="n">common</span>
+<span class="n">ErrorLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">ww</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">error_log</span>
+
+<span class="n">WSGIDaemonProcess</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span> <span class="n">user</span><span class="o">=</span><span class="n">joe</span> <span class="n">group</span><span class="o">=</span><span class="n">joe</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">25</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+
+<span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+<span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span>
+<span class="n">CustomLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">access_log</span> <span class="n">common</span>
+<span class="n">ErrorLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">error_log</span>
+
+<span class="n">WSGIDaemonProcess</span> <span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span> <span class="n">user</span><span class="o">=</span><span class="n">bob</span> <span class="n">group</span><span class="o">=</span><span class="n">bob</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">25</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span>
+
+<span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive and corresponding features are
+not available on Windows.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="WSGIImportScript.html" class="btn btn-neutral float-right" title="WSGIImportScript" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="WSGICaseSensitivity.html" class="btn btn-neutral" title="WSGICaseSensitivity" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

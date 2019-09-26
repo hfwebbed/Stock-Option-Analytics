@@ -1,0 +1,251 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block industry_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+    <div class="row">
+
+        {% if user_industries | length == 0 %}
+            <div class="col-lg-12 panel" id="crosstable_editor" >
+        {% else %}
+            <button type="button" class="btn btn-info btn-primary" data-toggle="collapse" data-target="#crosstable_editor">Open/Close editor</button>
+            <div class="col-lg-12 panel collapse" id="crosstable_editor" >
+        {% endif%}
+
+
+            <h2>Industry crosstable editor</h2>
+
+             <div>
+                 <h4>Legend</h4>
+                 <ul>
+                    <li>0 - No relation</li>
+                    <li>1 - Dependent</li>
+                    <li>2 - Interdependent</li>
+                 </ul>
+             </div>
+
+             <form id="reltable" method="post">
+                 {%if key is not none%}
+
+                 {%endif%}
+
+                <table border="solid">
+                     <tr>
+                         <td id="firstcell">
+                                <input type="submit"
+                                    value="Update"
+                                    class="btn btn-success btn-block"
+                                    formaction="/industry/update"
+                                    />
+                                <br><br>
+
+                             <!--
+                                <input type="submit"
+                                    value="Update industries"
+                                    class="btn btn-success btn-block"
+                                    formaction="/industry/update"
+                                    />
+                              -->
+                         </td>
+                        {% for user_industry in user_industries%}
+                            <th class='industry_rotate'><div>{{user_industry['name']}}</div></th>
+                        {% endfor%}
+
+                    </tr>
+
+                    <form class="dummy"></form>
+                    {% for user_industry1 in user_industries%}
+                        <tr>
+                            <th class='industry_simple'>
+                                <div>
+                                    <input name="name,{{user_industry1['id']}}" value="{{user_industry1['name']}}"/>
+                                </div>
+                            </th>
+                            {% for user_industry2 in user_industries%}
+                                <td width="40px" >
+
+                                    {%if user_industry1['id'] > user_industry2['id'] %}
+                                        <select name="relation:{{user_industry1['id']}},{{user_industry2['id']}}"  class="industry_relation" >
+
+                                            {% for relation in [0,1,2] %}
+                                                {%if relation == crosstable[user_industry1['id']][user_industry2['id']]%}
+                                                    <option selected>{{relation}}</option>
+                                                {% else %}
+                                                    <option>{{relation}}</option>
+                                                {% endif %}
+                                            {% endfor%}
+                                        </select>
+                                    {%else%}
+                                        {%if user_industry1['id'] == user_industry2['id']%}
+                                            .
+                                        {%else%}
+                                            {{crosstable[user_industry2['id']][user_industry1['id']]}}
+                                        {%endif%}
+                                    {%endif%}
+
+                                </td>
+                            {% endfor%}
+                            <td>
+                                <input name="desc,{{user_industry1['id']}}" value="{{user_industry1['desc']}}" placeholder="enter description" width="200px" size="50"/>
+                            </td>
+                            <td>
+                                <form name="delete_industry" action="/industry/delete" method="post">
+                                    <input type="hidden" name = "industry_id" value="{{user_industry1['id']}}">
+                                    <input type="submit" value="delete" class="btn btn-danger btn-xs">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor%}
+
+                    <tr>
+                        <td>
+                            <form name="add_industry" action="/industry/add" method="post">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input name="new_industry" id="new_industry" value="" placeholder="add new industry">
+                                        </td>
+                                        <td>
+                                            <input type="submit" value="add" class="btn btn-success btn-xs">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </td>
+                    </tr>
+                 </table>
+             </form>
+
+             {% if user_industries | length == 0 %}
+                <br>   <br>
+                    <a href = "/industry/template">Start with template</a>
+                <br>   <br>
+             {% endif%}
+
+         </div>
+    </div>
+        
+    <div class="row">
+        <div class="row col-lg-12 panel" id="rowforsvg">
+            <h2>Industry graph</h2>
+            <div>
+                <h4>Legend</h4>
+                <ul>
+                    <li>Blue line - Dependent</li>
+                    <li>Green line - Interdependent</li>
+                </ul>
+            </div>
+
+
+            <div class="alert alert-info rightbar" >
+                <h4>Description</h4>
+                <strong id="rightbar"></strong>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $( document ).ready(function() {
+             let elem = $("#firstcell");
+             elem.height(elem.width());
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='scripts/industryGraph.js') }}"></script>
+
+    <script>
+
+        var industryList = {{user_industries | tojson(indent=4)}};
+        var relationList = {{user_industry_relations | tojson(indent=4)}}
+
+        for (r = 0 ; r < relationList.length; r++){
+            relationList[r]["type"] = relationList[r]["score"];
+            relationList[r]["between"] = [relationList[r]["industry1_id"] , relationList[r]["industry2_id"]];
+        }
+
+        let builder = new Builder(industryList , relationList);
+        let sceneBuilder = new SceneBuilder(builder.industries,builder.relations);
+
+        var svgContainer = d3.select("#rowforsvg").append("svg")
+            .attr("width", sceneBuilder.sceneWidth)
+            .attr("height", sceneBuilder.sceneHeight);
+
+        var industryRelations = svgContainer.selectAll("line")
+            .data(sceneBuilder.relationLines)
+            .enter()
+            .append("line")
+            .style("stroke",function(d){ if(d.relation.type == 1) return "lightblue";return "lightgreen"; })
+            .style("stroke-width",function(d){return d.w})
+            .attr("x1",function(d){
+                return d.x1;
+            })
+            .attr("y1",function(d){
+                return d.y1;
+            })
+            .attr("x2",function(d){
+                return d.x2;
+            })
+            .attr("y2",function(d){
+                return d.y2;
+            })
+            .each(function(d){
+                d.registerSvg(this);
+            });
+
+        var industryCircles = svgContainer.selectAll("circle")
+            .data(sceneBuilder.industryCircles)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; })
+            .attr("r", function (d) {return d.r;})
+            .style("fill", function(d) { return d.c; })
+            .on("mouseover",function(d){
+                d.mouseOver()
+             })
+            .on("mouseout",function(d){
+                d.mouseOut()
+             })
+            .on("click",function(d){alert(d.industry.name);})
+            .each(function(d){
+                d.registerSvg(this);
+            });
+
+        var captions = svgContainer.selectAll("text")
+            .data(sceneBuilder.industryCircles)
+            .enter()
+            .append("text")
+            .attr("text-anchor",function(d){
+                if (d.x >= sceneBuilder.xCenter)
+                    return "start";
+                else
+                    return "end";
+             })
+            .attr("x", function (d) {
+                if (d.x >= sceneBuilder.xCenter)
+                    return d.x + 30;
+                else
+                    return d.x - 30;
+
+            })
+            .attr("y", function (d){
+                if (d.y >= sceneBuilder.yCenter)
+                    return d.y + 15;
+                else
+                    return d.y - 15;
+            })
+            .text( function (d) { return d.industry.name })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "16px")
+            .attr("fill", "black");
+
+
+    </script>
+
+{%endblock%}
+

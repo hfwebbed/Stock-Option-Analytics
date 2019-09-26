@@ -1,0 +1,60 @@
+.floatlefttable{
+    float:left;
+    border: 1px solid green;
+    box-sizing: border-box;
+    width:40%;
+
+}
+
+h2{
+    text-align: center;
+    color: green;
+}
+
+.industry_simple{
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 1.5em;
+  padding:2px;
+}
+
+.industry_rotate {
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 1.5em;
+  padding:8px;
+}
+
+
+.industry_rotate div {
+     -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+       -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-90.0deg);  /* Saf3.1+, Chrome */
+   margin-left: -20em;
+   margin-right: -20em;
+
+   filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+
+}
+.industry_relation{
+     width: 50px;
+}
+
+.industry_relation_input {
+    text-align: center;
+}
+
+
+.rightbar{
+    position:absolute;
+    top:0;
+    right:0;
+    width:20%;
+    height:100%;
+}
+
+
+

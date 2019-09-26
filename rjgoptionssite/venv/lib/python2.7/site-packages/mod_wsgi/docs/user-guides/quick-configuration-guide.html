@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quick Configuration Guide &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Configuration Guidelines" href="configuration-guidelines.html"/>
+        <link rel="prev" title="Installation On MacOS X" href="installation-on-macosx.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Quick Configuration Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wsgi-application-script-file">WSGI Application Script File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mounting-the-wsgi-application">Mounting The WSGI Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mounting-at-root-of-site">Mounting At Root Of Site</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delegation-to-daemon-process">Delegation To Daemon Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-any-problems">Debugging Any Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Quick Configuration Guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/quick-configuration-guide.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quick-configuration-guide">
+<h1>Quick Configuration Guide<a class="headerlink" href="#quick-configuration-guide" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the steps for configuring mod_wsgi for a basic
+WSGI application.</p>
+<p>If you are setting up mod_wsgi for the very first time, it is highly
+recommended that you follow the examples in this document. Make sure that
+you at least get the examples running to verify that mod_wsgi is working
+correctly before attempting to install any WSGI applications of your own.</p>
+<div class="section" id="wsgi-application-script-file">
+<h2>WSGI Application Script File<a class="headerlink" href="#wsgi-application-script-file" title="Permalink to this headline">¶</a></h2>
+<p>WSGI is a specification of a generic API for mapping between an underlying
+web server and a Python web application. WSGI itself is described by Python
+PEP 3333:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.python.org/dev/peps/pep-3333/">http://www.python.org/dev/peps/pep-3333/</a></li>
+</ul>
+</div></blockquote>
+<p>The purpose of the WSGI specification is to provide a common mechanism for
+hosting a Python web application on a range of different web servers
+supporting the Python programming language.</p>
+<p>A very simple WSGI application, and the one which should be used for the
+examples in this document, is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This sample application will need to be placed into what will be referred
+to as the WSGI application script file. For the examples presented here,
+the WSGI application will be run as the user that Apache runs as. As such,
+the user that Apache runs as must have read access to both the WSGI
+application script file and all the parent directories that contain it.</p>
+<p>Note that mod_wsgi requires that the WSGI application entry point be called
+&#8216;application&#8217;. If you want to call it something else then you would need to
+configure mod_wsgi explicitly to use the other name. Thus, don&#8217;t go
+arbitrarily changing the name of the function. If you do, even if you set
+up everything else correctly the application will not be found.</p>
+</div>
+<div class="section" id="mounting-the-wsgi-application">
+<h2>Mounting The WSGI Application<a class="headerlink" href="#mounting-the-wsgi-application" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of ways that a WSGI application hosted by mod_wsgi
+can be mounted against a specific URL. These methods are similar to how
+one would configure traditional CGI applications.</p>
+<p>The main approach entails explicitly declaring in the main Apache
+configuration file the URL mount point and a reference to the WSGI
+application script file. In this case the mapping is fixed, with changes
+only being able to be made by modifying the main Apache configuration and
+restarting Apache.</p>
+<p>When using mod_cgi to host CGI applications, this would be done using the
+ScriptAlias directive. For mod_wsgi, the directive is instead called
+WSGIScriptAlias:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>This directive can only appear in the main Apache configuration files. The
+directive can be used at server scope but would normally be placed within
+the VirtualHost container for a particular site. It cannot be used within
+either of the Location, Directory or Files container directives, nor can it
+be used within a &#8221;.htaccess&#8221; file.</p>
+<p>The first argument to the WSGIScriptAlias directive should be the URL
+mount point for the WSGI application. For this case the URL should not
+contain a trailing slash. The only exception to this is if the WSGI
+application is to be mounted at the root of the web server, in which case
+&#8216;/&#8217; would be used.</p>
+<p>The second argument to the WSGIScriptAlias directive should be an absolute
+pathname to the WSGI application script file. It is into this file that
+the sample WSGI application code should be placed.</p>
+<p>Note that an absolute pathname must be used for the WSGI application script
+file supplied as the second argument. It is not possible to specify an
+application by Python module name alone. A full path is used for a number
+of reasons, the main one being so that all the Apache access controls can
+still be applied to indicate who can actually access the WSGI application.</p>
+<p>Because the Apache access controls will apply, if the WSGI application is
+located outside of any directories already configured to be accessible to
+Apache, it will be necessary to tell Apache that files within that
+directory can be used. To do this the Directory directive must be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Note that it is highly recommended that the WSGI application script file in
+this case NOT be placed within the existing DocumentRoot for your main
+Apache installation, or the particular site you are setting it up for. This
+is because if that directory is otherwise being used as a source of static
+files, the source code for your application might be able to be downloaded.</p>
+<p>You also should not use the home directory of a user account, as to do
+that would mean allowing Apache to serve up any files in that account. In
+this case any misconfiguration of Apache could end up exposing your whole
+account for downloading.</p>
+<p>It is thus recommended that a special directory be setup distinct from
+other directories and that the only thing in that directory be the WSGI
+application script file, and if necessary any support files it requires.</p>
+<p>A complete virtual host configuration for this type of setup would
+therefore be something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+
+    <span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">ServerAlias</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">ServerAdmin</span> <span class="n">webmaster</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+
+    <span class="n">DocumentRoot</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">&gt;</span>
+    <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+    <span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">&gt;</span>
+    <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>After appropriate changes have been made Apache will need to be restarted.
+For this example, the URL &#8216;<a class="reference external" href="http://www.example.com/myapp">http://www.example.com/myapp</a>&#8216; would then be used
+to access the the WSGI application.</p>
+<p>Note that you obviously should substitute the paths and hostname with
+values appropriate for your system.</p>
+</div>
+<div class="section" id="mounting-at-root-of-site">
+<h2>Mounting At Root Of Site<a class="headerlink" href="#mounting-at-root-of-site" title="Permalink to this headline">¶</a></h2>
+<p>If instead you want to mount a WSGI application at the root of a site,
+simply list &#8216;/&#8217; as the mount point when configuring the WSGIScriptAlias
+directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>Do note however that doing so will mean that any static files contained in
+the DocumentRoot will be hidden and requests against URLs pertaining to
+the static files will instead be processed by the WSGI application.</p>
+<p>In this situation it becomes necessary to remap using the Alias directive,
+any URLs for static files to the directory containing them:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">Alias</span> <span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span>
+
+<span class="n">Alias</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">media</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>A complete virtual host configuration for this type of setup would
+therefore be something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+
+    <span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">ServerAlias</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">ServerAdmin</span> <span class="n">webmaster</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+
+    <span class="n">DocumentRoot</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span>
+
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span>
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span>
+
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">media</span><span class="o">/</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">&gt;</span>
+    <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+    <span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">&gt;</span>
+    <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>After appropriate changes have been made Apache will need to be restarted.
+For this example, the URL &#8216;<a class="reference external" href="http://www.example.com/">http://www.example.com/</a>&#8216; would then be used
+to access the the WSGI application.</p>
+<p>Note that you obviously should substitute the paths and hostname with
+values appropriate for your system.</p>
+</div>
+<div class="section" id="delegation-to-daemon-process">
+<h2>Delegation To Daemon Process<a class="headerlink" href="#delegation-to-daemon-process" title="Permalink to this headline">¶</a></h2>
+<p>By default any WSGI application will run in what is called embedded mode.
+That is, the application will be hosted within the Apache worker processes
+used to handle normal static file requests.</p>
+<p>When embedded mode is used, whenever you make changes to your WSGI
+application code you would generally have to restart the whole Apache web
+server in order for changes to be picked up. This can be inconvenient,
+especially if the web server is a shared resource hosting other web
+applications at the same time, or you don&#8217;t have root access to be able to
+restart the server and rely on someone else to restart it.</p>
+<p>On UNIX systems when running Apache 2.X, an option which exists with
+mod_wsgi and that avoids the need to restart the whole Apache web server
+when code changes are made, is to use what is called daemon mode.</p>
+<p>In daemon mode a set of processes is created for hosting a WSGI application,
+with any requests for that WSGI application automatically being routed to
+those processes for handling.</p>
+<p>When code changes are made and it is desired that the daemon processes for
+the WSGI application be restarted, all that is required is to mark the WSGI
+application script file as modified by using the &#8216;touch&#8217; command.</p>
+<p>To make use of daemon mode for WSGI applications hosted within a specific
+site, the WSGIDaemonProcess and WSGIProcessGroup directives would need to
+be defined. For example, to setup a daemon process group containing two
+multithreaded process one could use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">15</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>A complete virtual host configuration for this type of setup would
+therefore be something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+
+    <span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">ServerAlias</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">ServerAdmin</span> <span class="n">webmaster</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+
+    <span class="n">DocumentRoot</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span>
+
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span>
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">favicon</span><span class="o">.</span><span class="n">ico</span>
+
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">media</span><span class="o">/</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">documents</span><span class="o">&gt;</span>
+    <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+    <span class="n">WSGIDaemonProcess</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">15</span> <span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=%</span><span class="p">{</span><span class="n">GROUP</span><span class="p">}</span>
+    <span class="n">WSGIProcessGroup</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+
+    <span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">&gt;</span>
+    <span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>After appropriate changes have been made Apache will need to be restarted.
+For this example, the URL &#8216;<a class="reference external" href="http://www.example.com/">http://www.example.com/</a>&#8216; would then be used
+to access the the WSGI application.</p>
+<p>Note that you obviously should substitute the paths and hostname with
+values appropriate for your system.</p>
+<p>As mentioned previously, the daemon processes will be shutdown and restarted
+automatically if the WSGI application script file is modified.</p>
+<p>For the sample application presented in this document the whole application
+is in that file. For more complicated applications the WSGI application
+script file will be merely an entry point to an application being imported
+from other Python modules or packages. In this later case, although no
+change may be required to the WSGI application script file itself, it can
+still be touched to trigger restarting of the daemon processes in the event
+that any code in the separate modules or packages is changed.</p>
+<p>Note that only requests for the WSGI application are handled within the
+context of the daemon processes. Any requests for static files are still
+handled within the Apache worker processes.</p>
+</div>
+<div class="section" id="debugging-any-problems">
+<h2>Debugging Any Problems<a class="headerlink" href="#debugging-any-problems" title="Permalink to this headline">¶</a></h2>
+<p>To debug any problems one should take note of the type of error response
+being returned, but more importantly one should look at the Apache error
+logs for more detailed descriptions of a specific problem.</p>
+<p>Being new to mod_wsgi it is highly recommended that the default Apache
+LogLevel be increased from &#8216;warn&#8217; to &#8216;info&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LogLevel</span> <span class="n">info</span>
+</pre></div>
+</div>
+<p>When this is done mod_wsgi will output additional information regarding
+when daemon processes are created, when Python sub interpreters related
+to a group of WSGI applications are created and when WSGI application
+script files are loaded and/or reloaded. This information can be quite
+valuable in determining what problem may be occuring.</p>
+<p>Note that where the LogLevel directive may have been defined both in and
+outside of a VirualHost directive, due to the VirtualHost declaring its
+own error logs, both instances of the LogLevel directive should be changed.</p>
+<p>This is because although the virtual host may have its own error log, some
+information is still logged to the main Apache error log and the LogLevel
+directive outside of the virtual host context needs to be changed for that
+additional information to be recorded.</p>
+<p>In other words, even if the VirtualHost has its own error log file, also
+look in the main Apache error log file for information as well.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuration-guidelines.html" class="btn btn-neutral float-right" title="Configuration Guidelines" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation-on-macosx.html" class="btn btn-neutral" title="Installation On MacOS X" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

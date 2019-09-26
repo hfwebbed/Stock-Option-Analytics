@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 3.0 &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Release Notes" href="../release-notes.html"/>
+        <link rel="next" title="Version 2.8" href="version-2.8.html"/>
+        <link rel="prev" title="Version 3.1" href="version-3.1.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release-notes.html">Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.17.html">Version 4.5.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.16.html">Version 4.5.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.15.html">Version 4.5.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.14.html">Version 4.5.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.13.html">Version 4.5.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.12.html">Version 4.5.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.11.html">Version 4.5.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.10.html">Version 4.5.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.9.html">Version 4.5.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.8.html">Version 4.5.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.7.html">Version 4.5.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.6.html">Version 4.5.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.5.html">Version 4.5.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.4.html">Version 4.5.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.3.html">Version 4.5.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.2.html">Version 4.5.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.1.html">Version 4.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.0.html">Version 4.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.23.html">Version 4.4.23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.22.html">Version 4.4.22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.21.html">Version 4.4.21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.20.html">Version 4.4.20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.19.html">Version 4.4.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.18.html">Version 4.4.18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.17.html">Version 4.4.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.16.html">Version 4.4.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.15.html">Version 4.4.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.14.html">Version 4.4.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.13.html">Version 4.4.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.12.html">Version 4.4.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.11.html">Version 4.4.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.10.html">Version 4.4.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.9.html">Version 4.4.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.8.html">Version 4.4.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.7.html">Version 4.4.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.6.html">Version 4.4.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.5.html">Version 4.4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.4.html">Version 4.4.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.3.html">Version 4.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.2.html">Version 4.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.1.html">Version 4.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.0.html">Version 4.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.2.html">Version 4.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.1.html">Version 4.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.0.html">Version 4.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.8.html">Version 4.2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.7.html">Version 4.2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.6.html">Version 4.2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.5.html">Version 4.2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.4.html">Version 4.2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.3.html">Version 4.2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.2.html">Version 4.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.1.html">Version 4.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.0.html">Version 4.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.3.html">Version 4.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.2.html">Version 4.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.1.html">Version 4.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.0.html">Version 4.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.0.html">Version 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.5.html">Version 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.4.html">Version 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.3.html">Version 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.2.html">Version 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.1.html">Version 3.1</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 3.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-changed">Features Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-removed">Features Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-added">Features Added</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.8.html">Version 2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.7.html">Version 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.6.html">Version 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.5.html">Version 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.4.html">Version 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.3.html">Version 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.2.html">Version 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.1.html">Version 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.0.html">Version 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.6.html">Version 1.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.5.html">Version 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.4.html">Version 1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../release-notes.html">Release Notes</a> &raquo;</li>
+      
+    <li>Version 3.0</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/release-notes/version-3.0.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-3-0">
+<h1>Version 3.0<a class="headerlink" href="#version-3-0" title="Permalink to this headline">¶</a></h1>
+<p>Version 3.0 of mod_wsgi can be obtained from:</p>
+<blockquote>
+<div><a class="reference external" href="http://modwsgi.googlecode.com/files/mod_wsgi-3.0.tar.gz">http://modwsgi.googlecode.com/files/mod_wsgi-3.0.tar.gz</a></div></blockquote>
+<p>Precompiled Windows binaries for Apache 2.2 and Python 2.6 and 3.1 are also
+available from:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/downloads/list">http://code.google.com/p/modwsgi/downloads/list</a></div></blockquote>
+<p>Note that mod_wsgi 3.0 was originally derived from mod_wsgi 2.0. It has
+though all changes from later releases in the 2.X branch. Thus also see:</p>
+<ul class="simple">
+<li><a class="reference internal" href="version-2.1.html"><span class="doc">Version 2.1</span></a></li>
+<li><a class="reference internal" href="version-2.2.html"><span class="doc">Version 2.2</span></a></li>
+<li><a class="reference internal" href="version-2.3.html"><span class="doc">Version 2.3</span></a></li>
+<li><a class="reference internal" href="version-2.4.html"><span class="doc">Version 2.4</span></a></li>
+<li><a class="reference internal" href="version-2.5.html"><span class="doc">Version 2.5</span></a></li>
+<li><a class="reference internal" href="version-2.6.html"><span class="doc">Version 2.6</span></a></li>
+<li><a class="reference internal" href="version-2.7.html"><span class="doc">Version 2.7</span></a></li>
+</ul>
+<div class="section" id="bug-fixes">
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Fix bug with quoting of options to mod_wsgi directives as described in:</li>
+</ol>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=55">http://code.google.com/p/modwsgi/issues/detail?id=55</a></div></blockquote>
+<p>2. For any code not run in the first Python interpreter instance, thread
+local data was being thrown away at the end of the request, rather than
+persisting through to subsequent requests handled by the same thread. This
+prevented caching techniques which made use of thread local storage and
+where data was intended to persist for the life of the process. The result
+was that any such data would have had to have been recreated on every
+request. See:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=120">http://code.google.com/p/modwsgi/issues/detail?id=120</a></div></blockquote>
+</div>
+<div class="section" id="features-changed">
+<h2>Features Changed<a class="headerlink" href="#features-changed" title="Permalink to this headline">¶</a></h2>
+<p>1. No longer force a zero length read before sending response headers
+where Apache 2.2.8 or later is used. This was originally being done as a
+workaround because of bug in Apache whereby it didn&#8217;t generate the
+&#8216;100 Continue&#8217; headers properly, with possibility they would be sent as
+part of response content. This problem was however fixed in Apache 2.2.7
+(really 2.2.8 as 2.2.7 was never publically released by ASF). Also only
+allow zero length read to propogate to Apache input filters when done, if
+the zero length read is the very first read against the input stream. For
+details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=52">http://code.google.com/p/modwsgi/issues/detail?id=52</a></div></blockquote>
+<p>2. The WSGIImportScript can now appear inside of VirtualHost. However, there
+are now additional restrictions.</p>
+<p>First is that the WSGIDaemonProcess directive being referred to by the
+WSGIImportScript directive by way of the process-group option, must appear
+before the WSGIImportScript directive.</p>
+<p>Second is that the WSGIDaemonProcess directive being referred to by the
+WSGIImportScript directive by way of the process-group option, must appear
+in the same VirtualHost context, or at global server scope. It is not possible
+to reference a daemon process group specified in a different virtual server
+context.</p>
+<p>Third is that at global server context, it is not possible to refer to a
+daemon process group defined in a VirtualHost context.</p>
+<p>For additional details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=110">http://code.google.com/p/modwsgi/issues/detail?id=110</a></div></blockquote>
+<p>3. The restriction on accessing sys.stdin and sys.stdout has been lifted.
+This was originally done to promote the writing of portable WSGI code. In
+all the campaign has failed as people can&#8217;t be bothered to read the
+documentation to understand why it was done and instead use the workaround
+and don&#8217;t actually fix the code that isn&#8217;t portable. More details at:</p>
+<blockquote>
+<div><a class="reference external" href="http://blog.dscpl.com.au/2009/04/wsgi-and-printing-to-standard-output.html">http://blog.dscpl.com.au/2009/04/wsgi-and-printing-to-standard-output.html</a></div></blockquote>
+<p>4. Reenabled WSGIPythonHome directive in Windows as does apparently work so
+long as virtual environment setup correctly for it to refer to.</p>
+<p>5. WSGI version now marked as WSGI 1.1 instead of 1.0. This is on basis that
+proposed ammendments to WSGI which mod_wsgi already implements will at least
+be accepted as WSGI 1.1 independent of any discussions of changing WSGI
+interface to use unicode with encoding other than Latin-1.</p>
+<p>6. Set timeout on socket connection between Apache server child process and
+daemon process earlier to catch any blocking problems in initial handshake
+between the processes. This will make code more tolerant of any unexpected
+issues with socket communications.</p>
+</div>
+<div class="section" id="features-removed">
+<h2>Features Removed<a class="headerlink" href="#features-removed" title="Permalink to this headline">¶</a></h2>
+<p>1. The WSGIReloadMechanism directive has been removed. This means that script
+reloading is not available as an option in daemon mode and the prior default
+of process reloading always used, unless of course WSGIScriptReloadig is Off
+and all reloading is disabled. Doesn&#8217;t affect embedded mode where script
+reloading was always the only option. For details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=72">http://code.google.com/p/modwsgi/issues/detail?id=72</a></div></blockquote>
+<p>2. There is no longer an attempt to set Content-Length header for a response
+if not supplied and iterable was a sequence of length 1. This was suggested
+by WSGI specification but turns out this causes problems with HEAD requests.
+For details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://blog.dscpl.com.au/2009/10/wsgi-issues-with-http-head-requests.html">http://blog.dscpl.com.au/2009/10/wsgi-issues-with-http-head-requests.html</a></div></blockquote>
+<p>Note that Apache may still do the same thing in certain circumstances.
+Whether Apache always does the correct thing is not known.</p>
+<p>In general, a WSGI application should always return full response content
+for a HEAD request and should NOT truncate the response.</p>
+</div>
+<div class="section" id="features-added">
+<h2>Features Added<a class="headerlink" href="#features-added" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Support added for using Python 3.X.</li>
+</ol>
+<p>What constitutes support for Python 3.X is described in:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/SupportForPython3X">http://code.google.com/p/modwsgi/wiki/SupportForPython3X</a></div></blockquote>
+<p>Note that Python 3.0 is not supported and cannot be used. You must use
+Python 3.1 or later as mod_wsgi relies on features only added in Python 3.1.
+The PSF has also affectively abandoned Python 3.0 now anyway.</p>
+<p>Also note that there is no official WSGI specification for Python 3.X and
+objections could be raised about what mod_wsgi has implemented. If that
+occurs then mod_wsgi may need to stop claiming to be WSGI compliant.</p>
+<p>2. It is now possible to supply &#8216;process-group&#8217;, &#8216;application-group&#8217;,
+&#8216;callable-object&#8217; and &#8216;pass-authorization&#8217; configuration options to the
+WSGIScriptAlias and WSGIScriptAliasMatch directives after the location of
+the WSGI script file parameter. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">trac</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">trac</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">trac</span><span class="o">.</span><span class="n">wsgi</span> \
+ <span class="n">process</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">trac</span><span class="o">-</span><span class="n">projects</span> <span class="n">application</span><span class="o">-</span><span class="n">group</span><span class="o">=%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Where the options are provided, these will take precedence over any which
+apply to the application as defined in Location or Directory configuration
+containers.</p>
+<p>For WSGIScriptAlias (but not WSGIScriptAliasMatch) where both
+&#8216;process-group&#8217; and &#8216;application-group&#8217; parameters are provided, and
+neither use expansion variables that can only be evaluated at the time of
+request handling, this will also cause the WSGI script file to be preloaded
+when the process starts, rather than being lazily loaded only when first
+request for application arrives.</p>
+<p>Preloading of the WSGI script is performed in the same way as when using
+the WSGIImportScript directive. The above configuration is therefore
+equivalent to existing, but longer way of doing it, as shown below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">trac</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">trac</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">trac</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">WSGIImportScript</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">trac</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">trac</span><span class="o">.</span><span class="n">wsgi</span> \
+ <span class="n">process</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">trac</span><span class="o">-</span><span class="n">projects</span> <span class="n">application</span><span class="o">-</span><span class="n">group</span><span class="o">=%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">trac</span><span class="o">/</span><span class="n">apache</span><span class="o">&gt;</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">trac</span><span class="o">-</span><span class="n">projects</span>
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Note that the WSGIDaemonProcess directive defining the daemon process group
+being referred to by the process-group option must preceed the WSGIScriptAlias
+directive in the configuration file. Further, you can only refer to a daemon
+process group referred to in the same VirtualHost context, or at global server
+scope.</p>
+<p>3. When client closes connection and iterable returned from WSGI
+application being processed, now directly log message at debug level in log
+files, rather than raising a Python exception and with that being logged at
+error level as was previously the case.</p>
+<p>For where write() being called a Python exception still has to be raised
+and whether that results in any message being logged depends on what the
+WSGI application does.</p>
+<p>End result is that for normal case where LogLevel wouldn&#8217;t be set to debug,
+the log file will not fill up with messages where client prematurely closes
+connection.</p>
+<p>For details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=29">http://code.google.com/p/modwsgi/issues/detail?id=29</a></div></blockquote>
+<p>4. Added new &#8216;chroot&#8217; option to WSGIDaemonProcess directive to force daemon
+process to run inside of a chroot environment.</p>
+<p>For this to work you need to have a working Python installation installed
+into the chroot environment such that inside of that context it appears at
+same location as that which Apache/mod_wsgi is running.</p>
+<p>Note that the WSGI application code and any files it require have to be
+located within the chroot directory structure. In configuring mod_wsgi
+reference is then made to the WSGI application at that location. Thus:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">choot</span><span class="o">-</span><span class="mi">1</span> <span class="n">user</span><span class="o">=</span><span class="n">grahamd</span> <span class="n">group</span><span class="o">=</span><span class="n">staff</span> <span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=%</span><span class="p">{</span><span class="n">GROUP</span><span class="p">}</span> \
+    <span class="n">root</span><span class="o">=/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">chroot</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">app</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">chroot</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi</span> \
+    <span class="n">process</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">chroot</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Normally this would result in Apache generating SCRIPT_FILENAME as the
+path as second argument to WSGIScriptAlias, but mod_wsgi, knowing it is a
+chroot environment will adjust that path and drop the chroot directory root
+from front of path so that it resolves correctly when used in context of
+chroot environmet.</p>
+<p>In other words, there is no need to create a parallel directory structure
+outside of chroot environment just to satisfy Apache URL mapper.</p>
+<p>Any static files can be in or outside of the chroot directory and will
+still be served by Apache child worker processes, which don&#8217;t run in chroot
+environment. If user only has access to chroot environment through login
+shell that goes directly to it, then static files will obviously be inside.</p>
+<p>How to create a chroot environment will not be described here and you will
+want to know what you are doing if you want to use this feature. For some
+pointers to what may need to be done for Debian/Ubuntu see article at:</p>
+<blockquote>
+<div><a class="reference external" href="http://transcyberia.info/archives/12-chroot-plone-buildouts.html">http://transcyberia.info/archives/12-chroot-plone-buildouts.html</a></div></blockquote>
+<p>For details on this change also see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=106">http://code.google.com/p/modwsgi/issues/detail?id=106</a></div></blockquote>
+<p>5. Added WSGIPy3kWarningFlag directive when Python 2.6 being used. This should
+be at server scope outside of any VirtualHost and will apply to whole server:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIPy3kWarningFlag</span> <span class="n">On</span>
+</pre></div>
+</div>
+<p>This should have same affect as -3 option to &#8216;python&#8217; executable. For more
+details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=109">http://code.google.com/p/modwsgi/issues/detail?id=109</a></div></blockquote>
+<p>6: Fix up how Python thread state API is used to avoid internal Python
+assertion error when Python compiled with Py_DEBUG preprocessor symbol.
+For details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=113">http://code.google.com/p/modwsgi/issues/detail?id=113</a></div></blockquote>
+<p>7. Now allow chunked request content. Such content will be dechunked and
+available for reading by WSGI application. See:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=1">http://code.google.com/p/modwsgi/issues/detail?id=1</a></div></blockquote>
+<p>To enable this feature, you must use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIChunkedRequest</span> <span class="n">On</span>
+</pre></div>
+</div>
+<p>for appropriate context in Apache configuration.</p>
+<p>Do note however that WSGI is technically incapable of supporting chunked
+request content without all chunked request content having to be first
+read in and buffered. This is because WSGI requires CONTENT_LENGTH be set
+when there is any request content.</p>
+<p>In mod_wsgi no buffering is done. Thus, to be able to read the request
+content in the case of a chunked transfer encoding, you need to step
+outside of the WSGI specification and do things it says you aren&#8217;t meant
+to.</p>
+<p>You have two choices for how you can do this. The first choice you have is
+to call read() on wsgi.input but not supply any argument at all. This will
+cause all request content to be read in and returned.</p>
+<p>The second is to loop on calling read() on wsgi.input with a set block size
+passed as argument and do this until read() returns an empty string.</p>
+<p>Because both calling methods are not allowed under WSGI specification, in
+using these your code will not be portable to other WSGI hosting mechanisms.</p>
+<p>8. Values for HTTP headers now passed in environment dictionary to access,
+authentication and authorisation hooks. See:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=69">http://code.google.com/p/modwsgi/issues/detail?id=69</a></div></blockquote>
+<p>9. The flag wsgi.run_once is not set to True when running in daemon mode and
+both threads and maximum-requests is set to 1. With this configuration, are
+gauranteed that process will only be used once before being restarted. Note
+that don&#8217;t get this gaurantee when multiple threads used as the maximum
+requests is only checked at end of successful request and so could feasibly
+still have multiple concurrent requests in progress at that point and so
+process wasn&#8217;t used only once.</p>
+<p>10. Added lazy initialisation of Python interpreter. That is, Python
+interpreter will not be initialised in Apache parent process and inherited
+across fork when creating child processes. Instead, the Python interpreter
+will only first be initialised in child process after the fork.</p>
+<p>This behaviour is now the default as Python 3.X by design doesn&#8217;t cleanup
+memory when interpreter destroyed. This causes significant memory leaks
+into Apache parent process as not reclaiming the memory doesn&#8217;t work well
+with fact that Apache will unload Python library on an Apache restart and
+loose references to that unclaimed memory, such that when Python is
+reinitialised, it can&#8217;t reuse it.</p>
+<p>In Python 2.X it does attempt to reclaim all memory when Python interpreter
+is destroyed, but some Python versions still leak some memory due to real
+leaks or also perhaps by design as per Python 3.X. In Python 2.X the leaks
+are far less significant and have been tolerated in the past. The leaks in
+Python 2.X only cause problems if you do lots of Apache restarts, rather
+than stop/start. All the same, default for Python 2.X has also now been
+made to perform lazy initialisation.</p>
+<p>To control the behaviour have added the directive WSGILazyInitialization.
+This defaults to On for both Python 2.X and Python 3.X. If you wish to
+experiment with whether early initialisation gives better results for
+Python 2.X, you can set this directive to Off.</p>
+<p>The downside of performing lazy initialisation is that you may loose some
+benefit of being able to share memory between child process. Thus, child
+processes will potentially consume more resident memory than before due to
+data being local to process rather than potentially being shared.</p>
+<p>If you are exclusively using mod_wsgi daemon mode and not using embedded mode,
+if lazy initialisation is used in conjunction with WSGIRestrictEmbedded
+being set to On, then the Python interpreter will not be initialised at all
+in the Apache server child processes, unless authentication providers or
+other non content generation code is being provided to be executed in
+Apache server child processes. This means that Apache worker processes will
+be much smaller.</p>
+<p>Even when initialisation of Python in Apache worker processes is disabled,
+as before, the mod_wsgi daemon processes will still use more resident
+memory over shared memory. If however you are only running a small number
+of mod_wsgi daemon processes, then this may overall balance out as using
+less memory in total.</p>
+<p>For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=99">http://code.google.com/p/modwsgi/issues/detail?id=99</a></div></blockquote>
+<p>11. If daemon process defined in virtual host which has its own error log,
+then associated stderr with that virtual hosts error log instead. This way
+any messages sent direct to stderr from C extension modules will end up in
+the virtual host error log that the daemon process is associated with,
+rather than the main error log.</p>
+<p>12. If daemon process defined in a virtual host, close all error logs for
+other virtual hosts which don&#8217;t reference the same error log. This ensures
+that code can&#8217;t write messages to error logs for another host, or reopen the
+log and read data from the logs.</p>
+<p>13. Implement internal server redirection using Location response header
+as allowed for in CGI specification. Note though that this feature has only
+been implemented for mod_wsgi daemon mode. See:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=14">http://code.google.com/p/modwsgi/issues/detail?id=14</a></div></blockquote>
+<p>14. Implement WSGIErrorOverride directive which when set to On will result
+in Apache error documents being used rather than those passed back by the
+WSGI application. This allows error documents to match any web site that
+the WSGI application may be integrated as a part of. This feature is akin
+to the ProxyErrorOverride directive of Apache but for mod_wsgi only. Do note
+though that this feature has only been implemented for mod_wsgi daemon mode.
+See:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=57">http://code.google.com/p/modwsgi/issues/detail?id=57</a></div></blockquote>
+<p>15. Implement WSGIPythonWarnings directive as equivalent to the &#8216;python&#8217;
+executable &#8216;-W&#8217; option. The directive can be used at global scope in Apache
+configuration to provide warning control strings to disable messages produced
+by the warnings module. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Ignore everything.</span>
+<span class="n">WSGIPythonWarnings</span> <span class="n">ignore</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Ignore only DeprecationWarning.</span>
+<span class="n">WSGIPythonWarnings</span> <span class="n">ignore</span><span class="p">::</span><span class="ne">DeprecationWarning</span><span class="p">::</span>
+</pre></div>
+</div>
+<p>For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=137">http://code.google.com/p/modwsgi/issues/detail?id=137</a></div></blockquote>
+<p>16. Added cpu-time-limit option to WSGIDaemonProcess directive. This allows
+one to define a time in seconds which will be the maximum amount of cpu
+time the process is allowed to use before a shutdown is triggered and the
+daemon process restarted. The point of this is to provide some means of
+controlling potentially run away processes due to bad code that gets stuck
+in heavy processing loops. For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=21">http://code.google.com/p/modwsgi/issues/detail?id=21</a></div></blockquote>
+<p>17. Added cpu-priority option to WSGIDaemonProcess directive. This allows
+one to adjust the CPU priority associated with processes in a daemon process
+groups. The range of values that can be supplied is dictated by what the
+setpriority() function on your particular operating system accepts. Normally
+this is in the range of about -20 to 20, with 0 being normal. For more
+details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/issues/detail?id=142">http://code.google.com/p/modwsgi/issues/detail?id=142</a></div></blockquote>
+<p>18. Added WSGIHandlerScript directive. This allows one to nominate a WSGI
+script file that should be executed as a handler for a specific file type
+as configured within Apache. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Files</span> <span class="o">*.</span><span class="n">bobo</span><span class="o">&gt;</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">bobo</span>
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+<span class="n">MultiViewsMatch</span> <span class="n">Handlers</span>
+<span class="n">Options</span> <span class="o">+</span><span class="n">ExecCGI</span>
+<span class="o">&lt;/</span><span class="n">Files</span><span class="o">&gt;</span>
+<span class="n">AddHandler</span> <span class="n">bobo</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">bobo</span>
+<span class="n">WSGIHandlerScript</span> <span class="n">bobo</span><span class="o">-</span><span class="n">script</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">bobo</span><span class="o">-</span><span class="n">handler</span><span class="o">/</span><span class="n">handler</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>For this example, the application within the WSGI script file will be
+invoked whenever a URL maps to a file with &#8216;.bobo&#8217; extension. The name of
+the file mapped to by the URL will be available in the &#8216;SCRIPT_FILENAME&#8217;
+WSGI environment variable.</p>
+<p>Although same calling interface is used as a WSGI application, to distinguish
+that this is acted as a handler, the application entry point must be called
+&#8216;handle_request&#8217; and not &#8216;application&#8217;.</p>
+<p>When providing such a handler script, it is also possible to provide in the
+script file a &#8216;reload_required&#8217; callable object. This will be called prior
+to handling a request and allows the script to determine if a reload should be
+performed first. In the case of daemon mode, this allows script to
+programmatically determine if the whole process should be reloaded first.
+The argument to the &#8216;reload_required&#8217; function is the original resource file
+that was the target of the request and which would have been available to the
+handler as SCRIPT_FILENAME.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="version-2.8.html" class="btn btn-neutral float-right" title="Version 2.8" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="version-3.1.html" class="btn btn-neutral" title="Version 3.1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

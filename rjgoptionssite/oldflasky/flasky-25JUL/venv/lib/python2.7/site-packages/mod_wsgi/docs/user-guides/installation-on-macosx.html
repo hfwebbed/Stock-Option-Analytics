@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation On MacOS X &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Quick Configuration Guide" href="quick-configuration-guide.html"/>
+        <link rel="prev" title="Quick Installation Guide" href="quick-installation-guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation On MacOS X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-xcode-command-line-tools">Install Xcode command line tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-and-building-mod-wsgi">Configuring and building mod_wsgi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-mod-wsgi-module">Installing the mod_wsgi module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Installation On MacOS X</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/installation-on-macosx.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-on-macos-x">
+<h1>Installation On MacOS X<a class="headerlink" href="#installation-on-macos-x" title="Permalink to this headline">¶</a></h1>
+<p>If you are using MacOS X, mod_wsgi can be compiled from source code
+against the standard versions of Python and Apache httpd server supplied
+with the operating system. To do this though you will first need to have
+installed the Xcode command line tools.</p>
+<p>The Xcode command line tools package provides a C compiler, along with
+header files and support tools for the Apache httpd server. If you have
+already set up your system so as to be able to install additional Python
+packages which include C extensions, you likely will already have the
+Xcode command line tools.</p>
+<div class="section" id="install-xcode-command-line-tools">
+<h2>Install Xcode command line tools<a class="headerlink" href="#install-xcode-command-line-tools" title="Permalink to this headline">¶</a></h2>
+<p>To install the Xcode command line tools you should run the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
+</pre></div>
+</div>
+<p>If this gives you back the error message:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span><span class="p">:</span> <span class="n">error</span><span class="p">:</span> <span class="n">command</span> <span class="n">line</span> <span class="n">tools</span> <span class="n">are</span> <span class="n">already</span> <span class="n">installed</span><span class="p">,</span> <span class="n">use</span> <span class="s2">&quot;Software Update&quot;</span> <span class="n">to</span> <span class="n">install</span> <span class="n">updates</span>
+</pre></div>
+</div>
+<p>then the tools have already been installed. As noted by the warning
+message, do make sure you have run a system software update to ensure
+that you have the latest versions of these tools.</p>
+<p>If you do not already have the Xcode command line tools installed, running
+that <code class="docutils literal"><span class="pre">xcode-select</span></code> command should result in you being prompted to
+install them. This may ask you to provide the details of an administrator
+account along with the password for that account.</p>
+<p>Note that it is not necessary to install the whole of the Xcode
+developer application from the MacOS X App Store, only the command line
+tools using <code class="docutils literal"><span class="pre">xcode-select</span></code>. If you have installed the Xcode developer
+application, still ensure that the command line tools are installed and
+ensure you have run the system software update.</p>
+</div>
+<div class="section" id="configuring-and-building-mod-wsgi">
+<h2>Configuring and building mod_wsgi<a class="headerlink" href="#configuring-and-building-mod-wsgi" title="Permalink to this headline">¶</a></h2>
+<p>If you are using the Python and Apache httpd server packages provided with
+the operating system, all you need to do to configure the mod_wsgi source
+code before building it is to run in the mod_wsgi source code directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span>
+</pre></div>
+</div>
+<p>This should yield output similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">checking</span> <span class="k">for</span> <span class="n">apxs2</span><span class="o">...</span> <span class="n">no</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">apxs</span><span class="o">...</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">apxs</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">gcc</span><span class="o">...</span> <span class="n">gcc</span>
+<span class="n">checking</span> <span class="n">whether</span> <span class="n">the</span> <span class="n">C</span> <span class="n">compiler</span> <span class="n">works</span><span class="o">...</span> <span class="n">yes</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">C</span> <span class="n">compiler</span> <span class="n">default</span> <span class="n">output</span> <span class="n">file</span> <span class="n">name</span><span class="o">...</span> <span class="n">a</span><span class="o">.</span><span class="n">out</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">suffix</span> <span class="n">of</span> <span class="n">executables</span><span class="o">...</span>
+<span class="n">checking</span> <span class="n">whether</span> <span class="n">we</span> <span class="n">are</span> <span class="n">cross</span> <span class="n">compiling</span><span class="o">...</span> <span class="n">no</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">suffix</span> <span class="n">of</span> <span class="nb">object</span> <span class="n">files</span><span class="o">...</span> <span class="n">o</span>
+<span class="n">checking</span> <span class="n">whether</span> <span class="n">we</span> <span class="n">are</span> <span class="n">using</span> <span class="n">the</span> <span class="n">GNU</span> <span class="n">C</span> <span class="n">compiler</span><span class="o">...</span> <span class="n">yes</span>
+<span class="n">checking</span> <span class="n">whether</span> <span class="n">gcc</span> <span class="n">accepts</span> <span class="o">-</span><span class="n">g</span><span class="o">...</span> <span class="n">yes</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">gcc</span> <span class="n">option</span> <span class="n">to</span> <span class="n">accept</span> <span class="n">ISO</span> <span class="n">C89</span><span class="o">...</span> <span class="n">none</span> <span class="n">needed</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">prctl</span><span class="o">...</span> <span class="n">no</span>
+<span class="n">checking</span> <span class="n">Apache</span> <span class="n">version</span><span class="o">...</span> <span class="mf">2.4</span><span class="o">.</span><span class="mi">18</span>
+<span class="n">checking</span> <span class="k">for</span> <span class="n">python</span><span class="o">...</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span>
+<span class="n">configure</span><span class="p">:</span> <span class="n">creating</span> <span class="o">./</span><span class="n">config</span><span class="o">.</span><span class="n">status</span>
+<span class="n">config</span><span class="o">.</span><span class="n">status</span><span class="p">:</span> <span class="n">creating</span> <span class="n">Makefile</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">configure</span></code> script should show that it has detected <code class="docutils literal"><span class="pre">apxs</span></code> as being
+located at <code class="docutils literal"><span class="pre">/usr/sbin/apxs</span></code> and <code class="docutils literal"><span class="pre">python</span></code> as being at <code class="docutils literal"><span class="pre">/usr/bin/python</span></code>.</p>
+<p>If you get different values for <code class="docutils literal"><span class="pre">apxs</span></code> and <code class="docutils literal"><span class="pre">python</span></code> then it means
+that you likely have a separate installation of Python or the Apache
+httpd server installed on your system. If this is the case, to ensure that
+you use the versions of Python and Apache httpd server provided with the
+operating system instead use the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">python</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">apxs</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">apxs</span>
+</pre></div>
+</div>
+<p>Once you have configured the source code by running <code class="docutils literal"><span class="pre">configure</span></code>, you
+can build mod_wsgi using the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span>
+</pre></div>
+</div>
+<p>This will compile the mod_wsgi source code and produce a single
+<code class="docutils literal"><span class="pre">mod_wsgi.so</span></code> file which then needs to be installed into a common
+location so that the Apache httpd server can use it.</p>
+</div>
+<div class="section" id="installing-the-mod-wsgi-module">
+<h2>Installing the mod_wsgi module<a class="headerlink" href="#installing-the-mod-wsgi-module" title="Permalink to this headline">¶</a></h2>
+<p>What you need to do to install the mod_wsgi module depends on which version
+of MacOS X you are using.</p>
+<p>For the Apache httpd server provided by the operating system, the directory
+<code class="docutils literal"><span class="pre">/usr/libexec/apache2</span></code> is used to store the compiled modules. Prior to
+MacOS X El Capitan (10.11) this directory was writable and the mod_wsgi
+module could be installed here along with all the default modules. With the
+introduction of the System Integrity Protection (<a class="reference external" href="https://en.wikipedia.org/wiki/System_Integrity_Protection">SIP</a>) feature in MacOS X
+El Capitan this directory is not writable, not even to the root user.</p>
+<p>Because of this, if you are using a version of MacOS X prior to MacOS X El
+Capitan (10.11) you can use the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>to install the mod_wsgi module. As <code class="docutils literal"><span class="pre">sudo</span></code> is being run, you will be
+prompted for your password. The module will be installed into the
+directory <code class="docutils literal"><span class="pre">/usr/libexec/apache2</span></code>. Within the Apache httpd server
+configuration file you can then use the standard <code class="docutils literal"><span class="pre">LoadModule</span></code> line
+of:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LoadModule</span> <span class="n">wsgi_module</span> <span class="n">libexec</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span>
+</pre></div>
+</div>
+<p>If however you are using MacOS X El Capitan (10.11) or later, the mod_wsgi
+module will need to be installed into a different location. If you don&#8217;t
+and try to run just <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">make</span> <span class="pre">install</span></code>, it will fail with the output:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">apxs</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">S</span> <span class="n">LIBEXECDIR</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">apache2</span> <span class="o">-</span><span class="n">n</span> <span class="s1">&#39;mod_wsgi&#39;</span> <span class="n">src</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">la</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">instdso</span><span class="o">.</span><span class="n">sh</span> <span class="n">SH_LIBTOOL</span><span class="o">=</span><span class="s1">&#39;./libtool&#39;</span> <span class="n">src</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">la</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">apache2</span>
+<span class="o">./</span><span class="n">libtool</span> <span class="o">--</span><span class="n">mode</span><span class="o">=</span><span class="n">install</span> <span class="n">install</span> <span class="n">src</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">la</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span>
+<span class="n">libtool</span><span class="p">:</span> <span class="n">install</span><span class="p">:</span> <span class="n">install</span> <span class="n">src</span><span class="o">/</span><span class="n">server</span><span class="o">/.</span><span class="n">libs</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span>
+<span class="n">install</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span><span class="p">:</span> <span class="n">Operation</span> <span class="ow">not</span> <span class="n">permitted</span>
+<span class="n">apxs</span><span class="p">:</span><span class="n">Error</span><span class="p">:</span> <span class="n">Command</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">rc</span><span class="o">=</span><span class="mi">4653056</span>
+<span class="o">.</span>
+<span class="n">make</span><span class="p">:</span> <span class="o">***</span> <span class="p">[</span><span class="n">install</span><span class="p">]</span> <span class="n">Error</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The directory you use to install the mod_wsgi module is up to you, but
+one suggested option is that you use the directory
+<code class="docutils literal"><span class="pre">/usr/local/httpd/modules</span></code>. Just ensure that this isn&#8217;t already used
+by a separate installation of the Apache httpd server.</p>
+<p>To install the mod_wsgi module into this directory use the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span> <span class="n">LIBEXECDIR</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">modules</span>
+</pre></div>
+</div>
+<p>The output from the command will be similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mkdir -p /usr/local/httpd/modules
+./apxs -i -S LIBEXECDIR=/usr/local/httpd/modules -n &#39;mod_wsgi&#39; src/server/mod_wsgi.la
+/usr/share/httpd/build/instdso.sh SH_LIBTOOL=&#39;./libtool&#39; src/server/mod_wsgi.la /usr/local/httpd/modules
+./libtool --mode=install install src/server/mod_wsgi.la /usr/local/httpd/modules/
+libtool: install: install src/server/.libs/mod_wsgi.so /usr/local/httpd/modules/mod_wsgi.so
+libtool: install: install src/server/.libs/mod_wsgi.lai /usr/local/httpd/modules/mod_wsgi.la
+libtool: install: install src/server/.libs/mod_wsgi.a /usr/local/httpd/modules/mod_wsgi.a
+libtool: install: chmod 644 /usr/local/httpd/modules/mod_wsgi.a
+libtool: install: ranlib /usr/local/httpd/modules/mod_wsgi.a
+libtool: install: warning: remember to run `libtool --finish /usr/libexec/apache2&#39;
+chmod 755 /usr/local/httpd/modules/mod_wsgi.so
+</pre></div>
+</div>
+<p>The warning about needing to run <code class="docutils literal"><span class="pre">libtool</span> <span class="pre">--finish</span></code> can be ignored as it
+is not required for everything to work.</p>
+<p>With the mod_wsgi module installed in this location, the <code class="docutils literal"><span class="pre">LoadModule</span></code> line
+in the Apache httpd configuration file should be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LoadModule</span> <span class="n">wsgi_module</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span>
+</pre></div>
+</div>
+<p>Normal steps to then configure the Apache httpd server and mod_wsgi for
+your specific WSGI application would then be followed.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quick-configuration-guide.html" class="btn btn-neutral float-right" title="Quick Configuration Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quick-installation-guide.html" class="btn btn-neutral" title="Quick Installation Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

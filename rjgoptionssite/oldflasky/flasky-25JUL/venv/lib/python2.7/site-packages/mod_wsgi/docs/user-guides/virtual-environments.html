@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Virtual Environments &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Access Control Mechanisms" href="access-control-mechanisms.html"/>
+        <link rel="prev" title="Reloading Source Code" href="reloading-source-code.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Virtual Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#location-of-the-virtual-environment">Location of the Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual-environment-and-python-version">Virtual Environment and Python Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#daemon-mode-single-application">Daemon Mode (Single Application)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#daemon-mode-multiple-applications">Daemon Mode (Multiple Applications)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embedded-mode-single-application">Embedded Mode (Single Application)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embedded-mode-multiple-applications">Embedded Mode (Multiple Applications)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-additional-module-directories">Adding Additional Module Directories</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Virtual Environments</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/virtual-environments.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="virtual-environments">
+<h1>Virtual Environments<a class="headerlink" href="#virtual-environments" title="Permalink to this headline">¶</a></h1>
+<p>This document contains information about how to use Python virtual
+environments with mod_wsgi. You can use a Python virtual environment
+created using <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> and <a class="reference external" href="https://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a>, or if using Python 3,
+the <code class="docutils literal"><span class="pre">pyvenv</span></code> or <code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code> commands.</p>
+<p>The purpose of a Python virtual environments is to allow one to create
+multiple distinct Python environments for the same version of Python, but
+with different sets of Python modules and packages installed. It is
+recommended that you always use Python virtual environments and not install
+additional Python packages direct into your Python installation.</p>
+<p>A Python virtual environment is also required where it is necessary to run
+multiple WSGI applications which have conflicting requirements as to what
+version of a Python module or package needs to be installed. They can also
+be used when distinct mod_wsgi daemon process groups are used to host WSGI
+applications for different users and each user needs to be able to
+separately install their own Python modules and packages.</p>
+<p>How you configure mod_wsgi or setup your WSGI application script file for a
+Python virtual environment will depend on your specific requirements. The
+more common scenarios are explained below.</p>
+<div class="section" id="location-of-the-virtual-environment">
+<h2>Location of the Virtual Environment<a class="headerlink" href="#location-of-the-virtual-environment" title="Permalink to this headline">¶</a></h2>
+<p>Whichever method you use to create a Python virtual environment, before you
+use it with mod_wsgi, you should validate what the location of the Python
+virtual environment is. If using <a class="reference external" href="https://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a> this may be a non
+obvious directory hidden away under your home directory.</p>
+<p>The way to determine the location of the Python virtual environment is to
+activate the Python virtual environment from an interactive shell so it is
+being used, and then run the command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import sys; print(sys.prefix)&#39;</span>
+</pre></div>
+</div>
+<p>This will output the directory path you will use when setting up mod_wsgi
+to use the Python virtual environment. For the purposes of the examples
+below, it is assumed the location of any Python virtual environments are
+under the <code class="docutils literal"><span class="pre">/usr/local/venvs</span></code> directory. A specific Python virtual
+environment may thus return for <code class="docutils literal"><span class="pre">sys.prefix</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">venvs</span><span class="o">/</span><span class="n">example</span>
+</pre></div>
+</div>
+<p>Note that this should be the root directory of the Python virtual
+environment, which in turn contains the <code class="docutils literal"><span class="pre">bin</span></code> and <code class="docutils literal"><span class="pre">lib</span></code> directories for
+the Python virtual environment. It is a common mistake when setting up a
+Python virtual environment with mod_wsgi to use the full path to the
+<code class="docutils literal"><span class="pre">python</span></code> executable instead of the root directory. That will not work, so
+do not use the path for the <code class="docutils literal"><span class="pre">python</span></code> executable as the location of the
+Python virtual environment, it has to be the root directory.</p>
+<p>Do be aware that the user that Apache runs your code as will need to be
+able to access the Python virtual environment. On some Linux distributions,
+the home directory of a user account is not accessible to other users.
+Rather than change the permissions on your home directory, it might be
+better to consider locating your WSGI application code and any Python
+virtual environment outside of your home directory.</p>
+</div>
+<div class="section" id="virtual-environment-and-python-version">
+<h2>Virtual Environment and Python Version<a class="headerlink" href="#virtual-environment-and-python-version" title="Permalink to this headline">¶</a></h2>
+<p>When using a Python virtual environment with mod_wsgi, it is very important
+that it has been created using the same Python installation that mod_wsgi
+was originally compiled for. It is not possible to use a Python virtual
+environment to force mod_wsgi to use a different Python version, or even a
+different Python installation.</p>
+<p>You cannot for example force mod_wsgi to use a Python virtual environment
+created using Python 3.5 when mod_wsgi was originally compiled for Python
+2.7. This is because the Python library for the Python installation it was
+originally compiled against is linked directly into the mod_wsgi module.
+In other words, Python is embedded within mod_wsgi. When mod_wsgi is used
+it does not run the command line <code class="docutils literal"><span class="pre">python</span></code> program to run the interpreter
+and thus why you can&#8217;t force it to use a different Python installation.</p>
+<p>The problem in trying to force mod_wsgi to use a different Python
+installation than what it was compiled for, even where it is the same
+Python version, is that the Python installation may itself not have been
+compiled with the same options. This is especially a problem when it comes
+to issues around how Python stores Unicode characters in memory.</p>
+<p>The end result is that if you want to use a different Python installation
+or version than what mod_wsgi was originally compiled for, you would need
+to re-install mod_wsgi such that it is compiled for the Python installation
+or version you do want to use. Do not try and use a Python virtual
+environment from one Python installation or version with mod_wsgi, when
+mod_wsgi was compiled for a different one.</p>
+</div>
+<div class="section" id="daemon-mode-single-application">
+<h2>Daemon Mode (Single Application)<a class="headerlink" href="#daemon-mode-single-application" title="Permalink to this headline">¶</a></h2>
+<p>The preferred way of setting up mod_wsgi is to run each WSGI application
+in its own daemon process group. This is called daemon mode. A typical
+configuration for running a WSGI application in daemon mode would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapp</span>
+
+<span class="n">WSGIProcessGroup</span> <span class="n">myapp</span>
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive defines the daemon process group. The
+<code class="docutils literal"><span class="pre">WSGIProcessGroup</span></code> directive indicates that the WSGI application should be
+run within the defined daemon process group.</p>
+<p>As only the single application is being run within the daemon process
+group, the <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> directive is also being used. When this
+is used with the <code class="docutils literal"><span class="pre">%{GLOBAL}</span></code> value, it forces the WSGI application to run
+in the main Python interpreter context of each process. This is preferred
+in this scenario as some third party packages for Python which include C
+extensions will not run in the Python sub interpreter contexts which
+mod_wsgi would use by default. By using the main Python interpreter context
+you eliminate the possibility of such third party packages for Python
+causing problems.</p>
+<p>To modify the configuration for this scenario to use a Python virtual
+environment, all you need to do is add the <code class="docutils literal"><span class="pre">python-home</span></code> option to the
+<code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive resulting in:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapp</span> <span class="n">python</span><span class="o">-</span><span class="n">home</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">venvs</span><span class="o">/</span><span class="n">myapp</span>
+</pre></div>
+</div>
+<p>All the additonal Python packages and modules would then be installed into
+that Python virtual environment.</p>
+</div>
+<div class="section" id="daemon-mode-multiple-applications">
+<h2>Daemon Mode (Multiple Applications)<a class="headerlink" href="#daemon-mode-multiple-applications" title="Permalink to this headline">¶</a></h2>
+<p>If instead of running each WSGI application in a separate daemon process
+group as is the recommended practice, you are running multiple WSGI
+applications in one daemon process group, a different approach to using
+Python virtual environments is required.</p>
+<p>For this scenario there are various ways the configuration could be set
+up. If mounting each WSGI application explicitly you might be using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapps</span>
+
+<span class="n">WSGIProcessGroup</span> <span class="n">myapps</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp3</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp3</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp2</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp2</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp1</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If instead the directory containing the WSGI application script files is
+being mounted, you might be using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapps</span>
+
+<span class="n">WSGIProcessGroup</span> <span class="n">myapps</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The use of the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> and <code class="docutils literal"><span class="pre">WSGIProcessGroup</span></code> is the same as
+before, however the <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> directive is not being used.</p>
+<p>When the <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> directive isn&#8217;t being used to override
+which Python interpreter context is being used, each WSGI application will
+be run in its own Python sub interpreter context of the processes. This is
+necessary as often WSGI application frameworks (Django being a prime
+example), do not support running more than one instance of a WSGI
+application using the framework, in the same Python interpreter context at
+the same time.</p>
+<p>In this scenario of running multiple WSGI applications in the same daemon
+process group, more than one change is possibly required. The changes
+required depend on whether or not all WSGI applications should share the
+same Python virtual environment.</p>
+<p>If all of the WSGI applications should share the same Python virtual
+environment, then the same change as was performed above for the single
+application case would be made. That is, add the <code class="docutils literal"><span class="pre">python-home</span></code> option
+to the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapp</span> <span class="n">python</span><span class="o">-</span><span class="n">home</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">venvs</span><span class="o">/</span><span class="n">myapps</span>
+</pre></div>
+</div>
+<p>All the additonal Python packages and modules that any of the WSGI
+applications required would then be installed into that Python virtual
+environment. Because it is a shared environment, they must all use the same
+version of any specific Python package or module.</p>
+<p>If instead of all WSGI applications using the same Python virtual
+environment each needed their own, then a change will instead need to be
+made in each of the WSGI script files for the applications.</p>
+<p>How this is done will depend on how the Python virtual environment is
+created.</p>
+<p>If the Python virtual environment is created using <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> or
+<a class="reference external" href="https://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a>, the WSGI script for each application should be
+modified to include code of the following form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python_home</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/envs/myapp1&#39;</span>
+
+<span class="n">activate_this</span> <span class="o">=</span> <span class="n">python_home</span> <span class="o">+</span> <span class="s1">&#39;/bin/activate_this.py&#39;</span>
+<span class="n">execfile</span><span class="p">(</span><span class="n">activate_this</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">__file__</span><span class="o">=</span><span class="n">activate_this</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Because each WSGI application is to use a separate Python virtual
+environment, the value of the <code class="docutils literal"><span class="pre">python_home</span></code> variable would be set
+differently for each WSGI script file, with it referring to the root
+directory of the respective Python virtual environments.</p>
+<p>This code should be placed in the WSGI script file before any other module
+imports in the WSGI script file, with the exception of <code class="docutils literal"><span class="pre">from</span> <span class="pre">__future__</span></code>
+imports used to enable Python feature flags.</p>
+<p>Important to note is that when the Python virtual environment is activated
+from within the WSGI script, what happens is a bit different to when the
+<code class="docutils literal"><span class="pre">python-home</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> is used.</p>
+<p>When activating the Python virtual environment from within the WSGI script
+file, only the <code class="docutils literal"><span class="pre">site-packages</span></code> directory from the Python virtual
+environment is being used. This directory will be added to the Python
+module search path, along with any additional directories related to the
+<code class="docutils literal"><span class="pre">site-packages</span></code> directory registered using <code class="docutils literal"><span class="pre">.pth</span></code> files present in the
+<code class="docutils literal"><span class="pre">site-packages</span></code> directory. This will be placed at the start of the
+existing <code class="docutils literal"><span class="pre">sys.path</span></code>.</p>
+<p>The consequence of this is that the Python virtual environment isn&#8217;t
+completely overriding the original Python installation the Python virtual
+environment was created from. This means that if the main Python
+installation had additional Python packages installed they will also
+potentially be visible to the WSGI application.</p>
+<p>That this occurs could cause confusion as you might for example think you
+had all the packages you require listed in your <code class="docutils literal"><span class="pre">requirements.txt</span></code> file
+for <code class="docutils literal"><span class="pre">pip</span></code>, but didn&#8217;t and so a package may not have been installed. If
+that package was installed in the main Python installation, it would be
+picked up from there, but it might be the wrong version and have
+dependencies on versions of other packages for which you have different
+versions installed in your Python virtual environment and which are found
+instead of those in the main Python installation.</p>
+<p>To avoid such problems, when activating the Python virtual environment
+from within the WSGI script file, it is necessary to still set the
+<code class="docutils literal"><span class="pre">python-home</span></code> option of the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive, but set it to
+an empty Python virtual environment which has had no additional packages
+installed:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapp</span> <span class="n">python</span><span class="o">-</span><span class="n">home</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">venvs</span><span class="o">/</span><span class="n">empty</span>
+</pre></div>
+</div>
+<p>By doing this, the main Python installation will not be consulted and
+instead it will fallback to the empty Python virtual environment. This
+Python virtual environment should remain empty and you should not install
+additional Python packages or modules into it, or you will cause the same
+sort of conflicts that can arise with the main Python installation when it
+was being used.</p>
+<p>When needing to activate the Python virtual environment from within the
+WSGI script file as described, it is preferred that you be using the either
+<a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> or <a class="reference external" href="https://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a> to create the Python virtual
+environment. This is because they both provide the <code class="docutils literal"><span class="pre">activate_this.py</span></code>
+script file which does all the work of setting up <code class="docutils literal"><span class="pre">sys.path</span></code>. When you
+use either <code class="docutils literal"><span class="pre">pyvenv</span></code> or <code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code> with Python 3, no such
+activation script is provided.</p>
+<p>So use <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> or <a class="reference external" href="https://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a> if you can. If you cannot for
+some reason and are stuck with <code class="docutils literal"><span class="pre">pyvenv</span></code> or <code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code>, you can
+instead use the following code in the WSGI script file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python_home</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/envs/myapp1&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">site</span>
+
+<span class="c1"># Calculate path to site-packages directory.</span>
+
+<span class="n">python_version</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span>
+<span class="n">site_packages</span> <span class="o">=</span> <span class="n">python_home</span> <span class="o">+</span> <span class="s1">&#39;/lib/python</span><span class="si">%s</span><span class="s1">/site-packages&#39;</span> <span class="o">%</span> <span class="n">python_version</span>
+
+<span class="c1"># Add the site-packages directory.</span>
+
+<span class="n">site</span><span class="o">.</span><span class="n">addsitedir</span><span class="p">(</span><span class="n">site_packages</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As before this code should be placed in the WSGI script file before any
+other module imports in the WSGI script file, with the exception of <code class="docutils literal"><span class="pre">from</span>
+<span class="pre">__future__</span></code> imports used to enable Python feature flags.</p>
+<p>When using this method, do be aware that the additions to the Python module
+search path are made at the end of <code class="docutils literal"><span class="pre">sys.path</span></code>. For that reason, you must
+set the <code class="docutils literal"><span class="pre">python-home</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> to the location of
+an empty Python virtual environment. If you do not do this, any additional
+Python package installed in the main Python installation will hide those in
+the Python virtual environment for the application.</p>
+<p>There is extra code you could add which would reorder <code class="docutils literal"><span class="pre">sys.path</span></code> to make
+it work in an equivalent way to the <code class="docutils literal"><span class="pre">activate_this.py</span></code> script provided
+when you use <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> or <a class="reference external" href="https://pypi.python.org/pypi/virtualenvwrapper">virtualenvwrapper</a> but it is messy and more
+trouble than it is worth:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python_home</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/envs/myapp1&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">site</span>
+
+<span class="c1"># Calculate path to site-packages directory.</span>
+
+<span class="n">python_version</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span>
+<span class="n">site_packages</span> <span class="o">=</span> <span class="n">python_home</span> <span class="o">+</span> <span class="s1">&#39;/lib/python</span><span class="si">%s</span><span class="s1">/site-packages&#39;</span> <span class="o">%</span> <span class="n">python_version</span>
+<span class="n">site</span><span class="o">.</span><span class="n">addsitedir</span><span class="p">(</span><span class="n">site_packages</span><span class="p">)</span>
+
+<span class="c1"># Remember original sys.path.</span>
+
+<span class="n">prev_sys_path</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c1"># Add the site-packages directory.</span>
+
+<span class="n">site</span><span class="o">.</span><span class="n">addsitedir</span><span class="p">(</span><span class="n">site_packages</span><span class="p">)</span>
+
+<span class="c1"># Reorder sys.path so new directories at the front.</span>
+
+<span class="n">new_sys_path</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prev_sys_path</span><span class="p">:</span>
+        <span class="n">new_sys_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[:</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_sys_path</span>
+</pre></div>
+</div>
+<p>It is better to avoid needing to manually activate the Python virtual
+environment from inside of a WSGI script by using a separate daemon process
+group per WSGI application. At the minimum, at least avoid <code class="docutils literal"><span class="pre">pyvenv</span></code> and
+<code class="docutils literal"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span></code>.</p>
+</div>
+<div class="section" id="embedded-mode-single-application">
+<h2>Embedded Mode (Single Application)<a class="headerlink" href="#embedded-mode-single-application" title="Permalink to this headline">¶</a></h2>
+<p>The situation for running a single WSGI application in embedded mode is not
+much different to running a single WSGI application in daemon mode. In the
+case of embedded mode, there is though no <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive.</p>
+<p>The typical configuration when running a single WSGI application in
+embedded module might be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> and <code class="docutils literal"><span class="pre">WSGIProcessGroup</span></code> directives are gone, but
+the <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> directive is still used to force the WSGI
+application to run in the main Python interpreter context of each of the
+Apache worker processes. This is to avoid those issues with some third
+party packages for Python with C extensions as mentioned before.</p>
+<p>In this scenario, to set the location of the Python virtual environment
+to be used, the <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> directive is used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIPythonHome</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">myapp</span>
+</pre></div>
+</div>
+<p>Note that if the WSGI application is being setup within the context of an
+Apache <code class="docutils literal"><span class="pre">VirtualHost</span></code>, the <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> cannot be placed inside of
+the <code class="docutils literal"><span class="pre">VirtualHost</span></code>. Instead it must be placed outside of all
+<code class="docutils literal"><span class="pre">VirtualHost</span></code> definitions. This is because it applies to the whole Apache
+instance and not just the single <code class="docutils literal"><span class="pre">VirtualHost</span></code>.</p>
+</div>
+<div class="section" id="embedded-mode-multiple-applications">
+<h2>Embedded Mode (Multiple Applications)<a class="headerlink" href="#embedded-mode-multiple-applications" title="Permalink to this headline">¶</a></h2>
+<p>Running multiple applications in embedded mode is also similar to when
+running multiple WSGI applications in one daemon process group. You still
+need to ensure each WSGI application runs in its own Python sub interpreter
+context to avoid potential issues with Python web frameworks that don&#8217;t
+allow more than one WSGI application to be using it at the same time in a
+Python interpreter context.</p>
+<p>If mounting each WSGI application explicitly you might be using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp3</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp3</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp2</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp2</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">myapp1</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If instead the directory containing the WSGI application script files is
+being mounted, you might be using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span><span class="o">&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>In this scenario, to set the location of the Python virtual environment
+to be used by all WSGI application, the <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> directive is used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIPythonHome</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">myapps</span>
+</pre></div>
+</div>
+<p>If the WSGI application is being setup within the context of an Apache
+<code class="docutils literal"><span class="pre">VirtualHost</span></code>, the <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> cannot be placed inside of the
+<code class="docutils literal"><span class="pre">VirtualHost</span></code>. Instead it must be placed outside of all <code class="docutils literal"><span class="pre">VirtualHost</span></code>
+definitions. This is because it applies to the whole Apache instance and
+not just the single <code class="docutils literal"><span class="pre">VirtualHost</span></code>.</p>
+<p>If each WSGI application needs its own Python virtual environment, then
+activation of the Python virtual environment needs to be performed in the
+WSGI script itself as explained previously for the case of daemon mode
+being used. The <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> directive should be used to refer to an
+empty Python virtual environment if needed to ensure that any additional
+Python packages in the main Python installation don&#8217;t interfere with what
+packages are installed in the Python virtual environment for each WSGI
+application.</p>
+</div>
+<div class="section" id="adding-additional-module-directories">
+<h2>Adding Additional Module Directories<a class="headerlink" href="#adding-additional-module-directories" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">python-home</span></code> option to <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> and the
+<code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> directive are the preferred way of specifying the
+location of the Python virtual environment to be used. If necessary,
+activation of the Python virtual environment can also be performed from the
+WSGI script file itself.</p>
+<p>If you need to add additional directories to search for Python packages or
+modules this can also be done. You may want to do this where you need to
+specify where the actual WSGI application is located, where a WSGI script
+file needs to import application specific modules.</p>
+<p>If you are using daemon mode and want to add additional directories to the
+Python module search path, you can use the <code class="docutils literal"><span class="pre">python-path</span></code> option to
+<code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">myapp</span> <span class="n">python</span><span class="o">-</span><span class="n">path</span><span class="o">=/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span>
+</pre></div>
+</div>
+<p>This option would be in addition to the <code class="docutils literal"><span class="pre">python-home</span></code> option used to
+specify where the Python virtual environment is located.</p>
+<p>If you are using embedded mode, you can use the <code class="docutils literal"><span class="pre">WSGIPythonPath</span></code>
+directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIPythonPath</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">project</span>
+</pre></div>
+</div>
+<p>This directive is in addition to the <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> directive used to
+specify where the Python virtual environment is located.</p>
+<p>In either case, if you need to specify more than one directory, they can be
+separated using a &#8216;:&#8217; character.</p>
+<p>If you are having to activate the Python virtual enviromment from within a
+WSGI script and need to add additional directories to the Python module
+search path, you should modify <code class="docutils literal"><span class="pre">sys.path</span></code> directly from the WSGI script
+file.</p>
+<p>Note that prior practice was that these ways of setting the Python module
+search path were used to specify the location of the Python virtual
+environment. Specifically, they were used to add the <code class="docutils literal"><span class="pre">site-packages</span></code>
+directory of the Python virtual environment. You should not do that.</p>
+<p>The better way to specify the location of the Python virtual environment is
+using the <code class="docutils literal"><span class="pre">python-home</span></code> option of the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive for
+daemon mode, or the <code class="docutils literal"><span class="pre">WSGIPythonHome</span></code> directive for embedded mode. These
+ways of specifying the Python virtual environment have been available since
+mod_wsgi 3.0 and Linux distributions have not shipped such an old version
+of mod_wsgi for quite some time. If you are using the older way, please
+update your configurations.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="access-control-mechanisms.html" class="btn btn-neutral float-right" title="Access Control Mechanisms" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="reloading-source-code.html" class="btn btn-neutral" title="Reloading Source Code" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

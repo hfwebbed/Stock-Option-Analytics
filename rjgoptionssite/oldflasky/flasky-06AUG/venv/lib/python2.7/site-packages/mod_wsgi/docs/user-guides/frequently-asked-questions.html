@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Frequently Asked Questions &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Checking Your Installation" href="checking-your-installation.html"/>
+        <link rel="prev" title="Application Issues" href="application-issues.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Frequently Asked Questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#apache-process-crashes">Apache Process Crashes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#http-error-responses">HTTP Error Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#http-error-log-messages">HTTP Error Log Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-reloading">Application Reloading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execution-environment">Execution Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#access-control-mechanisms">Access Control Mechanisms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Frequently Asked Questions</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/frequently-asked-questions.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="frequently-asked-questions">
+<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="apache-process-crashes">
+<h2>Apache Process Crashes<a class="headerlink" href="#apache-process-crashes" title="Permalink to this headline">¶</a></h2>
+<p><em>Q</em>: Why when the mod_wsgi module is initially being loaded by Apache, do
+the Apache server processes crash with a &#8216;segmentation fault&#8217;?</p>
+<p><em>A</em>: This is nearly always caused due to mod_python also being loaded by
+Apache at the same time as mod_wsgi and the Python installation not
+providing a shared library, or mod_python having originally being built
+against a static Python library. This is especially a problem with older
+Linux distributions before they started shipping with Python as a shared
+library.</p>
+<p>Further information on these problems can be found in various sections of
+[InstallationIssues Installation Issues].</p>
+<p><em>Q</em>: Why when first request is made against a WSGI application does the
+Apache server process handling the request crash with a &#8216;segmentation
+fault&#8217;?</p>
+<p><em>A</em>: This is nearly always caused due to a shared library version conflict.
+That is, Apache or some Apache module is linked against a different version
+of a library than that which is being used by a particular Python module
+that the WSGI application makes use of. The most common culprits are the
+expat and MySQL libraries, but it can also occur with other shared
+libraries.</p>
+<p>Another cause of a process crash only upon the first request can be a third
+party C extension module for Python which has not been implemented so as to
+work within a secondary Python sub interpreter. The Python bindings for
+Subversion are a particular example, with the Python module only working
+correctly if the WSGI application is forced to run within the first
+interpreter instance created by Python.</p>
+<p>Further information on these problems can be found in various sections of
+<a class="reference internal" href="application-issues.html"><span class="doc">Application Issues</span></a>.
+The problems with the expat library are also gone into in more detail in
+<a class="reference internal" href="issues-with-expat-library.html"><span class="doc">Issues With Expat Library</span></a>.</p>
+<p><em>Q</em>: Why am I seeing the error message &#8216;premature end of script headers&#8217; in
+the Apache error logs.</p>
+<p><em>A</em>: If using daemon mode, this is a symptom of the mod_wsgi daemon process
+crashing when handling a request. You would probably also see the message
+&#8216;segmentation fault&#8217;. See answer for question about &#8216;segmentation fault&#8217;
+above.</p>
+<p>This error message can also occur where you haven&#8217;t configured Apache
+correctly and your WSGI script file is being executed as a CGI script
+instead.</p>
+</div>
+<div class="section" id="http-error-responses">
+<h2>HTTP Error Responses<a class="headerlink" href="#http-error-responses" title="Permalink to this headline">¶</a></h2>
+<p><em>Q</em>: When I try to use mod_wsgi daemon mode I get the error response &#8216;503
+Service Temporarily Unavailable&#8217;.</p>
+<p><em>A</em>: The standard Apache runtime directory has restricted access and the
+Apache child process cannot access the daemon process sockets. You will
+need to use the WSGISocketPrefix directive to specify an alternative
+location for storing of runtime files such as sockets.</p>
+<p>For further information see section &#8216;Location Of UNIX Sockets&#8217; of
+[ConfigurationIssues Configuration Issues].</p>
+<p><em>Q</em>: I am getting a HTTP 500 error response and I can&#8217;t find any error in
+the Apache error logs.</p>
+<p><em>A</em>: Some users of mod_wsgi 1.3/2.0 and older minor revisions, are finding
+that mod_wsgi error messages are going missing, or ending up in the main
+Apache error log file rather than a virtual host specific error log file.
+Specifically, this is occurring when Apache ErrorLog directive is being
+used inside of a VirtualHost container.</p>
+<p>It is not known exactly what operating system setup and/or Apache
+configuration is the trigger for this problem. To avoid the problem, use
+a newer version of mod_wsgi.</p>
+</div>
+<div class="section" id="http-error-log-messages">
+<h2>HTTP Error Log Messages<a class="headerlink" href="#http-error-log-messages" title="Permalink to this headline">¶</a></h2>
+<p><em>Q</em>: Why do I get the error &#8216;IOError: client connection closed&#8217; appearing
+in the error logs?</p>
+<p><em>A</em>: This occurs when the HTTP client making the request closes the
+connection before the complete response for a request has been written.</p>
+<p>This can occur where a user force reloads a web page before it had been
+completely displayed. It can also occur when using benchmarking tools such
+as &#8216;ab&#8217; as they will over commit on the number of requests they make when
+doing concurrent requests, killing off any extra requests once the required
+number has been reached.</p>
+<p>In general this error message can be ignored.</p>
+</div>
+<div class="section" id="application-reloading">
+<h2>Application Reloading<a class="headerlink" href="#application-reloading" title="Permalink to this headline">¶</a></h2>
+<p><em>Q</em>: Do I have to restart Apache every time I make a change to the Python
+code for my WSGI application?</p>
+<p><em>A</em>: If your WSGI application is contained totally within the WSGI script
+file and it is that file that you are changing, then no you don&#8217;t. In this
+case the WSGI script file will be automatically reloaded when a change is
+made provided that script reloading hasn&#8217;t been disabled.</p>
+<p>If the code you are changing lies outside of the WSGI script file then what
+you may need to do will depend on how mod_wsgi is being used.</p>
+<p>If embedded mode of mod_wsgi is being used, the only option is to restart
+Apache. You could set Apache configuration directive MaxRequestsPerChild
+to 1 to force a reload of the application on every request, but this is not
+recommended because it will perform as bad as or as worse as CGI and will
+also affect serving up of static files and other applications being hosted
+by the same Apache instance.</p>
+<p>If using daemon mode with a single process you can send a SIGINT signal to
+the daemon process using the &#8216;kill&#8217; command, or have the application send
+the signal to itself when a specific URL is triggered.</p>
+<p>If using daemon mode, with any number of processes, and the process reload
+mechanism of mod_wsgi 2.0 has been enabled, then all you need to do is
+touch the WSGI script file, thereby updating its modification time, and
+the daemon processes will automatically shutdown and restart the next time
+they receive a request.</p>
+<p>Use of daemon mode and the process reload mechanism is the preferred
+mechanism for handling automatic reloading of code after changes.</p>
+<p>More details on how source code reloading works with mod_wsgi can be
+found in <a class="reference internal" href="reloading-source-code.html"><span class="doc">Reloading Source Code</span></a>.</p>
+<p><em>Q</em>: Why do requests against my application seem to take forever, but
+then after a bit they all run much quicker?</p>
+<p><em>A</em>: This is because mod_wsgi by default performs lazy loading of any
+application. That is, an application is only loaded the first time that a
+request arrives which targets that WSGI application. This means that those
+initial requests will incur the overhead of loading all the application code
+and performing any startup initialisation.</p>
+<p>This startup overhead can appear to be quite significant, especially if
+using Apache prefork MPM and embedded mode. This is because the
+startup cost is incurred for each process and with prefork MPM there are
+typically a lot more processes that if using worker MPM or mod_wsgi
+daemon mode. Thus, as many requests as there are processes will run
+slowly and everything will only run full speed once code has all been
+loaded.</p>
+<p>Note that if recycling of Apache child processes or mod_wsgi daemon
+processes after a set number of requests is enabled, or for embedded mode
+Apache decides itself to reap any of the child processes, then you can
+periodically see these delayed requests occurring.</p>
+<p>Some number of the benchmarks for mod_wsgi which have been posted
+do not take into mind these start up costs and wrongly try to compare
+the results to other systems such as fastcgi or proxy based systems where
+the application code would be preloaded by default. As a result mod_wsgi
+is painted in a worse light than is reality. If mod_wsgi is configured
+correctly the results would be better than is shown by those benchmarks.</p>
+<p>For some cases, such as when WSGIScriptAlias is being used, it is actually
+possible to preload the application code when the processes first starts,
+rather than when the first request arrives. To preload an application see the
+WSGIImportScript directive.</p>
+<p>By preloading the application code you would not normally see delays in
+requests being handled. The only exception to this would be when running
+a single process under mod_wsgi daemon mode and the process is being
+restarted when a maximum number of requests arrives or explicitly via one
+of the means to trigger reloading of application code. Delays here can be
+avoided by running at least two processes in the daemon process group.
+This is because when one process is restarting, the others can handle the
+requests.</p>
+</div>
+<div class="section" id="execution-environment">
+<h2>Execution Environment<a class="headerlink" href="#execution-environment" title="Permalink to this headline">¶</a></h2>
+<p><em>Q</em>: Why do I get the error &#8216;IOError: sys.stdout access restricted by
+mod_wsgi&#8217;?</p>
+<p><em>A</em>: A portable WSGI application or application component should not
+output anything to standard output. This is because some WSGI hosting
+mechanisms use standard output to communicate with the web server. If
+a WSGI application outputs anything to standard output it will thus
+potentially interleave with the response sent back to the client.</p>
+<p>To promote portability of WSGI applications, mod_wsgi by default restricts
+direct use of &#8216;sys.stdout&#8217; and &#8216;sys.stdin&#8217;. Because the &#8216;print&#8217; statement
+defaults to outputing text to &#8216;sys.stdout&#8217;, using &#8216;print&#8217; for debugging
+purposes can cause this error.</p>
+<p>For more details about this issue, including how applications should do
+logging and how to disable this restriction see section &#8216;Writing To Standard
+Output&#8217; in <a class="reference internal" href="application-issues.html"><span class="doc">Application Issues</span></a> and section &#8216;Apache Error
+Log Files&#8217; in <a class="reference internal" href="debugging-techniques.html"><span class="doc">Debugging Techniques</span></a>.</p>
+<p><em>Q</em>: Can mod_wsgi be used with Python virtual environments created using
+Ian Bicking&#8217;s &#8216;virtualenv&#8217; package?</p>
+<p><em>A</em>: Yes. For more details see <a class="reference internal" href="virtual-environments.html"><span class="doc">Virtual Environments</span></a>.</p>
+</div>
+<div class="section" id="access-control-mechanisms">
+<h2>Access Control Mechanisms<a class="headerlink" href="#access-control-mechanisms" title="Permalink to this headline">¶</a></h2>
+<p><em>Q</em>: Why are client user credentials not being passed through to the WSGI
+application in the &#8216;HTTP_AUTHORIZATION&#8217; variable of the WSGI environment?</p>
+<p><em>A</em>: User credentials are not passed by default as doing so is insecure and
+could expose a users password to WSGI applications which shouldn&#8217;t be
+permitted to see it. Such a situation might occur within a corporate
+setting where HTTP authentication mechanisms were used to control access to
+a corporate web server but it was possible for users to provide their own
+web pages. The last thing a system administator will want is normal users
+being able to see other users passwords.</p>
+<p>As a result, the passing of HTTP authentication credentials must be
+explicitly enabled by the web server administrator. This can only be done
+using directives placed in the main Apache confguration file.</p>
+<p>For further information see <a class="reference internal" href="access-control-mechanisms.html"><span class="doc">Access Control Mechanisms</span></a>
+and the documentation for the WSGIPassAuthorization directive.</p>
+<p><em>Q</em>: Is there a way of having a WSGI application provide user authentication
+for resources outside of the application such as static files, CGI scripts
+or even a distinct application. In other words, something akin to being able
+to define access, authentication and authorisation handlers in mod_python?</p>
+<p><em>A</em>: Providing you are using Apache 2.0 or later, version 2.0 of mod_wsgi
+provides support for hooking into the Apache access, authentication and
+authorisation handler phases. This doesn&#8217;t allow full control of how the
+Apache handler is implemented, but does allow control over how user
+credentials are validated, determination of what groups a user is a member
+of and whether specific hosts are allowed access. This is generally more
+than sufficient and makes the task somewhat simpler than needing to
+implement a full handler like in mod_python as Apache and mod_wsgi do all
+the hard work.</p>
+<p>For further information see <a class="reference internal" href="access-control-mechanisms.html"><span class="doc">Access Control Mechanisms</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="checking-your-installation.html" class="btn btn-neutral float-right" title="Checking Your Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="application-issues.html" class="btn btn-neutral" title="Application Issues" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

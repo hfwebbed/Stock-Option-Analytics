@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>WSGIApplicationGroup &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Configuration" href="../configuration.html"/>
+        <link rel="next" title="WSGIAuthGroupScript" href="WSGIAuthGroupScript.html"/>
+        <link rel="prev" title="WSGIAccessScript" href="WSGIAccessScript.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../configuration.html">Configuration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="WSGIAcceptMutex.html">WSGIAcceptMutex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAccessScript.html">WSGIAccessScript</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WSGIApplicationGroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAuthGroupScript.html">WSGIAuthGroupScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIAuthUserScript.html">WSGIAuthUserScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGICallableObject.html">WSGICallableObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGICaseSensitivity.html">WSGICaseSensitivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIDaemonProcess.html">WSGIDaemonProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIImportScript.html">WSGIImportScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGILazyInitialization.html">WSGILazyInitialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPassAuthorization.html">WSGIPassAuthorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIProcessGroup.html">WSGIProcessGroup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonEggs.html">WSGIPythonEggs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonHome.html">WSGIPythonHome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonOptimize.html">WSGIPythonOptimize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIPythonPath.html">WSGIPythonPath</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictEmbedded.html">WSGIRestrictEmbedded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictProcess.html">WSGIRestrictProcess</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictSignal.html">WSGIRestrictSignal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictStdin.html">WSGIRestrictStdin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIRestrictStdout.html">WSGIRestrictStdout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptAlias.html">WSGIScriptAlias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptAliasMatch.html">WSGIScriptAliasMatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGIScriptReloading.html">WSGIScriptReloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WSGISocketPrefix.html">WSGISocketPrefix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../configuration.html">Configuration</a> &raquo;</li>
+      
+    <li>WSGIApplicationGroup</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/configuration-directives/WSGIApplicationGroup.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="wsgiapplicationgroup">
+<h1>WSGIApplicationGroup<a class="headerlink" href="#wsgiapplicationgroup" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Sets which application group WSGI application belongs to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Syntax:</th><td class="field-body"><code class="docutils literal"><span class="pre">WSGIApplicationGroup</span> <span class="pre">name</span></code>
+<code class="docutils literal"><span class="pre">WSGIApplicationGroup</span> <span class="pre">%{GLOBAL}</span></code>
+<code class="docutils literal"><span class="pre">WSGIApplicationGroup</span> <span class="pre">%{SERVER}</span></code>
+<code class="docutils literal"><span class="pre">WSGIApplicationGroup</span> <span class="pre">%{RESOURCE}</span></code>
+<code class="docutils literal"><span class="pre">WSGIApplicationGroup</span> <span class="pre">%{ENV:variable}</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal"><span class="pre">WSGIApplicationGroup</span> <span class="pre">%{RESOURCE}</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Context:</th><td class="field-body">server config, virtual host, directory</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> directive can be used to specify which
+application group a WSGI application or set of WSGI applications belongs
+to. All WSGI applications within the same application group will execute
+within the context of the same Python sub interpreter of the process
+handling the request.</p>
+<p>The argument to the <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> can be either one of four
+special expanding variables or an explicit name of your own choosing.
+The meaning of the special variables are:</p>
+<p><strong>%{GLOBAL}</strong></p>
+<blockquote>
+<div><p>The application group name will be set to the empty string.</p>
+<p>Any WSGI applications in the global application group will always be
+executed within the context of the first interpreter created by Python
+when it is initialised. Forcing a WSGI application to run within the
+first interpreter can be necessary when a third party C extension
+module for Python has used the simplified threading API for
+manipulation of the Python GIL and thus will not run correctly within
+any additional sub interpreters created by Python.</p>
+</div></blockquote>
+<p><strong>%{SERVER}</strong></p>
+<blockquote>
+<div><p>The application group name will be set to the server hostname. If the
+request arrived over a non standard HTTP/HTTPS port, the port number
+will be added as a suffix to the group name separated by a colon.</p>
+<p>For example, if the virtual host <code class="docutils literal"><span class="pre">www.example.com</span></code> is handling
+requests on the standard HTTP port (80) and HTTPS port (443), a request
+arriving on either port would see the application group name being set
+to <code class="docutils literal"><span class="pre">www.example.com</span></code>. If instead the virtual host was handling requests
+on port 8080, then the application group name would be set to
+<code class="docutils literal"><span class="pre">www.example.com:8080</span></code>.</p>
+</div></blockquote>
+<p><strong>%{RESOURCE}</strong></p>
+<blockquote>
+<div><p>The application group name will be set to the server hostname and port
+as for the <code class="docutils literal"><span class="pre">%{SERVER}</span></code> variable, to which the value of WSGI environment
+variable <code class="docutils literal"><span class="pre">SCRIPT_NAME</span></code> is appended separated by the file separator
+character.</p>
+<p>For example, if the virtual host <code class="docutils literal"><span class="pre">www.example.com</span></code> was handling
+requests on port 8080 and the URL-path which mapped to the WSGI
+application was:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">foo</span>
+</pre></div>
+</div>
+<p>then the application group name would be set to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">8080</span><span class="o">|/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">foo</span>
+</pre></div>
+</div>
+<p>The effect of using the <code class="docutils literal"><span class="pre">%{RESOURCE}</span></code> variable expansion is for each
+application on any server to be isolated from all others by being
+mapped to its own Python sub interpreter.</p>
+</div></blockquote>
+<p><strong>%{ENV:variable}</strong></p>
+<blockquote>
+<div>The application group name will be set to the value of the named
+environment variable. The environment variable is looked-up via the
+internal Apache notes and subprocess environment data structures and
+(if not found there) via <code class="docutils literal"><span class="pre">getenv()</span></code> from the Apache server process.</div></blockquote>
+<p>In an Apache configuration file, environment variables accessible using
+the <code class="docutils literal"><span class="pre">%{ENV}</span></code> variable reference can be setup by using directives such as
+<a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv">SetEnv</a> and <a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html#rewriterule">RewriteRule</a>.</p>
+<p>For example, to group all WSGI scripts for a specific user when using
+<a class="reference external" href="http://httpd.apache.org/docs/2.2/mod/mod_userdir.html">mod_userdir</a> within the same application group, the following could be
+used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RewriteEngine</span> <span class="n">On</span>
+<span class="n">RewriteCond</span> <span class="o">%</span><span class="p">{</span><span class="n">REQUEST_URI</span><span class="p">}</span> <span class="o">^/~</span><span class="p">([</span><span class="o">^/</span><span class="p">]</span><span class="o">+</span><span class="p">)</span>
+<span class="n">RewriteRule</span> <span class="o">.</span> <span class="o">-</span> <span class="p">[</span><span class="n">E</span><span class="o">=</span><span class="n">APPLICATION_GROUP</span><span class="p">:</span><span class="o">~%</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">home</span><span class="o">/*/</span><span class="n">public_html</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span>
+<span class="n">SetHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span>
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">ENV</span><span class="p">:</span><span class="n">APPLICATION_GROUP</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Note that in embedded mode or a multi process daemon process group, there
+will be an instance of the named sub interpreter in each process. Thus the
+directive only ensures that request is handled in the named sub interpreter
+within the process that handles the request. If you need to ensure that
+requests for a specific user always go back to the exact same sub interpreter,
+then you will need to use a daemon process group with only a single process,
+or implement sticky session mechanism across a number of single process
+daemon process groups.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="WSGIAuthGroupScript.html" class="btn btn-neutral float-right" title="WSGIAuthGroupScript" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="WSGIAccessScript.html" class="btn btn-neutral" title="WSGIAccessScript" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

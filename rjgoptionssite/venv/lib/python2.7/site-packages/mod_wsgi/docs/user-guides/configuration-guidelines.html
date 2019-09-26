@@ -1,0 +1,940 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuration Guidelines &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Installation Issues" href="installation-issues.html"/>
+        <link rel="prev" title="Quick Configuration Guide" href="quick-configuration-guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-wsgiscriptalias-directive">The WSGIScriptAlias Directive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-apache-alias-directive">The Apache Alias Directive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-configuration">Application Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-authentication">User Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hosting-of-static-files">Hosting Of Static Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limiting-request-content">Limiting Request Content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-application-groups">Defining Application Groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-process-groups">Defining Process Groups</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Configuration Guidelines</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/configuration-guidelines.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration-guidelines">
+<h1>Configuration Guidelines<a class="headerlink" href="#configuration-guidelines" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this document is to detail the basic configuration steps
+required for running WSGI applications with mod_wsgi.</p>
+<div class="section" id="the-wsgiscriptalias-directive">
+<h2>The WSGIScriptAlias Directive<a class="headerlink" href="#the-wsgiscriptalias-directive" title="Permalink to this headline">¶</a></h2>
+<p>Configuring Apache to run WSGI applications using mod_wsgi is similar to
+how Apache is configured to run CGI applications. To streamline this task
+however, an additional configuration directive called WSGIScriptAlias is
+provided. Like the ScriptAlias directive for CGI scripts, the mod_wsgi
+directive combines together a number of steps so as to reduce the amount of
+configuration required.</p>
+<p>The first way of using the WSGIScriptAlias directive to indicate the WSGI
+application to be used, is to associate a WSGI application against a
+specific URL prefix:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">myapp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>The last option to the directive in this case must be a full pathname to
+the actual code file containing the WSGI application. A trailing slash
+should never be added to the last option when it is referring to an actual
+file.</p>
+<p>The WSGI application contained within the code file specified should be
+called &#8216;application&#8217;. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that an absolute pathname to a WSGI script file must be provided. It
+is not possible to specify an application by Python module name alone. A
+full path is used for a number of reasons, the main one being so that all
+the Apache access controls can still be applied to indicate who can
+actually access the WSGI application. Because these access controls will
+apply, if the WSGI application is located outside of any directories
+already known to Apache, it will be necessary to tell Apache that files
+within that directory can be used. To do this the Directory directive must
+be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Note that Apache access control directives such as Order and Allow should
+nearly always be applied to Directory and never to a Location. Adding them
+to a Location would not be regarded as best practice and would potentially
+weaken the security of your Apache server, especially where the Location
+was for &#8216;/&#8217;.</p>
+<p>As for CGI scripts and the ScriptAlias directive, it is not necessary to
+have used the Options directive to enable the ExecCGI directive. This is
+because it is automatically implied from the use of the WSGIScriptAlias
+directive that the script must be executable.</p>
+<p>For WSGIScriptAlias, to mount a WSGI application at the root of the web
+site, simply use &#8216;/&#8217; as the mount point:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>If you need to mount multiple WSGI applications, the directives can be
+listed more than once. When this occurs, those occuring first are given
+precedence. As such, those which are mounted at what would be a sub URL to
+another WSGI application, should always be listed earlier:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">wiki</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">mywiki</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">blog</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">myblog</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">myapp</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>The second way of using the WSGIScriptAlias directive is to use it to map
+to a directory containing any number of WSGI applications:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>When this is used, the next part of the URL after the URL prefix is used to
+identify which WSGI application script file within the target directory
+should be used. Both the mount point and the directory path must have a
+trailing slash.</p>
+<p>If you want WSGI application scripts to use an extension, but don&#8217;t wish
+to have that extension appear in the URL, then it is possible to use the
+WSGIScriptAliasMatch directive instead:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>WSGIScriptAliasMatch ^/wsgi/([^/]+) /usr/local/wsgi/scripts/$1.wsgi
+</pre></div>
+</div>
+<p>In this case, any path information appearing after the URL prefix, will be
+mapped to a corresponding WSGI script file in the directory, but with a
+&#8216;.wsgi&#8217; extension. The extension would though not need to be included in
+the URL.</p>
+<p>In all ways that the WSGIScriptAlias can be used, the target script is not
+required to have any specific extension type and in particular it is not
+necessary to use a &#8216;.py&#8217; extension just because it contains Python code.
+Because the target script is not treated exactly like a traditional Python
+module, if an extension is used, it is recommended that &#8216;.wsgi&#8217; be used
+rather than &#8216;.py&#8217;.</p>
+</div>
+<div class="section" id="the-apache-alias-directive">
+<h2>The Apache Alias Directive<a class="headerlink" href="#the-apache-alias-directive" title="Permalink to this headline">¶</a></h2>
+<p>Although the WSGIScriptAlias directive is provided, the traditional Alias
+directive can still be used to enable execution of WSGI applications for
+specific URLs. The equivalent such configuration for:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>using the Alias directive would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span>
+
+<span class="n">SetHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The additional steps required in this case are to enable the ability to
+execute CGI like scripts using the Options directive and define the Apache
+handler as &#8216;wsgi-script&#8217;.</p>
+<p>If wishing to hold a mixture of static files, normal CGI scripts and WSGI
+applications within the one directory, the AddHandler directive can be
+used instead of the SetHandler directive to distinguish between the various
+resource types based on resource extension:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span>
+
+<span class="n">AddHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">cgi</span>
+<span class="n">AddHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>For whatever extension you use to identify a WSGI script file, ensure that
+you do not have a conflicting definition for that extension marking it as a
+CGI script file. For example, if you previously had all &#8216;.py&#8217; files being
+handled as &#8216;cgi-script&#8217;, consider disabling that before marking &#8216;.py&#8217; file
+as then being handled as &#8216;wsgi-script&#8217; file in same context. If both are
+defined in same context, which is used will depend on the order of the
+directives and the wrong handler may be selected.</p>
+<p>Because an extension is required to determine whether a script should be
+processed as a CGI script versus a WSGI application, the extension would
+need to appear in the URL. If this is not desired, then add the MultiViews
+option and MultiviewsMatch directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span> <span class="n">MultiViews</span>
+<span class="n">MultiviewsMatch</span> <span class="n">Handlers</span>
+
+<span class="n">AddHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">cgi</span>
+<span class="n">AddHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Adding of MultiViews in this instance and allowing multiviews to match
+Apache handlers will allow the extension to be dropped from the URL.
+Provided that for each resource there is only one alternative, Apache will
+then automatically select either the CGI script or WSGI application as
+appropriate for that resource. Use of multiviews in this way would make it
+possible to transparently migrate from CGI scripts to WSGI applications
+without the need to change any URLs.</p>
+<p>A benefit of using the AddHandler directive as described above, is that it
+also allows a directory index page or directory browsing to be enabled for
+the directory. To enable directory browsing add the Indexes option:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span> <span class="n">Indexes</span>
+
+<span class="n">AddHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">cgi</span>
+<span class="n">AddHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If a directory index page is enabled, it may refer to either a static file,
+CGI or WSGI application. The DirectoryIndex directive should be used to
+designate what should be used for the index page:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">wsgi</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span> <span class="n">Indexes</span>
+
+<span class="n">DirectoryIndex</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span> <span class="n">index</span><span class="o">.</span><span class="n">wsgi</span> <span class="n">index</span><span class="o">.</span><span class="n">cgi</span>
+
+<span class="n">AddHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">cgi</span>
+<span class="n">AddHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Using AddHandler or SetHandler to configure a WSGI application can also
+be done from within the &#8216;.htaccess&#8217; file located within the directory which
+a URL maps to. This will however only be possible where the directory has
+been enabled to allow these directives to be used. This would be done using
+the AllowOverride directive and enabling FileInfo for that directory.
+It would also be necessary to allow the execution of scripts using the
+Options directive by listing ExecCGI:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">site</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">site</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">site</span><span class="o">&gt;</span>
+<span class="n">AllowOverride</span> <span class="n">FileInfo</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span> <span class="n">MultiViews</span> <span class="n">Indexes</span>
+<span class="n">MultiviewsMatch</span> <span class="n">Handlers</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This done, the &#8216;.htaccess&#8217; file could then contain:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DirectoryIndex</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span> <span class="n">index</span><span class="o">.</span><span class="n">wsgi</span> <span class="n">index</span><span class="o">.</span><span class="n">cgi</span>
+
+<span class="n">AddHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">cgi</span>
+<span class="n">AddHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>Note that the DirectoryIndex directive can only be used to designate a
+simple WSGI application which returns a single page for when the URL maps
+to the actual directory. Because the DirectoryIndex directive is not
+applied when the URL has additional path information beyond the leading
+portion of the URL which mapped to the directory, it cannot be used as a
+means of making a complex WSGI application responding to numerous URLs
+appear at the root of a server.</p>
+<p>When using the AddHandler directive, with WSGI applications identified by
+the extension of the script file, the only way to make the WSGI application
+appear as the root of the server is to perform on the fly rewriting of the
+URL internal to Apache using mod_rewrite. The required rules for
+mod_rewrite to ensure that a WSGI application, implemented by the script
+file &#8216;site.wsgi&#8217; in the root directory of the virtual host, appears as being
+mounted on the root of the virtual host would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /site.wsgi/$1 [QSA,PT,L]
+</pre></div>
+</div>
+<p>Do note however that when the WSGI application is executed for a request
+the &#8216;SCRIPT_NAME&#8217; variable indicating what the mount point of the application
+was will be &#8216;/site.wsgi&#8217;. This will mean that when a WSGI application
+constructs an absolute URL based on &#8216;SCRIPT_NAME&#8217;, it will include
+&#8216;site.wsgi&#8217; in the URL rather than it being hidden. As this would probably
+be undesirable, many web frameworks provide an option to override what the
+value for the mount point is. If such a configuration option isn&#8217;t
+available, it is just as easy to adjust the value of &#8216;SCRIPT_NAME&#8217; in the
+&#8216;site.wsgi&#8217; script file itself:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="c1"># The original application.</span>
+    <span class="o">...</span>
+
+<span class="kn">import</span> <span class="nn">posixpath</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="c1"># Wrapper to set SCRIPT_NAME to actual mount point.</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">posixpath</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">_application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This wrapper will ensure that &#8216;site.wsgi&#8217; never appears in the URL as long
+as it wasn&#8217;t included in the first place and that access was always via the
+root of the web site instead.</p>
+</div>
+<div class="section" id="application-configuration">
+<h2>Application Configuration<a class="headerlink" href="#application-configuration" title="Permalink to this headline">¶</a></h2>
+<p>If it is necessary or desired to be able to pass configuration information
+through to a WSGI application from the Apache configuration file, then the
+SetEnv directive can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">demo</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">SetEnv</span> <span class="n">demo</span><span class="o">.</span><span class="n">templates</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">templates</span>
+<span class="n">SetEnv</span> <span class="n">demo</span><span class="o">.</span><span class="n">mailhost</span> <span class="n">mailhost</span>
+<span class="n">SetEnv</span> <span class="n">demo</span><span class="o">.</span><span class="n">debugging</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Any such variables added using the SetEnv directive will be automatically
+added to the WSGI environment passed to the application when executed.</p>
+<p>Note that the WSGI environment is passed upon each request to the
+application in the &#8216;environ&#8217; argument of the application object. This
+environment is totally unrelated to the process environment which is
+kept in &#8216;os.environ&#8217;. The SetEnv directive has no effect on &#8216;os.environ&#8217;
+and there is no way through Apache configuration directives to affect
+what is in the process environment.</p>
+<p>If needing to dynamically set variables based on some aspects of the
+request itself, the RewriteRule directive may also be useful in some cases
+as an avenue to set application configuration variables.</p>
+<p>For example, to enable additional debug only when the client is connecting
+from the localhost, the following might be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>SetEnv demo.debugging 0
+
+RewriteEngine On
+RewriteCond %{REMOTE_ADDR} ^127.0.0.1$
+RewriteRule . - [E=demo.debugging:1]
+</pre></div>
+</div>
+<p>More elaborate schemes involving RewriteMap could also be employed.</p>
+<p>Where SetEnv and RewriteRule are insufficient, then any further
+application configuration should be injected into an application using a
+WSGI application wrapper within the WSGI application script file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">]:</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;demo.debugging&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+    <span class="k">return</span> <span class="n">_application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-authentication">
+<h2>User Authentication<a class="headerlink" href="#user-authentication" title="Permalink to this headline">¶</a></h2>
+<p>As is the case when using CGI scripts with Apache, authorisation headers
+are not passed through to WSGI applications. This is the case, as doing so
+could leak information about passwords through to a WSGI application which
+should not be able to see them when Apache is performing authorisation.</p>
+<p>Unlike CGI scripts however, when using mod_wsgi, the WSGIPassAuthorization
+directive can be used to control whether HTTP authorisation headers are
+passed through to a WSGI application in the <code class="docutils literal"><span class="pre">HTTP_AUTHORIZATION</span></code>
+variable of the WSGI application environment when the equivalent HTTP
+request headers are present. This option would need to be set to <code class="docutils literal"><span class="pre">On</span></code>
+if the WSGI application was to handle authorisation rather than Apache
+doing it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIPassAuthorization</span> <span class="n">On</span>
+</pre></div>
+</div>
+<p>If Apache is performing authorisation and not the WSGI application, a WSGI
+application can still find out what type of authorisation scheme was used
+by checking the variable <code class="docutils literal"><span class="pre">AUTH_TYPE</span></code> of the WSGI application
+environment. The login name of the authorised user can be determined by
+checking the variable <code class="docutils literal"><span class="pre">REMOTE_USER</span></code>.</p>
+</div>
+<div class="section" id="hosting-of-static-files">
+<h2>Hosting Of Static Files<a class="headerlink" href="#hosting-of-static-files" title="Permalink to this headline">¶</a></h2>
+<p>When the WSGIScriptAlias directive is used to mount an application at the
+root of the web server for a host, all requests for that host will be
+processed by the WSGI application. If is desired for performance reasons
+to still use Apache to host static files associated with the application,
+then the Alias directive can be used to designate the files and directories
+which should be served in this way:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Alias /robots.txt /usr/local/wsgi/static/robots.txt
+Alias /favicon.ico /usr/local/wsgi/static/favicon.ico
+
+AliasMatch /([^/]*\.css) /usr/local/wsgi/static/styles/$1
+
+Alias /media/ /usr/local/wsgi/static/media/
+
+&lt;Directory /usr/local/wsgi/static&gt;
+Order deny,allow
+Allow from all
+&lt;/Directory&gt;
+
+WSGIScriptAlias / /usr/local/wsgi/scripts/myapp.wsgi
+
+&lt;Directory /usr/local/wsgi/scripts&gt;
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;
+</pre></div>
+</div>
+<p>When listing the directives, list those for more specific URLs first. In
+practice this shouldn&#8217;t actually be required as the Alias directive should
+take precedence over WSGIScriptAlias, but good practice all the same.</p>
+<p>Do note though that if using Apache 1.3, the Alias directive will only take
+precedence over WSGIScriptAlias if the mod_wsgi module is loaded prior to
+the mod_alias module. To ensure this, the LoadModule/AddModule directives
+are used.</p>
+<p>Note that there is never a need to use SetHandler to reset the Apache
+content handler back to &#8216;None&#8217; for URLs mapped to static files. That this
+is a requirement for mod_python is a short coming in mod_python, do not do
+the same thing for mod_wsgi.</p>
+</div>
+<div class="section" id="limiting-request-content">
+<h2>Limiting Request Content<a class="headerlink" href="#limiting-request-content" title="Permalink to this headline">¶</a></h2>
+<p>By default Apache does not limit the amount of data that may be pushed to
+the server via a HTTP request such as a POST. That this is the case means
+that malicious users could attempt to overload a server by attempting to
+upload excessively large amounts of data.</p>
+<p>If a WSGI application is not designed properly and doesn&#8217;t limit this
+itself in some way, and attempts to load the whole request content into
+memory, it could cause an application to exhaust available memory.</p>
+<p>If it is unknown if a WSGI application properly protects itself against
+such attempts to upload excessively large amounts of data, then the Apache
+LimitRequestBody directive can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LimitRequestBody</span> <span class="mi">1048576</span>
+</pre></div>
+</div>
+<p>The argument to the LimitRequestBody should be the maxumum number of bytes
+that should be allowed in the content of a request.</p>
+<p>When this directive is used, mod_wsgi will perform the check prior to
+actually passing a request off to a WSGI application. When the limit is
+exceeded mod_wsgi will immediately return the HTTP 413 error response
+without even invoking the WSGI application to handle the request. Any
+request content will not be read as the client connection will then be
+closed.</p>
+<p>Note that the HTTP 413 error response page will be that defined by Apache,
+or as specified by the Apache ErrorDocument directive for that error type.</p>
+</div>
+<div class="section" id="defining-application-groups">
+<h2>Defining Application Groups<a class="headerlink" href="#defining-application-groups" title="Permalink to this headline">¶</a></h2>
+<p>By default each WSGI application is placed into its own distinct
+application group. This means that each application will be given its own
+distinct Python sub interpreter to run code within. Although this means
+that applications will be isolated and cannot in general interfere with the
+Python code components of each other, each will load its own copy of all
+Python modules it requires into memory. If you have many applications and
+they use a lot of different Python modules this can result in large process
+sizes.</p>
+<p>To avoid large process sizes, if you know that applications within a
+directory can safely coexist and run together within the same Python sub
+interpreter, you can specify that all applications within a certain context
+should be placed in the same application group. This is indicated by using
+the WSGIApplicationGroup directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">&gt;</span>
+<span class="n">WSGIApplicationGroup</span> <span class="n">admin</span><span class="o">-</span><span class="n">scripts</span>
+
+<span class="n">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The argument to the WSGIApplicationGroup directive can in general be any
+unique name of your choosing, although there are also a number of special
+values which you can use as well. For further information about these
+special values see the more detailed documentation on the
+<a class="reference internal" href="../configuration-directives/WSGIApplicationGroup.html"><span class="doc">WSGIApplicationGroup</span></a> directive. Two of the
+special values worth highlighting are:</p>
+<p><strong>%{GLOBAL}</strong></p>
+<blockquote>
+<div><p>The application group name will be set to the empty string.</p>
+<p>Any WSGI applications in the global application group will always be
+executed within the context of the first interpreter created by Python
+when it is initialised. Forcing a WSGI application to run within the
+first interpreter can be necessary when a third party C extension
+module for Python has used the simplified threading API for
+manipulation of the Python GIL and thus will not run correctly within
+any additional sub interpreters created by Python.</p>
+</div></blockquote>
+<p><strong>%{ENV:variable}</strong></p>
+<blockquote>
+<div>The application group name will be set to the value of the named
+environment variable. The environment variable is looked-up via the
+internal Apache notes and subprocess environment data structures and
+(if not found there) via getenv() from the Apache server process.</div></blockquote>
+<p>In an Apache configuration file, environment variables accessible
+using the <code class="docutils literal"><span class="pre">%{ENV}</span></code> variable reference can be setup by using directives
+such as SetEnv and RewriteRule.</p>
+<p>For example, to group all WSGI scripts for a specific user when using
+mod_userdir within the same application group, the following could be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RewriteEngine</span> <span class="n">On</span>
+<span class="n">RewriteCond</span> <span class="o">%</span><span class="p">{</span><span class="n">REQUEST_URI</span><span class="p">}</span> <span class="o">^/~</span><span class="p">([</span><span class="o">^/</span><span class="p">]</span><span class="o">+</span><span class="p">)</span>
+<span class="n">RewriteRule</span> <span class="o">.</span> <span class="o">-</span> <span class="p">[</span><span class="n">E</span><span class="o">=</span><span class="n">APPLICATION_GROUP</span><span class="p">:</span><span class="o">~%</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">home</span><span class="o">/*/</span><span class="n">public_html</span><span class="o">/</span><span class="n">wsgi</span><span class="o">-</span><span class="n">scripts</span><span class="o">/&gt;</span>
+<span class="n">Options</span> <span class="n">ExecCGI</span>
+<span class="n">SetHandler</span> <span class="n">wsgi</span><span class="o">-</span><span class="n">script</span>
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">ENV</span><span class="p">:</span><span class="n">APPLICATION_GROUP</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-process-groups">
+<h2>Defining Process Groups<a class="headerlink" href="#defining-process-groups" title="Permalink to this headline">¶</a></h2>
+<p>By default all WSGI applications will run in what is called &#8216;embedded&#8217;
+mode. That is, the applications are run within Python sub interpreters
+hosted within the Apache child processes. Although this results in the best
+performance possible, there are a few down sides.</p>
+<p>First off, embedded mode is not recommended where you are not adept at
+tuning Apache. This is because the default MPM settings are never usually
+suitable for Python web applications, instead being biased towards static
+file serving and PHP applications. If you run embedded mode without tuning
+the MPM settings, you can experience problems with memory usage, due to
+default number of processes being too many, and can also experience load
+spikes, due to how Apache performs lazy creation of processes to meet
+demand.</p>
+<p>Secondly, embedded mode would not be suitable for shared web hosting
+environments as all applications run as the same user and through various
+means could interfere with each other.</p>
+<p>Running multiple Python applications within the same process, even if
+separated into distinct sub interpreters also presents other challenges and
+problems. These include problems with Python extension modules not being
+implemented correctly such that they work from a secondary sub interpreter,
+or when used from multiple sub interpreters at the same time.</p>
+<p>Where multiple applications, potentially owned by different users, need to
+be run, &#8216;daemon&#8217; mode of mod_wsgi should instead be used. Using daemon
+mode, each application can be delegated to its own dedicated daemon process
+running just the WSGI application, with the Apache child processes merely
+acting as proxies for delivering the requests to the application. Any
+static files associated with the application would still be served up by
+the Apache child processes to ensure best performance possible.</p>
+<p>To denote that a daemon process should be created the WSGIDaemonProcess
+directive is used. The WSGIProcessGroup directive is then used to delegate
+specific WSGI applications to execute within that daemon process:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>WSGIDaemonProcess www.site.com threads=15 maximum-requests=10000
+
+Alias /favicon.ico /usr/local/wsgi/static/favicon.ico
+
+AliasMatch /([^/]*\.css) /usr/local/wsgi/static/styles/$1
+
+Alias /media/ /usr/local/wsgi/static/media/
+
+&lt;Directory /usr/local/wsgi/static&gt;
+Order deny,allow
+Allow from all
+&lt;/Directory&gt;
+
+WSGIScriptAlias / /usr/local/wsgi/scripts/myapp.wsgi
+WSGIProcessGroup www.site.com
+
+&lt;Directory /usr/local/wsgi/scripts&gt;
+
+Order allow,deny
+Allow from all
+&lt;/Directory&gt;
+</pre></div>
+</div>
+<p>Where Apache has been started as the <code class="docutils literal"><span class="pre">root</span></code> user, the daemon processes
+can optionally be run as a user different to that which the Apache child
+processes would normally be run as. The number of daemon processes making
+up the process group and whether they are single or multithreaded can also
+be controlled.</p>
+<p>A further option which should be considered is that which dictates the
+maximum number of requests that a daemon process should be allowed to
+accept before the daemon process is shutdown and restarted. This should be
+used where there are problems with increasing memory use due to problems
+with the application itself or a third party extension module.</p>
+<p>As a general recommendation it would probably be a good idea to use the
+maximum requests option when running large installations of packages such
+as Trac and MoinMoin. Any large web site based on frameworks such as
+Django, TurboGears and Pylons or applications which use a database backend
+may also benefit.</p>
+<p>If an application does not shutdown cleanly when the maximum number of
+requests has been reached, it will be killed off after the shutdown timeout
+has expired. If this occurs on a regular basis you should run with more
+than a single daemon process in the process group such that the other
+process can still accept requests while the first is being restarted.</p>
+<p>If the maximum requests option is not specified, then the daemon process
+will never expire and will only be restarted if Apache is restarted or the
+user explicitly signals it to restart.</p>
+<p>For further information about the options that can be supplied to the
+WSGIDaemonProcess directive see the more detailed documentation for
+<a class="reference internal" href="../configuration-directives/WSGIDaemonProcess.html"><span class="doc">WSGIDaemonProcess</span></a>. A few of the options
+which can be supplied to the WSGIDaemonProcess directive worth highlighting
+are:</p>
+<p><strong>user=name | user=#uid</strong></p>
+<blockquote>
+<div><p>Defines the UNIX user _name_ or numeric user _uid_ of the user that
+the daemon processes should be run as. If this option is not supplied
+the daemon processes will be run as the same user that Apache would
+run child processes and as defined by the User directive.</p>
+<p>Note that this option is ignored if Apache wasn&#8217;t started as the root
+user, in which case no matter what the settings, the daemon processes
+will be run as the user that Apache was started as.</p>
+</div></blockquote>
+<p><strong>group=name | group=#gid</strong></p>
+<blockquote>
+<div><p>Defines the UNIX group _name_ or numeric group _gid_ of the primary
+group that the daemon processes should be run as. If this option is not
+supplied the daemon processes will be run as the same group that Apache
+would run child processes and as defined by the Group directive.</p>
+<p>Note that this option is ignored if Apache wasn&#8217;t started as the root
+user, in which case no matter what the settings, the daemon processes
+will be run as the group that Apache was started as.</p>
+</div></blockquote>
+<p><strong>processes=num</strong></p>
+<blockquote>
+<div><p>Defines the number of daemon processes that should be started in this
+process group. If not defined then only one process will be run in this
+process group.</p>
+<p>Note that if this option is defined as &#8216;processes=1&#8217;, then the WSGI
+environment attribute called &#8216;wsgi.multiprocess&#8217; will be set to be True
+whereas not providing the option at all will result in the attribute
+being set to be False. This distinction is to allow for where some form
+of mapping mechanism might be used to distribute requests across
+multiple process groups and thus in effect it is still a multiprocess
+application. If you need to ensure that &#8216;wsgi.multiprocess&#8217; is False so
+that interactive debuggers will work, simply do not specify the
+&#8216;processes&#8217; option and allow the default single daemon process to be
+created in the process group.</p>
+</div></blockquote>
+<p><strong>threads=num</strong></p>
+<blockquote>
+<div><p>Defines the number of threads to be created to handle requests in each
+daemon process within the process group.</p>
+<p>If this option is not defined then the default will be to create 15
+threads in each daemon process within the process group.</p>
+</div></blockquote>
+<p><strong>maximum-requests=nnn</strong></p>
+<blockquote>
+<div><p>Defines a limit on the number of requests a daemon process should
+process before it is shutdown and restarted. Setting this to a non zero
+value has the benefit of limiting the amount of memory that a process
+can consume by (accidental) memory leakage.</p>
+<p>If this option is not defined, or is defined to be 0, then the daemon
+process will be persistent and will continue to service requests until
+Apache itself is restarted or shutdown.</p>
+</div></blockquote>
+<p>Note that the name of the daemon process group must be unique for the whole
+server. That is, it is not possible to use the same daemon process group
+name in different virtual hosts.</p>
+<p>If the WSGIDaemonProcess directive is specified outside of all virtual
+host containers, any WSGI application can be delegated to be run within
+that daemon process group. If the WSGIDaemonProcess directive is specified
+within a virtual host container, only WSGI applications associated with
+virtual hosts with the same server name as that virtual host can be
+delegated to that set of daemon processes.</p>
+<p>When WSGIDaemonProcess is associated with a virtual host, the error log
+associated with that virtual host will be used for all Apache error log
+output from mod_wsgi rather than it appear in the main Apache error log.</p>
+<p>For example, if a server is hosting two virtual hosts and it is desired
+that the WSGI applications related to each virtual host run in distinct
+processes of their own and as a user which is the owner of that virtual
+host, the following could be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+<span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+<span class="n">CustomLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">access_log</span> <span class="n">common</span>
+<span class="n">ErrorLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">ww</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">error_log</span>
+
+<span class="n">WSGIDaemonProcess</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span> <span class="n">user</span><span class="o">=</span><span class="n">joe</span> <span class="n">group</span><span class="o">=</span><span class="n">joe</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">25</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">www</span><span class="o">.</span><span class="n">site1</span><span class="o">.</span><span class="n">com</span>
+
+<span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+<span class="n">ServerName</span> <span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span>
+<span class="n">CustomLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">access_log</span> <span class="n">common</span>
+<span class="n">ErrorLog</span> <span class="n">logs</span><span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">error_log</span>
+
+<span class="n">WSGIDaemonProcess</span> <span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span> <span class="n">user</span><span class="o">=</span><span class="n">bob</span> <span class="n">group</span><span class="o">=</span><span class="n">bob</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">25</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">www</span><span class="o">.</span><span class="n">site2</span><span class="o">.</span><span class="n">com</span>
+
+<span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>When using the WSGIProcessGroup directive, the argument to the directive
+can be either one of two special expanding variables or the actual name of
+a group of daemon processes setup using the WSGIDaemonProcess directive.
+The meaning of the special variables are:</p>
+<p><strong>%{GLOBAL}</strong></p>
+<blockquote>
+<div>The process group name will be set to the empty string.
+Any WSGI applications in the global process group will always be
+executed within the context of the standard Apache child processes.
+Such WSGI applications will incur the least runtime overhead, however,
+they will share the same process space with other Apache modules such
+as PHP, as well as the process being used to serve up static file
+content. Running WSGI applications within the standard Apache child
+processes will also mean the application will run as the user that
+Apache would normally run as.</div></blockquote>
+<p><strong>%{ENV:variable}</strong></p>
+<blockquote>
+<div>The process group name will be set to the value of the named
+environment variable. The environment variable is looked-up via the
+internal Apache notes and subprocess environment data structures and
+(if not found there) via getenv() from the Apache server process.
+The result must identify a named process group setup using the
+WSGIDaemonProcess directive.</div></blockquote>
+<p>In an Apache configuration file, environment variables accessible using
+the <cite>%{ENV}</cite> variable reference can be setup by using directives such as
+SetEnv and RewriteRule.</p>
+<p>For example, to select which process group a specific WSGI application
+should execute within based on entries in a database file, the following
+could be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>RewriteEngine On
+RewriteMap wsgiprocmap dbm:/etc/httpd/wsgiprocmap.dbm
+RewriteRule . - [E=PROCESS_GROUP:${wsgiprocmap:%{REQUEST_URI}}]
+
+WSGIProcessGroup %{ENV:PROCESS_GROUP}
+</pre></div>
+</div>
+<p>Note that the WSGIDaemonProcess directive and corresponding features are
+not available on Windows or when running Apache 1.3.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation-issues.html" class="btn btn-neutral float-right" title="Installation Issues" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quick-configuration-guide.html" class="btn btn-neutral" title="Quick Configuration Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

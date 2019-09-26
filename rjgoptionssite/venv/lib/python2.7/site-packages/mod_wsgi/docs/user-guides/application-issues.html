@@ -1,0 +1,1378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Application Issues &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Frequently Asked Questions" href="frequently-asked-questions.html"/>
+        <link rel="prev" title="Configuration Issues" href="configuration-issues.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Application Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#access-rights-of-apache-user">Access Rights Of Apache User</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#secure-variants-of-unix">Secure Variants Of UNIX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-working-directory">Application Working Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-environment-variables">Application Environment Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timezone-and-locale-settings">Timezone and Locale Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-home-environment-variable">User HOME Environment Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-global-variables">Application Global Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-to-standard-output">Writing To Standard Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reading-from-standard-input">Reading From Standard Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#registration-of-signal-handlers">Registration Of Signal Handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pickling-of-python-objects">Pickling of Python Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expat-shared-library-conflicts">Expat Shared Library Conflicts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mysql-shared-library-conflicts">MySQL Shared Library Conflicts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssl-shared-library-conflicts">SSL Shared Library Conflicts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-md5-hash-module-conflict">Python MD5 Hash Module Conflict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-pysqlite-symbol-conflict">Python &#8216;pysqlite&#8217; Symbol Conflict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-simplified-gil-state-api">Python Simplified GIL State API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reloading-python-interpreters">Reloading Python Interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-python-sub-interpreters">Multiple Python Sub Interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-constrained-vps-systems">Memory Constrained VPS Systems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openbsd-and-thread-stack-size">OpenBSD And Thread Stack Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-oracle-wrappers">Python Oracle Wrappers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-blocking-module-imports">Non Blocking Module Imports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Application Issues</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/application-issues.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="application-issues">
+<h1>Application Issues<a class="headerlink" href="#application-issues" title="Permalink to this headline">¶</a></h1>
+<p>Although installation and configuration of mod_wsgi may be successful,
+there are a range of issues that can impact on specific WSGI applications.
+These problems can arise for various reasons, including conflicts between
+an application and other Apache modules or non WSGI applications hosted by
+Apache, a WSGI application not being portable, use of Python modules that
+are not fully compatible with the way that mod_wsgi uses Python sub
+interpreters, or dependence on a specific operating system execution
+environment.</p>
+<p>The purpose of this document is to capture all the known problems that can
+arise, including workarounds if available, related to the actual running
+of a WSGI application.</p>
+<p>Note that the majority of these issues are not unique to mod_wsgi and would
+also affect mod_python as well. This is because they arise due to the fact
+that the Python interpreter is being embedded within the Apache server
+itself. Unlike mod_python, in mod_wsgi there are ways of avoiding many of
+the problems by using daemon mode.</p>
+<p>If you are having a problem which doesn&#8217;t seem to be covered by this
+document, also make sure you see <a class="reference internal" href="installation-issues.html"><span class="doc">Installation Issues</span></a>
+and <a class="reference internal" href="configuration-issues.html"><span class="doc">Configuration Issues</span></a>.</p>
+<div class="section" id="access-rights-of-apache-user">
+<h2>Access Rights Of Apache User<a class="headerlink" href="#access-rights-of-apache-user" title="Permalink to this headline">¶</a></h2>
+<p>For most Apache installations the web server is initially started up as
+the root user. This is necessary as operating systems will block non root
+applications from making use of Internet ports below 1024. A web server
+responding to HTTP and HTTPS requests on the standard ports will need to
+be able to acquire ports 80 and 443.</p>
+<p>Once the web server has acquired these ports and forked off child processes
+to handle any requests, the user that the child processes run as will be
+switched to a non privileged user. The actual name of this user varies from
+one system to another with some commonly used names being &#8216;apache&#8217;,
+&#8216;httpd&#8217;, &#8216;www&#8217;, and &#8216;wwwserv&#8217;. As well as the user being switched, the web
+server will also normally switch to an alternate group.</p>
+<p>If running a WSGI application in embedded mode with mod_wsgi, the user and
+group that the Apache child processes run as will be inherited by the
+application. To determine which user and group would be used the main
+Apache configuration files should be consulted. The particular
+configuration directives which control this are <code class="docutils literal"><span class="pre">User</span></code> and <code class="docutils literal"><span class="pre">Group</span></code>.
+For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">User</span> <span class="n">www</span>
+<span class="n">Group</span> <span class="n">www</span>
+</pre></div>
+</div>
+<p>Because this user is non privileged and will generally be different to the
+user that owns the files for a specific WSGI application, it is important
+that such files and the directories which contain them are accessible to
+others. If the files are not readable or the directories not searchable,
+the web server will not be able to see or read the files and execution of
+the WSGI application will fail at some point.</p>
+<p>As well as being able to read files, if a WSGI application needs to be able
+to create or edit files, it will be necessary to create a special directory
+which it can use to create files in and which is owned by the same user
+that Apache is running as. Any files contained in the directory which it
+needs to edit should also be owned by the user that Apache is run as, or
+group privileges used in some way to ensure the application will have the
+required access to update the file.</p>
+<p>One example of where access rights can be a problem in Python is with
+Python eggs which need to be unpacked at runtime by a WSGI application.
+This issue arises with Trac because of its ability for plugins to be
+packaged as Python eggs. Pylons with its focus on being able to support
+Python eggs in its deployment mechanism can also be affected. Because
+of the growing reliance on Python eggs however, the issue could arise
+for any WSGI application where you have installed Python eggs in their
+zipped up form rather than their unpacked form.</p>
+<p>If your WSGI application is affected by this problem in relation to Python
+eggs, you would generally see a Python exception similar to the following
+occuring and being logged in the Apache error logs:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>ExtractionError: Can&#39;t extract file(s) to egg cache
+
+The following error occurred while trying to extract file(s) to the
+Python egg cache:
+
+[Errno 13] Permission denied: &#39;/var/www/.python-eggs&#39;
+
+The Python egg cache directory is currently set to:
+
+  /var/www/.python-eggs
+
+Perhaps your account does not have write access to this directory?
+You can change the cache directory by setting the PYTHON_EGG_CACHE
+environment variable to point to an accessible directory.
+</pre></div>
+</div>
+<p>To avoid this particular problem you can set the &#8216;PYTHON_EGG_CACHE&#8217; cache
+environment variable at the start of the WSGI application script file. The
+environment variable should be set to a directory which is owned and/or
+writable by the user that Apache runs as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYTHON_EGG_CACHE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/pylons/python-eggs&#39;</span>
+</pre></div>
+</div>
+<p>Alternatively, if using mod_wsgi 2.0, one could also use the WSGIPythonEggs
+directive for applications running in embedded mode, or the &#8216;python-eggs&#8217;
+option to the WSGIDaemonProcess directive when using daemon mode.</p>
+<p>Note that you should refrain from ever using directories or files which
+have been made writable to anyone as this could compromise security. Also
+be aware that if hosting multiple applications under the same web server,
+they will all run as the same user and so it will be possible for each to
+both see and modify each others files. If this is an issue, you should host
+the applications on different web servers running as different users or on
+different systems. Alternatively, any data required or updated by the
+application should be hosted in a database with separate accounts for each
+application.</p>
+<p>Issues related to access rights can in general be avoided if daemon mode
+of mod_wsgi is used to run a WSGI application. This is because in daemon
+mode the user and group that the processes run as can be overridden and set
+to alternate values. Do however note additional issues related to &#8216;HOME&#8217;
+environment variable as described below.</p>
+</div>
+<div class="section" id="secure-variants-of-unix">
+<h2>Secure Variants Of UNIX<a class="headerlink" href="#secure-variants-of-unix" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the constraints imposed by Apache running as a distinct
+user, some variants of UNIX have features whereby access privileges for a
+specific user may be even further restricted. One example of such a system
+is SELinux. In such a system, the user that Apache runs as is typically
+restricted to only being able to access quite specific parts of the file
+system as well as possibly other resources or operating system library
+features.</p>
+<p>If running such a system you will need to change the configuration for the
+security system to allow both mod_wsgi and you application to do what is
+required.</p>
+<p>As an example, the extra security checks of such a system may present
+problems if the version of Python you are using only provides a static
+library and not a shared library. If you experience an error similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Cannot</span> <span class="n">load</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span> <span class="n">into</span> <span class="n">server</span><span class="p">:</span> \
+ <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">restore</span> <span class="n">segment</span> <span class="n">prot</span> <span class="n">after</span> <span class="n">reloc</span><span class="p">:</span> \
+ <span class="n">Permission</span> <span class="n">denied</span>
+</pre></div>
+</div>
+<p>you will either need to configure the security system appropriately to
+allow that memory relocations in static code to work, or you would need to
+make sure that you reinstall Python such that it provides a shared library
+and rebuild mod_wsgi. Other issues around only having a static variant of
+the Python library available are described in section &#8216;Lack Of Python
+Shared Library&#8217; of <a class="reference internal" href="installation-issues.html"><span class="doc">Installation Issues</span></a>.</p>
+<p>Even where a shared library is used, SELinux has also resulted in similar
+memory related errors when loading C extension modules at run time for
+Python:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">ImportError</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">lib</span><span class="o">-</span><span class="n">dynload</span><span class="o">/</span><span class="n">itertools</span><span class="o">.</span><span class="n">so</span><span class="p">:</span> \
+ <span class="n">failed</span> <span class="n">to</span> <span class="nb">map</span> <span class="n">segment</span> <span class="kn">from</span> <span class="nn">shared</span> <span class="nb">object</span><span class="p">:</span> <span class="n">Permission</span> <span class="n">denied</span>
+</pre></div>
+</div>
+<p>All up, configuring SELinux is a bit of a black art and so you are wise
+to do your research.</p>
+<p>For some information about using mod_wsgi in a SELinux enabled environment
+check out:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.packtpub.com/article/selinux-secured-web-hosting-python-based-web-applications">http://www.packtpub.com/article/selinux-secured-web-hosting-python-based-web-applications</a></li>
+<li><a class="reference external" href="http://www.globalherald.net/jb01/weblog/21.html">http://www.globalherald.net/jb01/weblog/21.html</a></li>
+<li><a class="reference external" href="http://blog.endpoint.com/2010/02/selinux-httpd-modwsgi-26-rhel-centos-5.html">http://blog.endpoint.com/2010/02/selinux-httpd-modwsgi-26-rhel-centos-5.html</a></li>
+</ul>
+</div></blockquote>
+<p>If you suspect that an issue may be caused by SELinux, you could
+temporarily try disabling it and doing a restart to verify whether it is
+the cause, but always re-enable it and do not disable it completely.</p>
+</div>
+<div class="section" id="application-working-directory">
+<h2>Application Working Directory<a class="headerlink" href="#application-working-directory" title="Permalink to this headline">¶</a></h2>
+<p>When Apache is started it is typically run such that the current working
+directory for the application is the root directory, although the actual
+directory may vary dependent on the system or any extra security system in
+place.</p>
+<p>Importantly, the current working directory will generally never have any
+direct relationship to any specific WSGI application. As a result, an
+application should never assume that it can use relative path names for
+accessing the filesystem. All paths used should always be absolute path
+names.</p>
+<p>An application should also never change the current working directory and
+then assume that it can then use relative paths. This is because other
+applications being hosted on the same web server may assume they can do the
+same thing with the result that you can never be sure what the current
+working directory may actually be.</p>
+<p>You should not even assume that it is safe to change the working directory
+immediately prior to a specific operation, as use of multithreading can
+mean that another application could change it even before you get to
+perform the operation which depended on the current working directory
+being the value you set it to.</p>
+<p>In the case of Python, if needing to use relative paths in order to make it
+easier to relocate an application, one can determine the directory that a
+specific code module is located in using <code class="docutils literal"><span class="pre">os.path.dirname(__file__)</span></code>. A
+full path name can then be constructed by using <code class="docutils literal"><span class="pre">os.path.join()</span></code> to
+merge the relative path with the directory name where the module was
+located.</p>
+<p>Another option is to take the directory part of the <code class="docutils literal"><span class="pre">SCRIPT_FILENAME</span></code>
+variable from the WSGI environment as the base directory. The only other
+alternative is to rely on a centralised configuration file so that all
+absolute path names are at least defined in the one place.</p>
+<p>Although it is preferable that an application never make assumptions about
+what the current working directory is, if for some reason the application
+cannot be changed the daemon mode of mod_wsgi could be used. This will work
+as an initial current working directory for the process can be specified as
+an option to the WSGIDaemonProcess directive used to configure the daemon
+process. Because the working directory applies to the whole process
+however, only the application requiring this working directory should be
+delegated to run within the context of that daemon process.</p>
+</div>
+<div class="section" id="application-environment-variables">
+<h2>Application Environment Variables<a class="headerlink" href="#application-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>When Python sub interpreters are created, each has its own copy of any
+modules which are loaded. They also each have their own copy of the set of
+environment variables inherited by the process and found in <code class="docutils literal"><span class="pre">os.environ</span></code>.</p>
+<p>Problems can arise with the use of <code class="docutils literal"><span class="pre">os.environ</span></code> though, due to the fact
+that updates to <code class="docutils literal"><span class="pre">os.environ</span></code> are pushed back into the set of process
+environment variables. This means that if the Python sub interpreter which
+corresponds to another application group is created after <code class="docutils literal"><span class="pre">os.environ</span></code>
+has been updated, the new value for that environment variable will be
+inherited by the new Python sub interpreter.</p>
+<p>This would not generally be a problem where a WSGI application is
+configured using a single mandatory environment variable, as the WSGI
+application script file for each application instance would be required to
+set it, thereby overriding any value inherited from another application
+instance via the process environment variables.</p>
+<p>As example, Django relies on the <code class="docutils literal"><span class="pre">DJANGO_SETTINGS_MODULE</span></code> environment
+variable being set to be the name of the Python module containing Django&#8217;s
+configuration settings. So long as each WSGI script file sets this variable
+all will be okay.</p>
+<p>Where use of environment variables can be problematic though is where there
+are multiple environment variables that can be set, with some being
+optional and non overlapping sets of variables are used to configure
+different modes.</p>
+<p>As example, Trac can be configured to host a single project by setting the
+<code class="docutils literal"><span class="pre">TRAC_ENV</span></code> environment variable. Alternatively, Trac can be configured
+to host a group of projects by setting the <code class="docutils literal"><span class="pre">TRAC_ENV_PARENT_DIR</span></code>
+environment variable. If both variables are set at the same time, then
+<code class="docutils literal"><span class="pre">TRAC_ENV</span></code> takes precedence.</p>
+<p>If now within the one process you have a Trac instance of each type in
+different Python sub interpreters, if that using <code class="docutils literal"><span class="pre">TRAC_ENV</span></code> loads
+first, when the other is loaded it will inherit <code class="docutils literal"><span class="pre">TRAC_ENV</span></code> from the
+first and that will override <code class="docutils literal"><span class="pre">TRAC_ENV_PARENT_DIR</span></code>. The end result is
+that both sites point at the same single project, rather than the first
+being for the single project and the other being the group of projects.</p>
+<p>Because of this potential leakage of environment variables between Python
+sub interpreters, it is preferable that WSGI applications not rely on
+environment variables for configuration.</p>
+<p>A further reason that environment variables should not be used for
+configuration is that it then becomes impossible to host two instances of
+the same WSGI application component within the same Python sub interpreter
+if each would require a different value be set for the same environment
+variable. Note that this also applies to other means of hosting WSGI
+applications besides mod_wsgi and is not mod_wsgi specific.</p>
+<p>As a consequence, because Django relies on the <code class="docutils literal"><span class="pre">DJANGO_SETTINGS_MODULE</span></code>
+environment variable being set to be the name of the Python module
+containing Django&#8217;s configuration settings, it would be impossible to host
+two Django instances in the same Python sub interpreter. It is thus
+important that where there are multiple instances of Django that need to be
+run on the same web server, that they run in separate Python sub
+interpreters.</p>
+<p>As it stands the default behaviour of mod_wsgi is to run different WSGI
+application scripts within the context of different Python sub
+interpreters. As such, this limitation in Django does not present as an
+immediate problem, however it should be kept in mind when attempting to
+merge multiple WSGI applications into one application group under one
+Python sub interpreter to try and limit memory use by avoiding duplicate
+instances of modules in memory.</p>
+<p>The prefered way of configuring a WSGI application is for the application
+to be a class instance which at the point of initialisation is provided
+with its configuration data as an argument. Alternatively, or in
+conjunction with this, configuration information can be passed through to
+the WSGI application in the WSGI environment. Variables in the WSGI
+environment could be set by a WSGI middleware component, or from the Apache
+configuration files using the <code class="docutils literal"><span class="pre">SetEnv</span></code> directive.</p>
+<p>Configuring an application when it is first constructed, or by supplying
+the configuration information through the WSGI environment variables, is
+thus the only way to ensure that a WSGI application is portable between
+different means of hosting WSGI applications. These problems can also be
+avoided by using daemon mode of mod_wsgi and delegating each WSGI
+application instance to a distinct daemon process group.</p>
+</div>
+<div class="section" id="timezone-and-locale-settings">
+<h2>Timezone and Locale Settings<a class="headerlink" href="#timezone-and-locale-settings" title="Permalink to this headline">¶</a></h2>
+<p>More insidious than the problem of leakage of application environment
+variable settings between sub interpreters, is where an environment
+variable is required by operating system libraries to set behaviour.</p>
+<p>This is a problem because applications running in different sub
+interpreters could set the process environment variable to be different
+values. Rather than each seeing behaviour consistant with the setting they
+used, all applications will see behaviour reflecting the setting as
+determined by the last application to initialise itself.</p>
+<p>Process environment variables where this can be a problem are the &#8216;TZ&#8217;
+environment variable for setting the timezone, and the &#8216;LANG&#8217;, &#8216;LC_TYPE&#8217;,
+&#8216;LC_COLLATE&#8217;, &#8216;LC_TIME&#8217; and &#8216;LC_MESSAGES&#8217; environment variables for setting
+the locale and language settings.</p>
+<p>The result of this, is that you cannot host multiple WSGI applications in
+the same process, even if running in different sub interpreters, if they
+require different settings for timezone, locale and/or language.</p>
+<p>In this situation you would have no choice but to use mod_wsgi daemon mode
+and delegate applications requiring different settings to different daemon
+process groups. Alternatively, completely different instances of Apache
+should be used.</p>
+</div>
+<div class="section" id="user-home-environment-variable">
+<h2>User HOME Environment Variable<a class="headerlink" href="#user-home-environment-variable" title="Permalink to this headline">¶</a></h2>
+<p>If Apache is started automatically as &#8216;root&#8217; when a machine is first booted
+it would inherit the user &#8216;HOME&#8217; environment variable setting of the &#8216;root&#8217;
+user. If however, Apache is started by a non privileged user via the &#8216;sudo&#8217;
+command, it would inherit the &#8216;HOME&#8217; environment variable of the user who
+started it, unless the <code class="docutils literal"><span class="pre">-H</span></code> option had been supplied to &#8216;sudo&#8217;. In the case
+of the <code class="docutils literal"><span class="pre">-H</span></code> option being supplied, the &#8216;HOME&#8217; environment variable of the
+&#8216;root&#8217; user would again be used.</p>
+<p>Because the value of the &#8216;HOME&#8217; environment variable can vary based on how
+Apache has been started, an application should not therefore depend on the
+&#8216;HOME&#8217; environment variable.</p>
+<p>Unfortunately, parts of the Python standard library do use the &#8216;HOME&#8217;
+environment variable as an authoritative source of information. In
+particular, the &#8216;os.expanduser()&#8217; function gives precedence to the value of
+the &#8216;HOME&#8217; environment variable over the home directory as obtained from
+the user password database entry:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;HOME&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pwd</span>
+    <span class="n">userhome</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">())</span><span class="o">.</span><span class="n">pw_dir</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">userhome</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>That the &#8216;os.expanduser()&#8217; function does this means it can yield incorrect
+results. Since the &#8216;setuptools&#8217; package uses &#8216;os.expanduser()&#8217; on UNIX
+systems to calculate where to store Python EGGS, the location it tries to
+use can change based on who started Apache and how.</p>
+<p>The only way to guarantee that the &#8216;HOME&#8217; environment variable is set to a
+sensible value is for it to be set explicitly at the start of the WSGI
+script file before anything else is done:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pwd</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;HOME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">())</span><span class="o">.</span><span class="n">pw_dir</span>
+</pre></div>
+</div>
+<p>In mod_wsgi 2.0, if using daemon mode the value of the &#8216;HOME&#8217; environment
+variable will be automatically reset to correspond to the home directory of
+the user that the daemon process is running as. This is not done for
+embedded mode however, due to the fact that the Apache child processes are
+shared with other Apache modules and it is not seen as appropriate that
+mod_wsgi should be changing the same environment that is used by these
+other unrelated modules.</p>
+<p>For some consistency in the environment inherited by applications running
+in embedded mode, it is therefore recommended that &#8216;sudo -H&#8217; at least always
+be used when restarting Apache from a non root account.</p>
+</div>
+<div class="section" id="application-global-variables">
+<h2>Application Global Variables<a class="headerlink" href="#application-global-variables" title="Permalink to this headline">¶</a></h2>
+<p>Because the Python sub interpreter which hosts a WSGI application is
+retained in memory between requests, any global data is effectively
+persistent and can be used to carry state forward from one request to the
+next. On UNIX systems however, Apache will normally use multiple processes
+to handle requests and each such process will have its own global data.</p>
+<p>This means that although global data can be used, it can only be used
+to cache data which can be safely reused within the context of that single
+process. You cannot use global data as a means of holding information that
+must be visible to any request handler no matter which process it runs in.</p>
+<p>If data must be visible to all request handlers across all Apache
+processes, then it will be necessary to store the data in the filesystem
+directly, or using a database. Alternatively, shared memory can be employed
+by using a package such as memcached.</p>
+<p>Because your WSGI application can be spread across multiple process, one
+must also be very careful in respect of local caching mechanisms employed
+by database connector objects. If such an adapter is quite agressive in its
+caching, it is possible that a specific process may end up with an out of
+date view of data from a database where one of the other processes has
+since changed the data. The result may be that requests handled in different
+processes may give different results.</p>
+<p>The problems described above can be alleviated to a degree by using daemon
+mode of mod_wsgi and restricting to one the number of daemon processes in
+the process group. This will ensure that all requests are serviced by the
+same process. If the data is only held in memory, it would however obviously
+be lost when Apache is restarted or the daemon process is restarted due to
+a maximum number of requests being reached.</p>
+</div>
+<div class="section" id="writing-to-standard-output">
+<h2>Writing To Standard Output<a class="headerlink" href="#writing-to-standard-output" title="Permalink to this headline">¶</a></h2>
+<p>No WSGI application component which claims to be portable should write to
+standard output. That is, an application should not use the Python <code class="docutils literal"><span class="pre">print</span></code>
+statement without directing output to some alternate stream. An application
+should also not write directly to <code class="docutils literal"><span class="pre">sys.stdout</span></code>.</p>
+<p>This is necessary as an underlying WSGI adapter hosting the application
+may use standard output as the means of communicating a response back to a
+web server. This technique is for example used when WSGI is hosted within a
+CGI script.</p>
+<p>Ideally any WSGI adapter which uses <code class="docutils literal"><span class="pre">sys.stdout</span></code> in this way should
+cache a reference to <code class="docutils literal"><span class="pre">sys.stdout</span></code> for its own use and then replace it
+with a reference to <code class="docutils literal"><span class="pre">sys.stderr</span></code>. There is however nothing in the WSGI
+specification that requires this or recommends it, so one can&#8217;t therefore
+rely on it being done.</p>
+<p>In order to highlight non portable WSGI application components which write
+to or use standard output in some way, mod_wsgi prior to version 3.0
+replaced <code class="docutils literal"><span class="pre">sys.stdout</span></code> with an object which will raise an exception when
+any attempt is made to write to or make use of standard output:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">IOError</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="n">access</span> <span class="n">restricted</span> <span class="n">by</span> <span class="n">mod_wsgi</span>
+</pre></div>
+</div>
+<p>If the WSGI application you are using fails due to use of standard output
+being restricted and you cannot change the application or configure it
+to behave differently, you have one of two options. The first option is to
+replace <code class="docutils literal"><span class="pre">sys.stdout</span></code> with <code class="docutils literal"><span class="pre">sys.stderr</span></code> at the start of your WSGI
+application script file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+</pre></div>
+</div>
+<p>This will have the affect of directing any data written to standard output
+to standard error. Such data sent to standard error is then directed through
+the Apache logging system and will appear in the main Apache error log file.</p>
+<p>The second option is to remove the restriction on using standard output
+imposed by mod_wsgi using a configuration directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIRestrictStdout</span> <span class="n">Off</span>
+</pre></div>
+</div>
+<p>This configuration directive must appear at global scope within the Apache
+configuration file outside of any VirtualHost container directives. It
+will remove the restriction on using standard output from all Python sub
+interpreters that mod_wsgi creates. There is no way using the configuration
+directive to remove the restriction from only one Python sub interpreter.</p>
+<p>When the restriction is not imposed, any data written to standard output
+will also be directed through the Apache logging system and will appear in
+the main Apache error log file.</p>
+<p>Ideally though, code should never use the &#8216;print&#8217; statement without
+redirecting the output to &#8216;sys.stderr&#8217;. Thus if the code can be changed,
+then it should be made to use something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">function</span><span class="p">():</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;application debug&quot;</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Also, note that code should ideally not be making assumptions about the
+environment it is executing in, eg., whether it is running in an
+interactive mode, by asking whether standard output is a tty. In other
+words, calling &#8216;isatty()&#8217; will cause a similar error with mod_wsgi. If such
+code is a library module, the code should be providing a way to
+specifically flag that it is a non interactive application and not use
+magic to determine whether that is the case or not.</p>
+<p>For further information about options for logging error messages and other
+debugging information from a WSGI application running under mod_wsgi see
+section &#8216;Apache Error Log Files&#8217; of <a class="reference internal" href="debugging-techniques.html"><span class="doc">Debugging Techniques</span></a>.</p>
+<p>WSGI applications which are known to write data to standard output in their
+default configuration are CherryPy and TurboGears. Some plugins for Trac
+also have this problem. Thus one of these two techniques described above to
+remove the restriction, should be used in conjunction with these WSGI
+applications. Alternatively, those applications will need to be configured
+not to output log messages via standard output.</p>
+<p>Note that the restrictions on writing to stdout were removed in mod_wsgi
+3.0 because it was found that people couldn&#8217;t be bothered to fix their
+code. Instead they just used the documented workarounds, thereby
+propogating their non portable WSGI application code. As such, since people
+just couldn&#8217;t care, stopped promoting the idea of writing portable WSGI
+applications.</p>
+</div>
+<div class="section" id="reading-from-standard-input">
+<h2>Reading From Standard Input<a class="headerlink" href="#reading-from-standard-input" title="Permalink to this headline">¶</a></h2>
+<p>No general purpose WSGI application component which claims to be portable
+should read from standard input. That is, an application should not read
+directly from <code class="docutils literal"><span class="pre">sys.stdin</span></code> either directly or indirectly.</p>
+<p>This is necessary as an underlying WSGI adapter hosting the application may
+use standard input as the means of receiving a request from a web server.
+This technique is for example used when WSGI is hosted within a CGI script.</p>
+<p>Ideally any WSGI adapter which uses <code class="docutils literal"><span class="pre">sys.stdin</span></code> in this way should
+cache a reference to <code class="docutils literal"><span class="pre">sys.stdin</span></code> for its own use and then replace it
+with an instance of <code class="docutils literal"><span class="pre">StringIO.StringIO</span></code> wrapped around an empty string
+such that reading from standard input would always give the impression that
+there is no input data available. There is however nothing in the WSGI
+specification that requires this or recommends it, so one can&#8217;t therefore
+rely on it being done.</p>
+<p>In order to highlight non portable WSGI application components which try
+and read from or otherwise use standard input, mod_wsgi prior to version
+3.0 replaced <code class="docutils literal"><span class="pre">sys.stdin</span></code> with an object which will raise an exception
+when any attempt is made to read from standard input or otherwise
+manipulate or reference the object:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">IOError</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span> <span class="n">access</span> <span class="n">restricted</span> <span class="n">by</span> <span class="n">mod_wsgi</span>
+</pre></div>
+</div>
+<p>This restriction on standard input will however prevent the use of
+interactive debuggers for Python such as <code class="docutils literal"><span class="pre">pdb</span></code>. It can also interfere
+with Python modules which use the <code class="docutils literal"><span class="pre">isatty()</span></code> method of <code class="docutils literal"><span class="pre">sys.stdin</span></code>
+to determine whether an application is being run within an interactive
+session.</p>
+<p>If it is required to be able to run such debuggers or other code which
+requires interactive input, the restriction on using standard input can be
+removed using a configuration directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIRestrictStdin</span> <span class="n">Off</span>
+</pre></div>
+</div>
+<p>This configuration directive must appear at global scope within the Apache
+configuration file outside of any VirtualHost container directives. It
+will remove the restriction on using standard input from all Python sub
+interpreters that mod_wsgi creates. There is no way using the configuration
+directive to remove the restriction from only one Python sub interpreter.</p>
+<p>Note however that removing the restriction serves no purpose unless you
+also run the Apache web server in single process debug mode. This is
+because Apache normally makes use of multiple processes and would close
+standard input to prevent any process trying to read from standard input.</p>
+<p>To run Apache in single process debug mode and thus allow an interactive
+Python debugger such as <code class="docutils literal"><span class="pre">pdb</span></code> to be used, your Apache instance should
+be shutdown and then the <code class="docutils literal"><span class="pre">httpd</span></code> program run explicitly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">httpd</span> <span class="o">-</span><span class="n">X</span>
+</pre></div>
+</div>
+<p>For more details on using interactive debuggers in the context of mod_wsgi
+see documentation on <a class="reference internal" href="debugging-techniques.html"><span class="doc">Debugging Techniques</span></a>.</p>
+<p>Note that the restrictions on reading from stdin were removed in mod_wsgi
+3.0 because it was found that people couldn&#8217;t be bothered to fix their
+code. Instead they just used the documented workarounds, thereby
+propogating their non portable WSGI application code. As such, since people
+just couldn&#8217;t care, stopped promoting the idea of writing portable WSGI
+applications.</p>
+</div>
+<div class="section" id="registration-of-signal-handlers">
+<h2>Registration Of Signal Handlers<a class="headerlink" href="#registration-of-signal-handlers" title="Permalink to this headline">¶</a></h2>
+<p>Web servers upon which WSGI applications are hosted more often than not use
+signals to control their operation. The Apache web server in particular
+uses various signals to control its operation including the signals
+<code class="docutils literal"><span class="pre">SIGTERM</span></code>, <code class="docutils literal"><span class="pre">SIGINT</span></code>, <code class="docutils literal"><span class="pre">SIGHUP</span></code>, <code class="docutils literal"><span class="pre">SIGWINCH</span></code> and <code class="docutils literal"><span class="pre">SIGUSR1</span></code>.</p>
+<p>If a WSGI application were to register their own signal handlers it is
+quite possible that they will interfere with the operation of the
+underlying web server, preventing it from being shutdown or restarted
+properly. As a general rule therefore, no WSGI application component should
+attempt to register its own signal handlers.</p>
+<p>In order to actually enforce this, mod_wsgi will intercept all attempts
+to register signal handlers and cause the registration to be ignored.
+As warning that this is being done, a message will be logged to the Apache
+error log file of the form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span> <span class="p">(</span><span class="n">pid</span><span class="o">=</span><span class="mi">123</span><span class="p">):</span> <span class="n">Callback</span> <span class="n">registration</span> <span class="k">for</span> <span class="n">signal</span> <span class="mi">1</span> <span class="n">ignored</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>If there is some very good reason that this feature should be disabled and
+signal handler registrations honoured, then the behaviour can be reversed
+using a configuration directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIRestrictSignal</span> <span class="n">Off</span>
+</pre></div>
+</div>
+<p>This configuration directive must appear at global scope within the Apache
+configuration file outside of any VirtualHost container directives. It
+will remove the restriction on signal handlers from all Python sub
+interpreters that mod_wsgi creates. There is no way using the configuration
+directive to remove the restriction from only one Python sub interpreter.</p>
+<p>WSGI applications which are known to register conflicting signal handlers
+are CherryPy and TurboGears. If the ability to use signal handlers is
+reenabled when using these packages it prevents the shutdown and restart
+sequence of Apache from working properly and the main Apache process is
+forced to explicitly terminate the Apache child processes rather than
+waiting for them to perform an orderly shutdown. Similar issues will occur
+when using features of mod_wsgi daemon mode to recycle processes when a set
+number of requests has been reached or an inactivity timer has expired.</p>
+</div>
+<div class="section" id="pickling-of-python-objects">
+<h2>Pickling of Python Objects<a class="headerlink" href="#pickling-of-python-objects" title="Permalink to this headline">¶</a></h2>
+<p>The script files that mod_wsgi uses as the entry point for a WSGI
+application, although containing Python code, are not treated exactly the
+same as a Python code module. This has implications when it comes to using
+the &#8216;pickle&#8217; module in conjunction which objects contained within the WSGI
+application script file.</p>
+<p>In practice what this means is that neither function objects, class objects
+or instances of classes which are defined in a WSGI application script file
+should be stored using the &#8220;pickle&#8221; module.</p>
+<p>In order to ensure that no strange problems at all are likely to occur, it
+is suggested that only basic builtin Python types, ie., scalars, tuples,
+lists and dictionaries, be stored using the &#8220;pickle&#8221; module from a WSGI
+application script file. That is, avoid any type of object which has user
+defined code associated with it.</p>
+<p>The technical reasons for the limitations in the use of the &#8220;pickle&#8221; module
+in conjunction with WSGI application script files are further discussed in
+the document <a class="reference internal" href="issues-with-pickle-module.html"><span class="doc">Issues With Pickle Module</span></a>. Note
+that the limitations do not apply to standard Python modules and packages
+imported from within a WSGI application script file from directories on the
+standard Python module search path.</p>
+</div>
+<div class="section" id="expat-shared-library-conflicts">
+<h2>Expat Shared Library Conflicts<a class="headerlink" href="#expat-shared-library-conflicts" title="Permalink to this headline">¶</a></h2>
+<p>One of the Python modules which comes standard with Python is the &#8216;pyexpat&#8217;
+module. This contains a Python wrapper for the popular &#8216;expat&#8217; library. So
+as to avoid dependencies on third party packages the Python package actually
+contains a copy of the &#8216;expat&#8217; library source code and embeds it within the
+&#8216;pyexpat&#8217; module.</p>
+<p>Prior to Python 2.5, there was however no attempt to properly namespace the
+public functions within the &#8216;expat&#8217; library source code. The problem this
+causes with mod_wsgi is that Apache itself also provides its own copy of
+and makes use of the &#8216;expat&#8217; library. Because the Apache version of the
+&#8216;expat&#8217; library is loaded first, it will always be used in preference to
+the version contained with the Python &#8216;pyexpat&#8217; module.</p>
+<p>As a result, if the &#8216;pyexpat&#8217; module is loaded into a WSGI application and
+the version of the &#8216;expat&#8217; library included with Python is markedly
+different in some way to the Apache version, it can cause Apache to crash
+with a segmentation fault. It is thus important to ensure that Apache and
+Python use a compatible version of the &#8216;expat&#8217; library to avoid this
+problem.</p>
+<p>For further technical discussion of this issue and how to determine which
+version of the &#8216;expat&#8217; library both Apache and Python use, see the document
+<a class="reference internal" href="issues-with-expat-library.html"><span class="doc">Issues With Expat Library</span></a>.</p>
+</div>
+<div class="section" id="mysql-shared-library-conflicts">
+<h2>MySQL Shared Library Conflicts<a class="headerlink" href="#mysql-shared-library-conflicts" title="Permalink to this headline">¶</a></h2>
+<p>Shared library version conflicts can also occur with the MySQL client
+libraries. In this case the conflict is usually between an Apache module
+that uses MySQL directly such as mod_auth_mysql or mod_dbd_mysql, or an
+Apache module that indirectly uses MySQL such as PHP, and the Python
+&#8216;MySQLdb&#8217; module. The result of conflicting library versions can be Apache
+crashing, or incorrect results beings returned from the MySQL client
+library for certain types of operations.</p>
+<p>To ascertain if there is a conflict, you need to determine which versions
+of the shared library each package is attempting to use. This can be done
+by running, on Linux, the &#8216;ldd&#8217; command to list the library dependencies.
+This should be done on any Apache modules that are being loaded, any PHP
+modules and the Python <code class="docutils literal"><span class="pre">_mysql</span></code> C extension module:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ldd /usr/lib/python2.3/site-packages/_mysql.so | grep mysql
+    libmysqlclient_r.so.15 =&gt; /usr/lib/libmysqlclient_r.so.15 (0xb7d52000)
+
+$ ldd /usr/lib/httpd/modules/mod_*.so | grep mysql
+    libmysqlclient.so.12 =&gt; /usr/lib/libmysqlclient.so.12 (0xb7f00000)
+
+$ ldd /usr/lib/php4/*.so | grep mysql
+/usr/lib/php4/mysql.so:
+    libmysqlclient.so.10 =&gt; /usr/lib/mysql/libmysqlclient.so.10 (0xb7f6e000)
+</pre></div>
+</div>
+<p>If there is a difference in the version of the MySQL client library, or
+one version is reentrant and the other isn&#8217;t, you will need to recompile
+one or both of the packages such that they use the same library.</p>
+</div>
+<div class="section" id="ssl-shared-library-conflicts">
+<h2>SSL Shared Library Conflicts<a class="headerlink" href="#ssl-shared-library-conflicts" title="Permalink to this headline">¶</a></h2>
+<p>When Apache is built, if it cannot find an existing SSL library that it can
+use or isn&#8217;t told where one is that it should use, it will use a SSL
+library which comes with the Apache source code. When this SSL code is
+compiled it will be statically linked into the actual Apache executable. To
+determine if the SSL code is static rather than dynamically loaded from a
+shared library, on Linux, the &#8216;ldd&#8217; command can be used to list the library
+dependencies. If an SSL library is listed, then code will not be statically
+compiled into Apache:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ldd /usr/local/apache/bin/httpd | grep ssl
+    libssl.so.0.9.8 =&gt; /usr/lib/i686/cmov/libssl.so.0.9.8 (0xb79ab000)
+</pre></div>
+</div>
+<p>Where a Python module now uses a SSL library, such as a database client
+library with SSL support, they would typically always obtain SSL code from
+a shared library. When however the SSL library functions have also been
+compiled statically into Apache, they can conflict and interfere with those
+from the SSL shared library being used by the Python module. Such conflicts
+can cause core dumps, or simply make it appear that SSL support in either
+Apache or the Python module is not working.</p>
+<p>Python modules where this is known to cause a problem are, any database
+client modules which include support for connecting to the database using
+an SSL connection, and the Python &#8216;hashlib&#8217; module introduced in Python
+2.5.</p>
+<p>In the case of the &#8216;hashlib&#8217; module it will fail to load the internal C
+extension module called <code class="docutils literal"><span class="pre">_hashlib</span></code> because of the conflict. That
+<code class="docutils literal"><span class="pre">_hashlib</span></code> module couldn&#8217;t be loaded is however not raised as an
+exception, and instead the code will fallback to attempting to load the
+older <code class="docutils literal"><span class="pre">_md5</span></code> module. In Python 2.5 however, this older <code class="docutils literal"><span class="pre">_md5</span></code>
+module is not generally compiled and so the following error will occur:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">ImportError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="n">_md5</span>
+</pre></div>
+</div>
+<p>To resolve this problem it would be necessary to rebuild Apache and use the
+<code class="docutils literal"><span class="pre">--with-ssl</span></code> option to &#8216;configure&#8217; to specify the location of the distinct
+SSL library that is being used by the Python modules.</p>
+<p>Note that it has also been suggested that the !ImportError above can also
+be caused due to the &#8216;python-hashlib&#8217; package not being installed. This
+might be the case on Linux systems where this module was separated from the
+main Python package.</p>
+</div>
+<div class="section" id="python-md5-hash-module-conflict">
+<h2>Python MD5 Hash Module Conflict<a class="headerlink" href="#python-md5-hash-module-conflict" title="Permalink to this headline">¶</a></h2>
+<p>Python provides in the form of the &#8216;md5&#8217; module, routines for calculating
+MD5 message-digest fingerprint (checksum) values for arbitrary data. This
+module is often used in Python web frameworks for generating cookie values
+to be associated with client session information.</p>
+<p>If a WSGI application uses this module, it is however possible that a
+conflict can arise if PHP is also being loaded into Apache. The end result
+of the conflict will be that the &#8216;md5&#8217; module in Python can given incorrect
+results for hash values. For example, the same value may be returned no
+matter what the input data, or an incorrect or random value can be returned
+even for the same data. In the worst case scenario the process may crash.</p>
+<p>As might be expected this can cause session based login schemes such as
+commonly employed by Python web frameworks such as Django, TurboGears or
+Trac to fail in strange ways.</p>
+<p>The underlying trigger for all these problems appears to be a clash between
+the Python &#8216;md5&#8217; module and the &#8216;libmhash2&#8217; library used by the PHP &#8216;mhash&#8217;
+module, or possibly also other PHP modules relying on md5 routines for
+cryptography such as the LDAP module for PHP.</p>
+<p>This clash has come about because because md5 source code in Python was
+replaced with an alternate version when it was packaged for Debian. This
+version did not include in the &#8220;md5.h&#8221; header file some preprocessor
+defines to rename the md5 functions with a namespace prefix specific to
+Python:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#define MD5Init _PyDFSG_MD5Init</span>
+<span class="c1">#define MD5Update _PyDFSG_MD5Update</span>
+<span class="c1">#define MD5Final _PyDFSG_MD5Final</span>
+<span class="c1">#define MD5Transform _PyDFSG_MD5Transform</span>
+
+<span class="n">void</span> <span class="n">MD5Init</span><span class="p">(</span><span class="n">struct</span> <span class="n">MD5Context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">MD5Update</span><span class="p">(</span><span class="n">struct</span> <span class="n">MD5Context</span> <span class="o">*</span><span class="n">context</span><span class="p">,</span> <span class="n">md5byte</span> <span class="n">const</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="n">unsigned</span> <span class="nb">len</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">MD5Final</span><span class="p">(</span><span class="n">unsigned</span> <span class="n">char</span> <span class="n">digest</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">struct</span> <span class="n">MD5Context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As a result, the symbols in the md5 module ended up being:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nm -D /usr/lib/python2.4/lib-dynload/md5.so | grep MD5
+0000000000001b30 T MD5Final
+0000000000001380 T MD5Init
+00000000000013b0 T MD5Transform
+0000000000001c10 T MD5Update
+</pre></div>
+</div>
+<p>The symbols then clashed directly with the non namespaced symbols present
+in the &#8216;libmhash2&#8217; library:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nm -D /usr/lib/libmhash.so.2 | grep MD5
+00000000000069b0 T MD5Final
+0000000000006200 T MD5Init
+0000000000006230 T MD5Transform
+0000000000006a80 T MD5Update
+</pre></div>
+</div>
+<p>In Python 2.5 the md5 module is implemented in a different way and thus
+this problem should only occur with older versions of Python. For those
+older versions of Python, the only workaround for this problem at the
+present time is to disable the loading of the &#8216;mhash&#8217; module or other PHP
+modules which use the &#8216;libmhash2&#8217; library. This will avoid the problem
+with the Python &#8216;md5&#8217; module, obviously however, not loading these modules
+into PHP may cause some PHP programs which rely on them to fail.</p>
+<p>The actual cause of this problem having now been identified a patch has been
+produced and is recorded in Debian ticket:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=440272">http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=440272</a></li>
+</ul>
+</div></blockquote>
+<p>It isn&#8217;t know when an updated Debian package for Python may be produced.</p>
+</div>
+<div class="section" id="python-pysqlite-symbol-conflict">
+<h2>Python &#8216;pysqlite&#8217; Symbol Conflict<a class="headerlink" href="#python-pysqlite-symbol-conflict" title="Permalink to this headline">¶</a></h2>
+<p>Certain versions of &#8216;pysqlite&#8217; module defined a global symbol &#8216;cache_init&#8217;.
+This symbol clashes with a similarly named symbol present in the Apache
+mod_cache module. As a result of the clash, the two modules being loaded at
+the same time can cause the Apache process to crash or the following Python
+exception to be raised:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">SystemError</span><span class="p">:</span> <span class="n">NULL</span> <span class="n">result</span> <span class="n">without</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">PyObject_Call</span>
+</pre></div>
+</div>
+<p>This problem is mentioned in pysqlite ticket:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.initd.org/tracker/pysqlite/ticket/174">http://www.initd.org/tracker/pysqlite/ticket/174</a></li>
+</ul>
+</div></blockquote>
+<p>and the release notes for version 2.3.3:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.initd.org/tracker/pysqlite/wiki/2.3.3_Changelog">http://www.initd.org/tracker/pysqlite/wiki/2.3.3_Changelog</a></li>
+</ul>
+</div></blockquote>
+<p>of pysqlite To avoid the problem upgrade to pysqlite 2.3.3 or later.</p>
+</div>
+<div class="section" id="python-simplified-gil-state-api">
+<h2>Python Simplified GIL State API<a class="headerlink" href="#python-simplified-gil-state-api" title="Permalink to this headline">¶</a></h2>
+<p>In an attempt to simplify management of thread state objects when coding C
+extension modules for Python, Python 2.3 introduced the simplified API for
+GIL state management. Unfortunately, this API will only work if the code is
+running against the very first Python sub interpreter created when Python
+is initialised.</p>
+<p>Because mod_wsgi by default assigns a Python sub interpreter to each WSGI
+application based on the virtual host and application mount point, code
+would normally never be executed within the context of the first Python sub
+interpreter created, instead a distinct Python sub interpreter would be
+used.</p>
+<p>The consequences of attempting to use a C extension module for Python which
+is implemented against the simplified API for GIL state management in
+any sub interpreter besides the first, is that the code is likely to
+deadlock or crash the process. The only way around this issue is to ensure
+that any WSGI application which makes use of C extension modules which use
+this API, only runs in the very first Python sub interpreter created when
+Python is initialised.</p>
+<p>To force a specific WSGI application to be run within the very first Python
+sub interpreter created when Python is initialised, the WSGIApplicationGroup
+directive should be used and the group set to &#8216;%{GLOBAL}&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Extension modules for which this is known to be necessary are any which
+have been developed using SWIG and for which the <code class="docutils literal"><span class="pre">-threads</span></code> option was
+supplied to &#8216;swig&#8217; when the bindings were generated. One example of this is
+the &#8216;dbxml&#8217; module, a Python wrapper for the Berkeley Database, previously
+developed by !SleepyCat Software, but now managed by Oracle. Another package
+believed to have this problem in certain use cases is Xapian.</p>
+<p>There is also a bit of a question mark over the Python Subversion bindings.
+This package also uses SWIG, however it is only some versions that appear
+to require that the very first sub interpreter created when Python is
+initialised be used. It is currently believed that this may be more to do
+with coding problems than with the <code class="docutils literal"><span class="pre">-threads</span></code> option being passed to the
+&#8216;swig&#8217; command when the bindings were generated.</p>
+<p>For all the affected packages, as described above it is believed though
+that they will work when application group is set to force the application
+to run in the first interpreter created by Python as described above.</p>
+<p>Another option for packages which use SWIG generated bindings is not to use
+the <code class="docutils literal"><span class="pre">-threads</span></code> option when &#8216;swig&#8217; is used to generate the bindings. This
+will avoid any problems and allow the package to be used in any sub
+interpreter. Do be aware though that by disabling thread support in SWIG
+bindings, that the GIL isn&#8217;t released when C code is entered. The
+consequences of this are that if the C code blocks, the whole Python
+interpreter environment running in that process will be blocked, even
+requests being handled within other threads in different sub interpreters.</p>
+</div>
+<div class="section" id="reloading-python-interpreters">
+<h2>Reloading Python Interpreters<a class="headerlink" href="#reloading-python-interpreters" title="Permalink to this headline">¶</a></h2>
+<p><em>Note: The &#8220;Interpreter&#8221; reload mechanism has been removed in mod_wsgi
+version 2.0. This is because the problems with third party modules didn&#8217;t
+make it a viable option. Its continued presence was simply complicating the
+addition of new features. As an alternative, daemon mode of mod_wsgi should
+be used and the &#8220;Process&#8221; reload mechanism added with mod_wsgi 2.0.</em></p>
+<p>To make it possible to modify a WSGI application and have the whole
+application reloaded without restarting the Apache web server, mod_wsgi
+provides an interpreter reloading feature. This specific feature is enabled
+using the WSGIReloadMechanism directive, setting it to the value
+&#8216;Interpreter&#8217; instead of its default value of &#8216;Module&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIReloadMechanism</span> <span class="n">Interpreter</span>
+</pre></div>
+</div>
+<p>When this option is selected and script reloading is also enabled, when the
+WSGI application script file is modified, the next request which arrives
+will result in the Python sub interpreter which is hosting that WSGI
+application being destroyed. A new Python sub interpreter will then be
+created and the WSGI application reloaded including any changes made to
+normal Python modules.</p>
+<p>For many WSGI applications this mechanism will generally work fine, however
+there are a few limitations on what is reloaded, plus some Python C extension
+modules can be incompatible with this feature.</p>
+<p>The first issue is that although Python code modules will be destroyed and
+reloaded, because a C extension module is only loaded once and used across
+all Python sub interpreters for the life of the process, any changes to a C
+extension module will not be picked up.</p>
+<p>The second issue is that some C extension modules may cache references to
+the Python interpreter object itself. Because there is no notification
+mechanism for letting a C extension module know when a sub interpreter is
+destroyed, it is possible that later on the C extension module may attempt
+to access the now destroyed Python interpreter. By this time the pointer
+reference is likely a dangling reference to unused memory or some
+completely different data and attempting to access or use it will likely
+cause the process to crash at some point.</p>
+<p>A third issue is that the C extension module may cache references to Python
+objects in static variables but not actually increment the reference count
+on the objects in respect of its own reference to the objects. When the
+last Python sub interpreter to hold a reference to that Python object is
+destroyed, the object itself would be destroyed but the static variable left
+with a dangling pointer. If a new Python sub interpreter is then created
+and the C extension module attempts to use that cached Python object,
+accessing it or using it will likely cause the process to crash at some
+point.</p>
+<p>A few examples of Python modules which exhibit one or more of these problems
+are psycopg2, PyProtocols and lxml. In the case of !PyProtocols, because this
+module is used by TurboGears and sometimes used indirectly by Pylons
+applications, it means that the interpreter reloading mechanism can not be
+used with either of these packages. The reason for the problems with
+!PyProtocols appear to stem from its use of Pyrex generated code. The lxml
+package similarly uses Pyrex and is thus afflicted.</p>
+<p>In general it is probably inadvisable to use the interpreter reload
+mechanism with any WSGI application which uses large or complicated C
+extension modules. It would be recommended for example that the interpreter
+reload mechanism not be used with Trac because of its use of the Python
+Subversion bindings. One would also need to be cautious if using any Python
+database client, although some success has been seen when using simple
+database adapters such as pysqlite.</p>
+</div>
+<div class="section" id="multiple-python-sub-interpreters">
+<h2>Multiple Python Sub Interpreters<a class="headerlink" href="#multiple-python-sub-interpreters" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the requirements imposed by the Python GIL, other issues can
+also arise with C extension modules when multiple Python sub interpreters
+are being used. Typically these problems arise where an extension module
+caches a Python object from the sub interpreter which is initially used to
+load the module and then passes that object to code executing within
+secondary sub interpreters.</p>
+<p>The prime example of where this would be a problem is where the code within
+the second sub interpreter attempts to execute a method of the Python
+object. When this occurs the result will be an attempt to execute Python
+code which doesn&#8217;t belong to the current sub interpreter.</p>
+<p>One result of this will be that if the code being executed attempts to
+import additional modules it will obtain those modules from the current sub
+interpreter rather than the interpreter the code belonged to. The result of
+this can be a unholy mixing of code and data owned by multiple sub
+interpreters leading to potential chaos at some point.</p>
+<p>A more concrete outcome of such a mixing of code and data from multiple
+sub interpreters is where a file object from one sub interpreter is used
+within a different sub interpreter. In this sort of situation a Python
+exception will occur as Python will detect in certain cases that the object
+didn&#8217;t belong to that interpreter:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">exceptions</span><span class="o">.</span><span class="n">IOError</span><span class="p">:</span> <span class="n">file</span><span class="p">()</span> <span class="n">constructor</span> <span class="ow">not</span> <span class="n">accessible</span> <span class="ow">in</span> <span class="n">restricted</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<p>Problems with code being executed in restricted mode can also occur when
+the Python code and data marshalling features are used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">exceptions</span><span class="o">.</span><span class="n">RuntimeError</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">unmarshal</span> <span class="n">code</span> <span class="n">objects</span> <span class="ow">in</span> <span class="n">restricted</span> <span class="n">execution</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<p>A further case is where the cached object is a class object and that object
+is used to create instances of that type of object for different sub
+interpreters. As above this can result in an unholy mixing of code and data
+from multiple sub interpreters, but at a more mundane level may become
+evident through the &#8216;isinstance()&#8217; function failing when used to check the
+object instances against the local type object for that sub interpreter.</p>
+<p>An example of a Python module which fails in this way is psycopg2, which
+caches an instance of the &#8216;decimal.Decimal&#8217; type and uses it to create
+object instances for all sub interpreters. This particular problem in
+psycopg2 has been reported in psycopg2 ticket:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.initd.org/tracker/psycopg/ticket/192">http://www.initd.org/tracker/psycopg/ticket/192</a></li>
+</ul>
+</div></blockquote>
+<p>and has been fixed in pyscopg2 source code. It isn&#8217;t known however which
+version of psycopg2 this fix may have been released with. Another package
+believed to have this problem in certain use cases is lxml.</p>
+<p>Because of the possibilty that extension module writers have not written
+their code to take into consideration it being used from multiple sub
+interpreters, the safest approach is to force all WSGI applications to run
+within the same application group, with that preferably being the
+first interpreter instance created by Python.</p>
+<p>To force a specific WSGI application to be run within the very first Python
+sub interpreter created when Python is initialised, the WSGIApplicationGroup
+directive should be used and the group set to &#8216;%{GLOBAL}&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If it is not feasible to force all WSGI applications to run in the same
+interpreter, then daemon mode of mod_wsgi should be used to assign
+different WSGI applications to their own daemon processes. Each would
+then be made to run in the first Python sub interpreter instance within
+their respective processes.</p>
+</div>
+<div class="section" id="memory-constrained-vps-systems">
+<h2>Memory Constrained VPS Systems<a class="headerlink" href="#memory-constrained-vps-systems" title="Permalink to this headline">¶</a></h2>
+<p>Virtual Private Server (VPS) systems typically always have constraints
+imposed on them in regard to the amount of memory or resources they are
+able to use. Various limits and related counts are described below:</p>
+<dl class="docutils">
+<dt><em>Memory Limit</em></dt>
+<dd>Maximum virtual memory size a VPS/context can allocate.</dd>
+<dt><em>Used Memory</em></dt>
+<dd>Virtual memory size used by a running VPS/context.</dd>
+<dt><em>Max Total Memory</em></dt>
+<dd>Maximum virtual memory usage by VPS/context.</dd>
+<dt><em>Context RSS Limit</em></dt>
+<dd>Maximum resident memory size a VPS/context can allocate. If limit is exceeded, VPS starts to use the host&#8217;s SWAP.</dd>
+<dt><em>Context RSS</em></dt>
+<dd>Resident memory size used by a running VPS/context.</dd>
+<dt><em>Max RSS Memory</em></dt>
+<dd>Maximum resident memory usage by VPS/context.</dd>
+<dt><em>Disk Limit</em></dt>
+<dd>Maximum disk space that can be used by VPS (calculated for the entire VPS file tree).</dd>
+<dt><em>Used Disk Memory</em></dt>
+<dd>Disk space used by a VPS file tree.</dd>
+<dt><em>Files Limit</em></dt>
+<dd>Maximum number of files that can be switched to a VPS/context.</dd>
+<dt><em>Used Files</em></dt>
+<dd>Number of files used in a VPS/context.</dd>
+<dt><em>TCP Sockets Limit</em></dt>
+<dd>Limit on the number of established connections in a virtual server.</dd>
+<dt><em>Established Sockets</em></dt>
+<dd>Number of established connections in a virtual server.</dd>
+</dl>
+<p>In respect of the limits, when summary virtual memory size used by the
+VPS exceeds Memory Limit, processes can&#8217;t allocate the required memory and
+will fail in unexpected ways. The general recommendation is that Context
+RSS Limit be set to be one third of Memory Limit.</p>
+<p>Some VPS providers however appear to ignore such guidance, not perhaps
+understanding how virtual memory systems work, and set too restrictive a
+value on the Memory Limit of the VPS, to the extent that virtual memory use
+will exceed the Memory Limit even before actual memory use reaches Max RSS
+Memory or even perhaps before reaching Context RSS Limit.</p>
+<p>This is especially a problem where the hosted operating system is Linux, as
+Linux uses a default per thread stack size which is excessive. When using
+Apache worker MPM with multiple threads, or mod_wsgi daemon mode and
+multiple worker threads, the amount of virtual memory quickly adds up
+causing the artificial Memory Limit to be exceeded.</p>
+<p>Under Linux the default process stack size is 8MB. Where as other UNIX
+system typically use a much smaller per thread stack size in the order of
+512KB, Linux inherits the process stack size and also uses it as the per
+thread stack size.</p>
+<p>If running a VPS system and are having problems with Memory Limit being
+exceeded by the amount of virtual memory set aside by all applications
+running in the VPS, it will be necessary to override the default per thread
+stack size as used by Linux.</p>
+<p>If you are using the Apache worker MPM, you will need to upgrade to Apache
+2.2 if you are not already running it. Having done that you should then use
+the Apache directive !ThreadStackSize to lower the per thread stack size
+for threads created by Apache for the Apache child processes:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ThreadStackSize</span> <span class="mi">524288</span>
+</pre></div>
+</div>
+<p>This should drop the amount of virtual memory being set aside by Apache for
+its child process and thus any WSGI application running under embedded
+mode.</p>
+<p>If a WSGI application creates its own threads for performing background
+activities, it is also preferable that they also override the stack size
+set aside for that thread. For that you will need to be using at least
+Python 2.5. The WSGI application should be ammended to execute:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">thread</span>
+<span class="n">thread</span><span class="o">.</span><span class="n">stack_size</span><span class="p">(</span><span class="mi">524288</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If using mod_wsgi daemon mode, you will need to use mod_wsgi 2.0 and
+override the per thread stack size using the &#8216;stack-size&#8217; option to the
+WSGIDaemonProcess directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">example</span> <span class="n">stack</span><span class="o">-</span><span class="n">size</span><span class="o">=</span><span class="mi">524288</span>
+</pre></div>
+</div>
+<p>If you are unable to upgrade to Apache 2.2 and/or mod_wsgi 2.0, the only
+other option you have for affecting the amount of virtual memory set aside
+for the stack of each thread is to override the process stack size. If you are
+using a standard Apache distribution, this can be done by adding to the
+&#8216;envvars&#8217; file for the Apache installation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ulimit</span> <span class="o">-</span><span class="n">s</span> <span class="mi">512</span>
+</pre></div>
+</div>
+<p>If using a customised Apache installation, such as on RedHat, the &#8216;envvars&#8217;
+file may not exist. In this case you would need to add this into the actual
+startup script for Apache. For RedHat this is &#8216;/etc/sysconfig/httpd&#8217;.</p>
+<p>Note that although 512KB is given here as an example, you may in practice
+need to adjust this higher if you are using third party C extension modules
+for Python which allocate significant amounts of memory on the stack.</p>
+</div>
+<div class="section" id="openbsd-and-thread-stack-size">
+<h2>OpenBSD And Thread Stack Size<a class="headerlink" href="#openbsd-and-thread-stack-size" title="Permalink to this headline">¶</a></h2>
+<p>When using Linux the excessive amount of virtual memory set aside for the
+stack of each thread can cause problems in memory constrained VPS systems.
+Under OpenBSD the opposite problem can occur in that the default per thread
+stack size can be too small. In this situation the same mechanisms as used
+above for adjusting the amount of virtual memory set aside can be used, but
+in this case to increase the amount of memory to be greater than the
+default value.</p>
+<p>Although it has been reported that the default per thread stack size on
+OpenBSD can be a problem, it isn&#8217;t known what it defaults too and thus
+whether it is too low, or whether it was just the users specific
+application which was attempting to allocate too much memory from the
+stack.</p>
+</div>
+<div class="section" id="python-oracle-wrappers">
+<h2>Python Oracle Wrappers<a class="headerlink" href="#python-oracle-wrappers" title="Permalink to this headline">¶</a></h2>
+<p>When using WSGIDaemonProcess directive, it is possible to use the
+&#8216;display-name&#8217; option to set what the name of the process is that will be
+displayed in output from BSD derived &#8216;ps&#8217; programs and some other monitoring
+programs. This allows one to distinguish the WSGI daemon processes in a
+process group from the normal Apache &#8216;httpd&#8217; processes.</p>
+<p>The mod_wsgi package accepts the magic string &#8216;%{GROUP}&#8217; as value to the
+WSGIDaemonProcess directive to indicate that mod_wsgi should construct the
+name of the processes based on the name of the process group. Specifically,
+if you have:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonprocess</span> <span class="n">mygroup</span> <span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=%</span><span class="p">{</span><span class="n">GROUP</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>then the name of the processes in that process group would be set to the
+value:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">wsgi</span><span class="p">:</span><span class="n">mygroup</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This generally works fine, however causes a problem when the WSGI
+application makes use of the &#8216;cx_Oracle&#8217; module for wrapping Oracle client
+libraries in Python. Specifically, Oracle client libraries can produce the
+error:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ORA</span><span class="o">-</span><span class="mi">06413</span><span class="p">:</span> <span class="n">Connection</span> <span class="ow">not</span> <span class="nb">open</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>This appears to be caused by the use of brackets, ie., &#8216;()&#8217; in the name of
+the process. It is therefore recommended that you explicitly provide the
+name to use for the process and avoid these characters and potentially any
+non alphanumeric characters to be extra safe.</p>
+<p>This issue is briefly mentioned in:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.dba-oracle.com/t_ora_06413_connection_not_open.htm">http://www.dba-oracle.com/t_ora_06413_connection_not_open.htm</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="non-blocking-module-imports">
+<h2>Non Blocking Module Imports<a class="headerlink" href="#non-blocking-module-imports" title="Permalink to this headline">¶</a></h2>
+<p>In Python 2.6 non blocking module imports were added as part of the Python
+C API in the form of the function PyImport_ImportModuleNoBlock(). This
+function was introduced to prevent deadlocks with module imports in certain
+circumstances. Unfortunately, for valid reasons or not, use of this
+function has been sprinkled through Python standard library modules as well
+as third party modules.</p>
+<p>Although the function may have been created to fix some underlying issue,
+its usage has caused a new set of problems for multithreaded programs which
+defer module importing until after threads have been created. With mod_wsgi
+this is actually the norm as the default mode of operation is that code is
+lazily loaded only when the first request arrives which requires it.</p>
+<p>A classic example of the sorts of problems use of this function causes is the
+error:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">ImportError</span><span class="p">:</span> <span class="n">Failed</span> <span class="n">to</span> <span class="kn">import</span> <span class="nn">_strptime</span> <span class="n">because</span> <span class="n">the</span> <span class="kn">import</span> <span class="nn">lock</span> <span class="ow">is</span> <span class="n">held</span> <span class="n">by</span> <span class="n">another</span> <span class="n">thread</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>This particular error occurs when &#8216;time.strptime()&#8217; is called for the first
+time and it so happens that another thread is in the process of doing a
+module import and holds the global module import lock.</p>
+<p>It is believed that the fact this can happen indicates that Python is
+flawed in using the PyImport_ImportModuleNoBlock(). Unfortunately, when
+this issue has been highlighted in the past, people seemed to think it was
+acceptable and the only solution, rather than fixing the Python standard
+library, was to ensure that all module imports are done before any threads
+are created.</p>
+<p>This response is frankly crazy and you can expect all manner of random
+problems related to this to crop up as more and more people start using the
+PyImport_ImportModuleNoBlock() function without realising that it is a
+really bad idea in the context of a multithreaded system.</p>
+<p>Although no hope is held out for the issue being fixed in Python, a problem
+report has still been lodged and can be found at:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">bugs</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">issue8098</span>
+</pre></div>
+</div>
+<p>The only work around for the problem is to ensure that all module imports
+related to modules on which the PyImport_ImportModuleNoBlock() function is
+used be done explicitly or indirectly when the WSGI script file is loaded.
+Thus, to get around the specific case above, add the following into the
+WSGI script file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">_strptime</span>
+</pre></div>
+</div>
+<p>There is nothing that can be done in mod_wsgi to fix this properly as the
+set of modules that might have to be forceably imported is unknown. Having
+a hack to import them just to avoid the problem is also going to result in
+unnecessary memory usage if the application didn&#8217;t actually need them.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="frequently-asked-questions.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuration-issues.html" class="btn btn-neutral" title="Configuration Issues" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

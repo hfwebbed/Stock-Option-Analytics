@@ -1,0 +1,79 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block options_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-4 panel panel-default" >
+            <div class="panel-body">
+                <form method="post">
+                    <table width="100%" >
+                        <tr><td> Underlying price</td><td><input name="underlyingPrice" id="underlyingPrice" value="{{underlyingPrice or 0.00}}" type="number" min="0.00" step="0.01">$</td></tr>
+
+                        <tr><td> Days Until Expiry</td><td><input name="days" id="days" value="{{days or 0}}" type="number" min="0" step=1>$</td></tr>
+                        <tr><td> Volatility</td><td> <input name="volatility" id="volatility" value="{{volatility or 0.00}}" type="number" min="0.0" step="0.1" value="0.0">%</td></tr>
+                        <tr><td> Interest</td><td><input name="interest" id="interest" value="{{interest or 0.00}}" type="number" min="0.0" step="0.1" value="0.0">%</td></tr>
+                        <tr><td> Dividend</td><td><input name="dividend" id="dividend" value="{{dividend or 0.00}}" type="number" min="0.0" step="0.1" value="0.0">%</td></tr>
+                    </table>
+                    <button name="submit" >Calculate!</button>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    {% if df_call is not none %}
+
+        <div class="row">
+
+            <div class="panel panel-default">
+                <h2>Call</h2>
+                {{df_call.to_html(classes="table" , escape=False,index=False) | safe }}
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="panel panel-default">
+                <h2>Put</h2>
+                {{df_put.to_html(classes="table", escape=False,index=False) | safe }}
+            </div>
+        </div>
+
+
+        <script>
+            $(".implied_volatility_button").click(function(event){
+                let row_id = event.target.attributes["data-rowid"].value;
+
+                let exercisePrice = event.target.attributes["exercisePrice"].value;
+                let optionSide = event.target.attributes["optionSide"].value;
+
+                let targetPrice = $("#request_" + optionSide + "_" + row_id).val();
+
+                $.ajax({url: "/options/marketPrice",
+                        data: {
+                            underlyingPrice:$("#underlyingPrice").val(),
+                            exercisePrice:exercisePrice,
+                            days:$("#days").val(),
+                            targetPrice:targetPrice,
+                            interest:$("#interest").val(),
+                            dividend:$("#dividend").val(),
+                            optionSide:optionSide
+                        } ,
+                        success: function(response){
+                            let result = response["result"];
+                            let field = $("#response_" + optionSide + "_" + row_id);
+                            field.text(result * 100 + "%");
+                        }
+                });
+            });
+        </script>
+
+    {%endif%}
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block summary_analysis_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+    <div class="panel panel-default">
+        <div class="row panel-body">
+            <div class="col-lg-3">
+                <form method="post">
+
+                    <label for="tickers">Stock:</label>
+                    <input name="tickers" id="tickers" value="{{tickers or ''}}">
+
+                    <!--<label for="from_date" >From:</label>-->
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" hidden>
+
+                    <!--<label for="till_date">Till:</label>-->
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" hidden>
+
+                    <button name="submit" >Fetch!</button>
+                </form>
+            </div>
+            {% if price_changes is not none %}
+            <div class="col-lg-6">
+                <a href = "recommendation?ticker={{tickers}}"><h4>Check out some of our prediction scenarios for an in-depth view on the price</h4></a>
+            </div>
+            {%endif%}
+        </div>
+    </div>
+
+    {% if bullish_vs_bearish_totals is not none %}
+        <div class="panel panel-default">
+            {{bullish_vs_bearish_totals.to_html(classes="table") | safe }}
+        </div>
+    {%endif%}
+
+    {% if slope_and_rsquare_totals is not none %}
+        <div class="panel panel-default">
+            {{slope_and_rsquare_totals.render() | safe }}
+        </div>
+    {%endif%}
+
+    <div class="row">
+        {% if price_changes is not none %}
+            <div class="panel panel-default col-lg-6">
+                <h2>Change in price based on volatility</h2>
+               <table>
+                    <tr>
+                        <th>Current Close</th>
+                        <td>{{price_changes["last_close"]}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <th>Change in price based on the month volatility</th>
+                        <th>Change in price based on the Year volatility</th>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>Upward Price based on 30 days</th>
+                        <td>{{price_changes["expected_monthly_grow"]}}</td>
+                        <td>{{price_changes["expected_yearly_grow"]}}</td>
+                        <th>Upward Price based on a year</th>
+                    </tr>
+
+                    <tr>
+                        <th>Downward Price based on 30 days</th>
+                        <td>{{price_changes["expected_monthly_drop"]}}</td>
+                        <td>{{price_changes["expected_yearly_drop"]}}</td>
+                        <th>Downward Price based on a year</th>
+                    </tr>
+                </table>
+            </div>
+
+        {% endif %}
+    </div>
+
+
+    <script>
+        $( document ).ready(function() {
+            $('table').addClass('table')
+        });
+    </script>
+
+{% endblock %}

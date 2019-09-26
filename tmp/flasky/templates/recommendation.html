@@ -1,0 +1,374 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block recommendation_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="row panel-body">
+            <div class="col-lg-3">
+                <form method="post" action="/recommendation">
+
+                    <label for="tickers">Stock:</label>
+                    <input name="tickers" id="tickers" value="{{ticker or ''}}">
+
+                    <!--<label for="from_date" >From:</label>-->
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" hidden>
+
+                    <!--<label for="till_date">Till:</label>-->
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" hidden>
+
+                    <button name="submit" >Fetch!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if ticker is not none %}
+
+    <div class="row">
+        <div class="panel">
+            <h2>Recomendation for {{ticker}}</h2>
+
+
+            <h3>What Happened in the Past</h3>
+            <p>
+                In the past, <b>{{ticker}}</b> had indicators from the data of
+                <b>{{model["past3month_timeframe_start"].strftime('%Y-%m-%d')}} to {{model["past3month_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
+                that has indicators of being <b>{{bullish_vs_bearish_totals.iloc[0]["%past_bullish"]|round(2, 'floor')}}%</b> bullish on the future.
+            </p>
+            <p>
+                In the 6 months following that, ending on <b>{{model["past9month_timeframe_finish"].strftime('%Y-%m-%d')}}</b> the stock
+                {% if model["past9month_start_closeprice"] < model["past9month_finish_closeprice"] %}
+                    increased
+                {% else %}
+                    decreased
+                {% endif %}
+                from <b>${{model["past9month_start_closeprice"] |round(2, 'floor')  }} to ${{model["past9month_finish_closeprice"]|round(2, 'floor')}}</b>.
+            </p>
+
+            <p>
+                From indicators of <b>{{model["past9month_timeframe_start"].strftime('%Y-%m-%d')}} to {{model["past9month_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
+                we see that it is <b>{{bullish_vs_bearish_totals.iloc[1]["%past_bullish"]|round(2, 'floor')}}%</b> bullish.
+            </p>
+            <p>
+                The price from the 9 month mark <b>${{model["past9month_finish_closeprice"]|round(2, 'floor')}}</b>,
+                {% if model["past9month_finish_closeprice"] < model["past1year_finish_closeprice"] %}
+                    increased
+                {% else %}
+                    decreased
+                {% endif %}
+                to <b>${{model["past1year_finish_closeprice"]|round(2, 'floor')}}</b>, <b>{{model["past1year_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
+            </p>
+
+            <p>
+                From indicators of <b>{{model["past1year_timeframe_start"].strftime('%Y-%m-%d')}} to {{model["past1year_timeframe_finish"].strftime('%Y-%m-%d')}}</b> ,
+                    we see that it is <b>{{bullish_vs_bearish_totals.iloc[2]["%past_bullish"] |round(2, 'floor') }}%</b> bullish.
+            </p>
+            <p>
+                The price from 1 year mark <b>${{model["past1year_finish_closeprice"]|round(2, 'floor')}}</b>,
+                {% if model["past1year_finish_closeprice"] < model["last_close"] %}
+                    increased
+                {% else %}
+                    decreased
+                {% endif %}
+                to <b>${{model["last_close"]|round(2, 'floor')}}</b> todays price
+            </p>
+
+
+            <h3>Here is what may happen in the future - 9 Months</h3>
+
+            <p>
+                Over the most recent 9 month span, recent indicators reports <b>{{bullish_vs_bearish_totals.iloc[1]["%recent_bullish"] |round(2, 'floor') }}%</b> bullish.
+                In this time, <b>{{ticker}}</b> went
+                {% if slope_and_rsquare_totals.loc["9month"]["slope"] > 0 %}
+                    Up
+                {% else %}
+                    Down
+                {% endif %}
+                every day.
+
+                This <b>{{bullish_vs_bearish_totals.iloc[1]["%recent_bullish"] |round(2, 'floor') }}%</b> recent bullish indicator is
+                {% if  bullish_vs_bearish_totals.iloc[1]["%recent_bullish"] < bullish_vs_bearish_totals.iloc[1]["%past_bullish"] %}
+                    less than
+                {% else %}
+                    greater then
+                {% endif %}
+                the past indicator <b>{{bullish_vs_bearish_totals.iloc[1]["%past_bullish"]|round(2, 'floor')}}%</b> at 9 months <b>{{model["past9month_timeframe_start"].strftime('%Y-%m-%d')}} to {{model["past9month_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
+
+                {% if  bullish_vs_bearish_totals.iloc[1]["%recent_bullish"] < bullish_vs_bearish_totals.iloc[1]["%past_bullish"] %}
+                    The past indicator of <b>{{bullish_vs_bearish_totals.iloc[1]["%past_bullish"]|round(2, 'floor')}}%</b> bullish,
+                    showed a price
+                    {% if model["past9month_finish_closeprice"] < model["past1year_finish_closeprice"] %}
+                        increase
+                    {% else %}
+                        decrease
+                    {% endif %}
+                    thereafter. Since this indicator is less, it may not be as strong and be more of a bear. 
+                {% else %}
+                    The past indicator of <b>{{bullish_vs_bearish_totals.iloc[1]["%past_bullish"]|round(2, 'floor')}}%</b> bullish,
+                    showed a price
+                    {% if model["past9month_finish_closeprice"] < model["past1year_finish_closeprice"] %}
+                        increase
+                    {% else %}
+                        decrease
+                    {% endif %}
+                    thereafter. Since this indicator is greater, it may be as strong or stronger to push <b>{{ticker}}</b> upward . 
+                {% endif %}
+
+                {% if slope_and_rsquare_totals.loc["9month"]["r_squared"] > 0.66 %}
+                    This should continue over another 9 months, since in that type of timeframe,
+                    <b>{{ticker}}</b> has a “tight regression”. This may mean that in a 9 months,
+                    <b>{{ticker}}</b> experiences stable progression over that span and there is more certainty of 
+                    <b>{{ticker}}</b> moving around <b>${{slope_and_rsquare_totals.loc["9month"]["r_squared"]|round(2, 'floor')}}</b> per day.
+                {% else%}
+                    {% if slope_and_rsquare_totals.loc["9month"]["r_squared"] < 0.33 %}
+                        This may continue over another 9 months, but in that type of timeframe, <b>{{ticker}}</b>
+                        has an “unstable regression”. This may mean that in a 9 months,
+                        <b>{{ticker}}</b> experiences some unstable events and price fluctuations over that span and there is little certainty of 
+                        <b>{{ticker}}</b> moving around <b>${{slope_and_rsquare_totals.loc["9month"]["r_squared"]|round(2, 'floor')}}</b> per day.
+                    {% else%}
+                        This may continue over another 9 months, but in that type of timeframe, <b>{{ticker}}</b>
+                        has a “mediocre regression”. This may mean that in a 9 months,
+                        <b>{{ticker}}</b> experiences some inconsistencies over that span but may remains hovering around
+                        <b>${{slope_and_rsquare_totals.loc["9month"]["r_squared"]|round(2, 'floor')}}</b> per day with medium confidence.
+                    {% endif%}
+                {% endif%}
+            </p>
+
+            <h3>Here is what may happen in the future - 1 Year</h3>
+            <p>
+                Over the most recent 1 year span, recent indicators reports <b>{{bullish_vs_bearish_totals.iloc[2]["%recent_bullish"] |round(2, 'floor') }}%</b> bullish.
+                In this time, <b>{{ticker}}</b> went
+                {% if slope_and_rsquare_totals.loc["1year"]["slope"] > 0 %}
+                    Up
+                {% else %}
+                    Down
+                {% endif %}
+                every day.
+
+                This <b>{{bullish_vs_bearish_totals.iloc[2]["%recent_bullish"] |round(2, 'floor') }}%</b> recent bullish indicator is
+                {% if  bullish_vs_bearish_totals.iloc[2]["%recent_bullish"] < bullish_vs_bearish_totals.iloc[2]["%past_bullish"] %}
+                    less than
+                {% else %}
+                    greater then
+                {% endif %}
+                the past indicator <b>{{bullish_vs_bearish_totals.iloc[2]["%past_bullish"]|round(2, 'floor')}}%</b> at 9 months <b>{{model["past1year_timeframe_start"].strftime('%Y-%m-%d')}} to {{model["past1year_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
+
+                {% if  bullish_vs_bearish_totals.iloc[2]["%recent_bullish"] < bullish_vs_bearish_totals.iloc[2]["%past_bullish"] %}
+                    The past indicator of <b>{{bullish_vs_bearish_totals.iloc[2]["%past_bullish"]|round(2, 'floor')}}%</b> bullish,
+                    showed a price
+                    {% if model["past1year_finish_closeprice"] < model["last_close"] %}
+                        increase
+                    {% else %}
+                        decrease
+                    {% endif %}
+
+                    thereafter. Since this indicator is less, it may not be as strong and be more of a bear. 
+                {% else %}
+                    The past indicator of <b>{{bullish_vs_bearish_totals.iloc[2]["%past_bullish"]|round(2, 'floor')}}%</b> bullish,
+                    showed a price
+                    {% if model["past1year_finish_closeprice"] < model["last_close"] %}
+                        increase
+                    {% else %}
+                        decrease
+                    {% endif %}
+                    thereafter. Since this indicator is greater, it may be as strong or stronger to push <b>{{ticker}}</b> upward . 
+                {% endif %}
+
+                {% if slope_and_rsquare_totals.loc["1year"]["r_squared"] > 0.66 %}
+                    This should continue over another year, since in that type of timeframe,
+                    <b>{{ticker}}</b> has a “tight regression”. This may mean that in a year,
+                    <b>{{ticker}}</b> experiences stable progression over that span and there is more certainty of 
+                    <b>{{ticker}}</b> moving around <b>${{slope_and_rsquare_totals.loc["1year"]["r_squared"]|round(2, 'floor')}}</b> per day.
+                {% else%}
+                    {% if slope_and_rsquare_totals.loc["1year"]["r_squared"] < 0.33 %}
+                        This may continue over another year, but in that type of timeframe, <b>{{ticker}}</b>
+                        has an “unstable regression”. This may mean that in a year,
+                        <b>{{ticker}}</b> experiences some unstable events and price fluctuations over that span and there is little certainty of 
+                        <b>{{ticker}}</b> moving around <b>${{slope_and_rsquare_totals.loc["1year"]["r_squared"]|round(2, 'floor')}}</b> per day.
+                    {% else%}
+                        This may continue over another year, but in that type of timeframe, <b>{{ticker}}</b>
+                        has a “mediocre regression”. This may mean that in a year,
+                        <b>{{ticker}}</b> experiences some inconsistencies over that span but may remains hovering around
+                        <b>${{slope_and_rsquare_totals.loc["1year"]["r_squared"]|round(2, 'floor')}}</b> per day with medium confidence.
+                    {% endif%}
+                {% endif%}
+            </p>
+
+            <h3>Here is what may happen in the future - 4 Year +</h3>
+
+            <p>
+
+                Over the long term the, we indicate that there is a <b>{{bullish_vs_bearish_totals.iloc[3]["%recent_bullish"] |round(2, 'floor') }}%</b> bullish.
+                In this time, <b>{{ticker}}</b> went
+                {% if slope_and_rsquare_totals.loc["4years"]["slope"] > 0 %}
+                    Up
+                {% else %}
+                    Down
+                {% endif %}
+
+                {% if slope_and_rsquare_totals.loc["4years"]["r_squared"] > 0.66 %}
+                    This should continue over another year, since in that type of timeframe,
+                    <b>{{ticker}}</b> has a “tight regression”. This may mean that in a year,
+                    <b>{{ticker}}</b> experiences stable progression over that span and there is more certainty of 
+                    <b>{{ticker}}</b> moving around <b>${{slope_and_rsquare_totals.loc["4years"]["r_squared"]|round(2, 'floor')}}</b> per day.
+                {% else%}
+                    {% if slope_and_rsquare_totals.loc["4years"]["r_squared"] < 0.33 %}
+                        This may continue over another year, but in that type of timeframe, <b>{{ticker}}</b>
+                        has an “unstable regression”. This may mean that in a year,
+                        <b>{{ticker}}</b> experiences some unstable events and price fluctuations over that span and there is little certainty of 
+                        <b>{{ticker}}</b> moving around <b>${{slope_and_rsquare_totals.loc["4years"]["r_squared"]|round(2, 'floor')}}</b> per day.
+                    {% else%}
+                        This may continue over another year, but in that type of timeframe, <b>{{ticker}}</b>
+                        has a “mediocre regression”. This may mean that in a year,
+                        <b>{{ticker}}</b> experiences some inconsistencies over that span but may remains hovering around
+                        <b>${{slope_and_rsquare_totals.loc["4years"]["r_squared"]|round(2, 'floor')}}</b> per day with medium confidence.
+                    {% endif%}
+                {% endif%}
+            </p>
+
+            <h3> Conclusion</h3>
+
+            <p>
+                In Summary, we the price of this going in the following direction:
+                <ul>
+                    <li>
+                        By the end of 30 days
+                        <ul>
+                            <li>Highest = <b>${{price_changes['expected_monthly_grow']}}</b></li>
+                            <li>Lowest = <b>${{price_changes['expected_monthly_drop']}}</b></li>
+                        </ul>
+                    </li>
+                    <li>
+                        By the end of year
+                        <ul>
+                            <li>Highest = <b>${{price_changes['expected_yearly_grow']}}</b></li>
+                            <li>Lowest = <b>${{price_changes['expected_yearly_drop']}}</b></li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 panel panel-default">
+            <h2>Call option recommendation</h2><br>
+
+            <form name="call_option_recommendation" id="call_option_recommendation" >
+                Up/Down:<br>
+                <select name="up_down" id = "up_down" class="selectpicker">
+                    <option></option>
+                    <option>Up - Bullish</option>
+                    <option>Down - Bearish</option>
+                    <option>Neutral</option>
+                </select>
+                <br><br>
+                Regression:<br>
+                <select name="regression" id="regression" class="selectpicker">
+                    <option></option>
+                    <option>Up - Regression is low</option>
+                    <option>Up - Regression is ok</option>
+                    <option>Up - Regression is great</option>
+                    <option>Down - Regression is low</option>
+                    <option>Down - Regression is ok</option>
+                    <option>Down - Regression is great</option>
+                </select>
+                <br><br>
+                My Recommendation:<br>
+                <input name="call_option_recommendation_text" id="call_option_recommendation_text" disabled size=25 >
+                <br><br>
+            </form>
+
+        <script>
+            $( document ).ready(function() {
+                $('table').addClass('table')
+            });
+
+            $('select').change(function(){
+
+                let regression = $("#regression").val();
+                let up_down = $("#up_down").val();
+
+                let recommendation = "-";
+
+                if(up_down == "Up - Bullish"){
+                    if(regression == "Up - Regression is great"){
+                        recommendation = "Call Option Try OTM";
+                    }
+                    if(regression == "Up - Regression is ok"){
+                        recommendation = "Call Option ITM";
+                    }
+                    if(regression == "Up - Regression is low"){
+                        recommendation = "Call Option ITM";
+                    }
+
+                    if(regression == "Down - Regression is great"){
+                        recommendation = "Call Option ITM close to ATM";
+                    }
+                    if(regression == "Down - Regression is ok"){
+                        recommendation = "Call Option ITM";
+                    }
+                    if(regression == "Down - Regression is low"){
+                        recommendation = "Call Option";
+                    }
+                }
+
+                if(up_down == "Neutral"){
+                    if(regression == "Up - Regression is great"){
+                        recommendation = "Call Option ITM close to ATM";
+                    }
+                    if(regression == "Up - Regression is ok"){
+                        recommendation = "Call Option ITM";
+                    }
+                    if(regression == "Up - Regression is low"){
+                        recommendation = "Call Option ITM close to ATM";
+                    }
+
+                    if(regression == "Down - Regression is great"){
+                        recommendation = "Put Option ITM close to ATM";
+                    }
+                    if(regression == "Down - Regression is ok"){
+                        recommendation = "Put Option ITM";
+                    }
+                    if(regression == "Down - Regression is low"){
+                        recommendation = "Put Option ITM close to ATM";
+                    }
+                }
+
+                if(up_down == "Down - Bearish"){
+
+                    if(regression == "Up - Regression is great"){
+                        recommendation = "Put Option ITM close to ATM";
+                    }
+                    if(regression == "Up - Regression is ok"){
+                        recommendation = "Put Option ITM";
+                    }
+                    if(regression == "Up - Regression is low"){
+                        recommendation = "Put Option";
+                    }
+
+                    if(regression == "Down - Regression is great"){
+                        recommendation = "Put Option try OTM";
+                    }
+                    if(regression == "Down - Regression is ok"){
+                        recommendation = "Put Option ITM";
+                    }
+                    if(regression == "Down - Regression is low"){
+                        recommendation = "Put Option ITM close to ATM";
+                    }
+                }
+                $("#call_option_recommendation_text").val(recommendation);
+            });
+        </script>
+
+        </div>
+    </div>
+    {%endif%}
+
+{% endblock %}

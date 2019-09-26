@@ -1,0 +1,1318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Debugging Techniques &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Processes And Threading" href="processes-and-threading.html"/>
+        <link rel="prev" title="Checking Your Installation" href="checking-your-installation.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Debugging Techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#apache-error-log-files">Apache Error Log Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#displaying-request-environment">Displaying Request Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tracking-request-and-response">Tracking Request and Response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poorly-performing-code">Poorly Performing Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-catching-middleware">Error Catching Middleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-interactive-debugger">Python Interactive Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browser-based-debugger">Browser Based Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-crashes-with-gdb">Debugging Crashes With GDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-python-stack-traces">Extracting Python Stack Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Debugging Techniques</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/debugging-techniques.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="debugging-techniques">
+<h1>Debugging Techniques<a class="headerlink" href="#debugging-techniques" title="Permalink to this headline">¶</a></h1>
+<p>Be it when initially setting up mod_wsgi for the first time, or later
+during development or use of your WSGI application, you are bound to get
+some sort of unexpected Python error. By default all you are usually going
+to see as evidence of this is a HTTP 500 &#8220;Internal Server Error&#8221; being
+displayed in the browser window and little else.</p>
+<p>The purpose of this document is to explain where to go look for more
+details on what caused the error, describe techniques one can use to have
+your WSGI application generate more useful debug information, as well as
+mechanisms that can be employed to interactively debug your application.</p>
+<p>Note that although this document is intended to deal with techniques which
+can be used when using mod_wsgi, many of the techniques are also directly
+transferable or adaptable to other web hosting mechanisms for WSGI
+applications.</p>
+<div class="section" id="apache-error-log-files">
+<h2>Apache Error Log Files<a class="headerlink" href="#apache-error-log-files" title="Permalink to this headline">¶</a></h2>
+<p>When using mod_wsgi, unless you or the web framework you are using takes
+specific action to catch exceptions and present the details in an alternate
+manner, the only place that details of uncaught exceptions will be recorded
+is in the Apache error log files. The Apache error log files are therefore
+your prime source of information when things go wrong.</p>
+<p>Do note though that log messages generated by mod_wsgi are logged with
+various severity levels and which ones will be output to the Apache error
+log files will depend on how Apache has been configured. The standard
+configuration for Apache has the !LogLevel directive being set to &#8216;warn&#8217;.
+With this setting any important error messages will be output, but
+informational messages generated by mod_wsgi which can assist in working
+out what it is doing are not. Thus, if new to mod_wsgi or trying to debug a
+problem, it is worthwhile setting the Apache configuration to use &#8216;info&#8217;
+log level instead:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LogLevel</span> <span class="n">info</span>
+</pre></div>
+</div>
+<p>If your Apache web server is only providing services for one host, it is
+likely that you will only have one error log file. If however the Apache
+web server is configured for multiple virtual hosts, then it is possible
+that there will be multiple error log files, one corresponding to the main
+server host and an additional error log file for each virtual host. Such a
+virtual host specific error log if one is being used, would have been
+configured through the placing of the Apache CustomLog directive within
+the context of the VirtualHost container.</p>
+<p>Although your WSGI application may be hosted within a particular virtual
+host and that virtual host has its own error log file, some error and
+informational messages will still go to the main server host error log
+file. Thus you may still need to consult both error log files when using
+virtual hosts.</p>
+<p>Messages of note that will end up in the main server host error log file
+include notifications in regard to initialisation of Python and the
+creation and destruction of Python sub interpreters, plus any errors which
+occur when doing this.</p>
+<p>Messages of note that would end up in the virtual host error log file, if
+it exists, include details of uncaught Python exceptions which occur when
+the WSGI application script is being loaded, or when the WSGI application
+callable object is being executed.</p>
+<p>Messages that are logged by a WSGI application via the &#8216;wsgi.errors&#8217; object
+passed through to the application in the WSGI environment are also logged.
+These will go to the virtual host error log file if it exists, or the main
+error log file if the virtual host is not setup with its own error log file.
+Thus, if you want to add debugging messages to your WSGI application code,
+you can use &#8216;wsgi.errors&#8217; in conjunction with the &#8216;print&#8217; statement as shown
+below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!&#39;</span>
+
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.errors&#39;</span><span class="p">],</span> <span class="s2">&quot;application debug #1&quot;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.errors&#39;</span><span class="p">],</span> <span class="s2">&quot;application debug #2&quot;</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If &#8216;wsgi.errors&#8217; is not available to the code which needs to output log
+messages, then it should explicitly direct output from the &#8216;print&#8217;
+statement to &#8216;sys.stderr&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">function</span><span class="p">():</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;application debug #3&quot;</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal"><span class="pre">sys.stderr</span></code> or <code class="docutils literal"><span class="pre">sys.stdout</span></code> is used directly then
+these messages will end up in the main server host error log file and not
+that for the virtual host unless the WSGI application is running in a
+daemon process specifically associated with a virtual host.</p>
+<p>Do be aware though that writing to <code class="docutils literal"><span class="pre">sys.stdout</span></code> is by default
+restricted in versions of mod_wsgi prior to 3.0 and will result in an
+exception occurring of the form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ne">IOError</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="n">access</span> <span class="n">restricted</span> <span class="n">by</span> <span class="n">mod_wsgi</span>
+</pre></div>
+</div>
+<p>This is because portable WSGI applications should not write to
+<code class="docutils literal"><span class="pre">sys.stdout</span></code> or use the &#8216;print&#8217; statement without specifying an
+alternate file object besides <code class="docutils literal"><span class="pre">sys.stdout</span></code> as the target. This
+restriction can be disabled for the whole server using the
+WSGIRestrictStdout directive, or by mapping <code class="docutils literal"><span class="pre">sys.stdout</span></code> to
+<code class="docutils literal"><span class="pre">sys.stderr</span></code> at global scope within in the WSGI application script
+file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+</pre></div>
+</div>
+<p>In general, a WSGI application should always endeavour to only log messages
+via the &#8216;wsgi.errors&#8217; object that is passed through to a WSGI application
+in the WSGI environment. This is because this is the only way of logging
+messages for which there is some guarantee that they will end up in a log
+file that you might have access to if using a shared server.</p>
+<p>An application shouldn&#8217;t however cache &#8216;wsgi.errors&#8217; and try to use it
+outside of the context of a request. If this is done an exception will be
+raised indicating that the request has expired and the error log object
+is now invalid.</p>
+<p>That messages output via <code class="docutils literal"><span class="pre">sys.stderr</span></code> and <code class="docutils literal"><span class="pre">sys.stdout</span></code> end up in
+the Apache error logs at all is provided as a convenience but there is no
+requirement in the WSGI specification that they are valid means of a WSGI
+application logging messages.</p>
+</div>
+<div class="section" id="displaying-request-environment">
+<h2>Displaying Request Environment<a class="headerlink" href="#displaying-request-environment" title="Permalink to this headline">¶</a></h2>
+<p>When a WSGI application is invoked, the request headers are passed as CGI
+variables in the WSGI request environment. The dictionary used for this
+also holds information about the WSGI execution environment and mod_wsgi.
+This includes mod_wsgi specific variables indicating the name of the
+process and application groups within which the WSGI application is
+executing.</p>
+<p>Knowing the values of the process and application group variables can be
+important when needing to validate that your Apache configuration is doing
+what you intended as far as ensuring your WSGI application is running in
+daemon mode or otherwise.</p>
+<p>A simple way of validating such details or getting access to any of the
+other WSGI request environment variables is to substitute your existing
+WSGI application with one which echos back the details to your browser.
+Such a task can be achieved with the following test application. The
+application could be extended as necessary to display other information as
+well, with process ID, user ID and group ID being shown as examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cStringIO</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">))</span>
+    <span class="n">write</span> <span class="o">=</span> <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;PID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;UID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">output</span><span class="p">,</span> <span class="s2">&quot;GID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getgid</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">output</span>
+
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">keys</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">output</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">output</span>
+
+    <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">))))</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>For the case of the process group as recorded by the
+&#8216;mod_wsgi.process_group&#8217; variable in the WSGI request environment, if the
+value is an empty string then the WSGI application is running in embedded
+mode. For any other value it will be running in daemon mode with the process
+group named by the variables value.</p>
+<p>Note that by default WSGI applications run in embedded mode, which means
+within the Apache server child processes which accept the original requests.
+Daemon mode processes would only be used through appropriate use of the
+WSGIDaemonProcess and WSGIProcessGroup directives to delegate the WSGI
+application to a named daemon process group.</p>
+<p>For the case of the application group as recorded by the
+&#8216;mod_wsgi.application_group&#8217; variable in the WSGI request environment, if the
+value is an empty string then the WSGI application is running in the main
+Python interpreter. That is, the very first interpreter created when Python
+was initialised. For any other value it indicates it is running in the named
+Python sub interpreter.</p>
+<p>Note that by default WSGI applications would always run in a sub
+interpreter rather than the main interpreter. The name of this sub
+interpreter would be automatically constructed from the name of the server
+or virtual host, the URL mount point of the WSGI application and the number
+of the listener port when it is other than ports 80 or 443.</p>
+<p>To delegate a WSGI application to run in main Python interpreter, the
+WSGIApplicationGroup directive would need to have been used with the value
+&#8216;%{GLOBAL}&#8217;. Although the value is &#8216;%{GLOBAL}&#8217;, this translates to the
+empty string seen for the value of &#8216;mod_wsgi.application_group&#8217; within the
+WSGI request environment.</p>
+<p>The WSGIApplicationGroup directive could also be used to designate a
+specific named sub interpreter rather than that selected automatically.</p>
+<p>For newcomers this can all be a bit confusing, which is where the test
+application comes in as you can use it to validate where your WSGI
+application is running is where you intended it to run.</p>
+<p>The set of WSGI request environment variables will also show the WSGI
+variables indicating whether process is multithreaded and whether the
+process group is multiprocess or not. For a more complete explanation
+of what that means see documentation of
+<a class="reference internal" href="processes-and-threading.html"><span class="doc">Processes And Threading</span></a>.</p>
+</div>
+<div class="section" id="tracking-request-and-response">
+<h2>Tracking Request and Response<a class="headerlink" href="#tracking-request-and-response" title="Permalink to this headline">¶</a></h2>
+<p>Although one can use above test application to display the request
+environment, it is replacing your original WSGI application. Rather than
+replace your existing application you can use a WSGI middleware wrapper
+application which logs the details to the Apache error log instead:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Original WSGI application.</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Logging WSGI middleware.</span>
+
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="k">class</span> <span class="nc">LoggingMiddleware</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__application</span> <span class="o">=</span> <span class="n">application</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.errors&#39;</span><span class="p">]</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">((</span><span class="s1">&#39;REQUEST&#39;</span><span class="p">,</span> <span class="n">environ</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">((</span><span class="s1">&#39;RESPONSE&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">_start_response</span><span class="p">)</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">LoggingMiddleware</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output from the middleware would end up in the Apache error log for the
+virtual host, or if no virtual host specific error log file, in the main
+Apache error log file.</p>
+<p>For more complicated problems it may also be necessary to track both the
+request and response content as well. A more complicated middleware which
+can log these as well as header information to the file system is as
+follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Original WSGI application.</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Logging WSGI middleware.</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">LoggingInstance</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">oheaders</span><span class="p">,</span> <span class="n">ocontent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__start_response</span> <span class="o">=</span> <span class="n">start_response</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__oheaders</span> <span class="o">=</span> <span class="n">oheaders</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocontent</span> <span class="o">=</span> <span class="n">ocontent</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">((</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span><span class="o">+</span><span class="n">args</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__oheaders</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__oheaders</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__write</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocontent</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocontent</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__iterable</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocontent</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocontent</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__iterable</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__iterable</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocontent</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">LoggingMiddleware</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">,</span> <span class="n">savedir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__application</span> <span class="o">=</span> <span class="n">application</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__savedir</span> <span class="o">=</span> <span class="n">savedir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pid</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+
+        <span class="n">iheaders</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__savedir</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;.iheaders&quot;</span><span class="p">)</span>
+        <span class="n">iheaders_fp</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="n">iheaders</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+        <span class="n">icontent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__savedir</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;.icontent&quot;</span><span class="p">)</span>
+        <span class="n">icontent_fp</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="n">icontent</span><span class="p">,</span> <span class="s1">&#39;w+b&#39;</span><span class="p">)</span>
+
+        <span class="n">oheaders</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__savedir</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;.oheaders&quot;</span><span class="p">)</span>
+        <span class="n">oheaders_fp</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="n">oheaders</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+        <span class="n">ocontent</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__savedir</span><span class="p">,</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;.ocontent&quot;</span><span class="p">)</span>
+        <span class="n">ocontent_fp</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="n">ocontent</span><span class="p">,</span> <span class="s1">&#39;w+b&#39;</span><span class="p">)</span>
+
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.errors&#39;</span><span class="p">]</span>
+        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">iheaders_fp</span><span class="p">)</span>
+        <span class="n">iheaders_fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">))</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">icontent_fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">length</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">icontent_fp</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">icontent_fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_SET</span><span class="p">)</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">icontent_fp</span>
+
+        <span class="n">iterable</span> <span class="o">=</span> <span class="n">LoggingInstance</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">oheaders_fp</span><span class="p">,</span> <span class="n">ocontent_fp</span><span class="p">)</span>
+        <span class="n">iterable</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">iterable</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">LoggingMiddleware</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="s1">&#39;/tmp/wsgi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For this middleware, the second argument to the constructor should be a
+preexisting directory. For each request four files will be saved. These
+correspond to input headers, input content, response status and headers,
+and request content.</p>
+</div>
+<div class="section" id="poorly-performing-code">
+<h2>Poorly Performing Code<a class="headerlink" href="#poorly-performing-code" title="Permalink to this headline">¶</a></h2>
+<p>The WSGI specification allows any iterable object to be returned as the
+response, so long as the iterable yields string values. That this is the
+case means that one can too easily return an object which satisfies this
+requirement but has some sort of performance related issue.</p>
+<p>The worst case of this is where instead of returning a list containing
+strings, a single string is returned. The problem with a string is that
+when it is iterated over, a single character of the string is yielded each
+time. In other words, a single character is written back to the client on
+each loop, with a flush occurring in between to ensure that the character
+has actually been written and isn&#8217;t just being buffered.</p>
+<p>Although for small strings a performance impact may not be noticed, if
+returning large strings the affect on request throughput could be quite
+significant.</p>
+<p>Another case which can cause problems is to return a file like object. For
+iteration over a file like object, typically what can occur is that a
+single line within the file is returned each time. If the file is a line
+oriented text file where each line is a of a reasonable length, this may be
+okay, but if the file is a binary file there may not actually be line
+breaks within the file.</p>
+<p>For the case where file contains many short lines, throughput would be
+affected much like in the case where a string is returned. For the case
+where the file is just binary data, the result can be that the complete
+file may be read in on the first loop. If the file is large, this could
+cause a large transient spike in memory usage. Once that memory is
+allocated, it will then be retained by the process, albeit that it may be
+reused by the process at a later point.</p>
+<p>Because of the performance impacts in terms of throughput and memory usage,
+both these cases should be avoided. For the case of returning a string, it
+should be returned with a single element list. For the case of a file like
+object, the &#8216;wsgi.file_wrapper&#8217; extension should be used, or a wrapper
+which suitably breaks the response into chunks.</p>
+<p>In order to identify where code may be inadvertently returning such iterable
+types, the following code can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">types</span>
+
+<span class="kn">import</span> <span class="nn">cStringIO</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">StringIO</span>
+
+<span class="n">BAD_ITERABLES</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">cStringIO</span><span class="o">.</span><span class="n">InputType</span><span class="p">,</span>
+  <span class="n">socket</span><span class="o">.</span><span class="n">SocketType</span><span class="p">,</span>
+  <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">,</span>
+  <span class="n">types</span><span class="o">.</span><span class="n">FileType</span><span class="p">,</span>
+  <span class="n">types</span><span class="o">.</span><span class="n">StringType</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">ValidatingMiddleware</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__application</span> <span class="o">=</span> <span class="n">application</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.errors&#39;</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">InstanceType</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">__class__</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">BAD_ITERABLES</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">errors</span><span class="p">,</span> <span class="s1">&#39;BAD ITERABLE RETURNED: &#39;</span><span class="p">,</span>
+            <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">errors</span><span class="p">,</span> <span class="s1">&#39;URL=</span><span class="si">%s</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">],</span>
+            <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">errors</span><span class="p">,</span> <span class="s1">&#39;TYPE=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">ValidatingMiddleware</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-catching-middleware">
+<h2>Error Catching Middleware<a class="headerlink" href="#error-catching-middleware" title="Permalink to this headline">¶</a></h2>
+<p>Because mod_wsgi only logs details of uncaught exceptions to the Apache
+error log and returns a generic HTTP 500 &#8220;Internal Server Error&#8221; response,
+if you want the details of any exception to be displayed in the error
+page and be visible from the browser, you will need to use a WSGI error
+catching middleware component.</p>
+<p>One example of WSGI error catching middleware is the ErrorMiddleware class
+from Paste.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.pythonpaste.org">http://www.pythonpaste.org</a></li>
+</ul>
+</div></blockquote>
+<p>This class can be configured not only to catch exceptions and present the
+details to the browser in an error page, it can also be configured to send
+the details of any errors in email to a designated recipient, or log the
+details to an alternate log file.</p>
+<p>Being able to have error details sent by email would be useful in a
+production environment or where your application is running on a web
+hosting environment and the Apache error logs would not necessarily be
+closely monitored on a day to day basis. Enabling of that particular
+feature though should possibly only be done when you have some confidence
+in the application else you might end up getting inundated with emails.</p>
+<p>To use the error catching middleware from Paste you simply need to wrap
+your existing application with it such that it then becomes the top level
+application entry point:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">paste.exceptions.errormiddleware</span> <span class="k">import</span> <span class="n">ErrorMiddleware</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">ErrorMiddleware</span><span class="p">(</span><span class="n">application</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In addition to displaying information about the Python exception that has
+occurred and the stack traceback, this middleware component will also
+output information about the WSGI environment such that you can see what
+was being passed to the WSGI application. This can be useful if the cause
+of any problem was unexpected values passed in the headers of the HTTP
+request.</p>
+<p>Note that error catching middleware is of absolutely no use for trying
+to capture and display in the browser any errors that occur at global scope
+within the WSGI application script when it is being imported. Details of
+any such errors occurring at this point will only be captured in the Apache
+error log files. As much as possible you should avoid performing
+complicated tasks when the WSGI application script file is being imported,
+instead you should only trigger such actions the first time a request is
+received. By doing this you will be able to capture errors in such
+initialisation code with the error catching middleware.</p>
+<p>Also note that the debug mode whereby details are displayed in the browser
+should only be used during development and not in a production system. This
+is because details which are displayed may be of use to anyone who may wish
+to compromise your site.</p>
+</div>
+<div class="section" id="python-interactive-debugger">
+<h2>Python Interactive Debugger<a class="headerlink" href="#python-interactive-debugger" title="Permalink to this headline">¶</a></h2>
+<p>Python debuggers such as implemented by the &#8216;pdb&#8217; module can sometimes be
+useful in debugging Python applications, especially where there is a need
+to single step through code and analyse application state at each point.
+Use of such debuggers in web applications can be a bit more tricky than
+normal applications though and especially so with mod_wsgi.</p>
+<p>The problem with mod_wsgi is that the Apache web server can create multiple
+child processes to respond to requests. Partly because of this, but also
+just to prevent problems in general, Apache closes off standard input at
+startup. Thus there is no actual way to interact with the Python debugger
+module if it were used.</p>
+<p>To get around this requires having complete control of the Apache web
+server that you are using to host your WSGI application. In particular, it
+will be necessary to shutdown the web server and then startup the &#8216;httpd&#8217;
+process explicitly in single process debug mode, avoiding the &#8216;apachectl&#8217;
+management application altogether:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ apachectl stop
+$ httpd -X
+</pre></div>
+</div>
+<p>If Apache is normally started as the &#8216;root&#8217; user, this also will need to be
+run as the &#8216;root&#8217; user otherwise the Apache web server will not have the
+required permissions to write to its log directories etc.</p>
+<p>The result of starting the &#8216;httpd&#8217; process in this way will be that the
+Apache web server will run everything in one process rather than using
+multiple processes. Further, it will not close off standard input thus
+allowing the Python debugger to be used.</p>
+<p>Do note though that one cannot be using the ability of mod_wsgi to run
+your application in a daemon process when doing this. The WSGI application
+must be running within the main Apache process.</p>
+<p>To trigger the Python debugger for any call within your code, the following
+customised wrapper for the &#8216;Pdb&#8217; class should be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Debugger</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__object</span> <span class="o">=</span> <span class="nb">object</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pdb</span><span class="o">,</span> <span class="nn">sys</span>
+        <span class="n">debugger</span> <span class="o">=</span> <span class="n">pdb</span><span class="o">.</span><span class="n">Pdb</span><span class="p">()</span>
+        <span class="n">debugger</span><span class="o">.</span><span class="n">use_rawinput</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">debugger</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">settrace</span><span class="p">(</span><span class="n">debugger</span><span class="o">.</span><span class="n">trace_dispatch</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__object</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">debugger</span><span class="o">.</span><span class="n">quitting</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">settrace</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This might for example be used to wrap the actual WSGI application callable
+object:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">Debugger</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a request is now received, the Python debugger will be triggered and
+you can interactively debug your application from the window you ran the
+&#8216;httpd&#8217; process. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">hello</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span><span class="n">application</span><span class="p">()</span>
+<span class="o">-&gt;</span> <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+
+<span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="nb">list</span>
+ <span class="mi">16</span>             <span class="k">finally</span><span class="p">:</span>
+ <span class="mi">17</span>                 <span class="n">debugger</span><span class="o">.</span><span class="n">quitting</span> <span class="o">=</span> <span class="mi">1</span>
+ <span class="mi">18</span>                 <span class="n">sys</span><span class="o">.</span><span class="n">settrace</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+ <span class="mi">19</span>
+ <span class="mi">20</span>     <span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+ <span class="mi">21</span>  <span class="o">-&gt;</span>     <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+ <span class="mi">22</span>         <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!</span><span class="se">\n</span><span class="s1">&#39;</span>
+ <span class="mi">23</span>
+ <span class="mi">24</span>         <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+ <span class="mi">25</span>                             <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+ <span class="mi">26</span>         <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="nb">print</span> <span class="n">start_response</span>
+<span class="o">&lt;</span><span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">method</span> <span class="n">start_response</span> <span class="n">of</span> <span class="n">mod_wsgi</span><span class="o">.</span><span class="n">Adapter</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x1160180</span><span class="o">&gt;</span>
+
+<span class="n">cont</span>
+</pre></div>
+</div>
+<p>When wishing to allow the request to complete, issue the &#8216;cont&#8217; command. If
+wishing to cause the request to abort, issue the &#8216;quit&#8217; command. This will
+result in a &#8216;BdbQuit&#8217; exception being raised and would result in a HTTP
+500 &#8220;Internal Server Error&#8221; response being returned to the client. To kill
+off the whole &#8216;httpd&#8217; process, after having issued &#8216;cont&#8217; or &#8216;quit&#8217; to exit
+the debugger, interrupt the process using &#8216;CTRL-C&#8217;.</p>
+<p>To see what commands the Python debugger accepts, issue the &#8216;help&#8217; command
+and also consult the documentation for the &#8216;pdb&#8217; module on the Python web
+site.</p>
+<p>Note that the Python debugger expects to be able to write to
+<code class="docutils literal"><span class="pre">sys.stdout</span></code> to display information to the terminal. Thus if using
+using a Python web framework which replaces <code class="docutils literal"><span class="pre">sys.stdout</span></code> such as
+web.py, you will not be able to use the Python debugger.</p>
+</div>
+<div class="section" id="browser-based-debugger">
+<h2>Browser Based Debugger<a class="headerlink" href="#browser-based-debugger" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the Python debugger modules you need to have direct access
+to the host and the Apache web server that is running your WSGI application.
+If your only access to the system is via your web browser this makes the use
+of the full Python debugger impractical.</p>
+<p>An alternative to the Python debugger modules which is available is an
+extension of the WSGI error catching middleware previously described. This
+is the EvalException class from Paste. It embodies the error catching
+attributes of the ErrorMiddleware class, but also allows some measure of
+interactive debugging and introspection through the web browser.</p>
+<p>As with any WSGI middleware component, to use the class entails creating
+a wrapper around the application you wish to debug:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">b</span><span class="s1">&#39;Hello World!</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">paste.evalexception.middleware</span> <span class="k">import</span> <span class="n">EvalException</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">EvalException</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Like ErrorMiddleware when an unexpected exception occurs a web page is
+presented which shows the location of the error along with the contents of
+the WSGI application environment. Where EvalException is different however
+is that it is possible to inspect the local variables residing within each
+stack frame down to where the error occurred. Further, it is possible to
+enter Python code which can be evaluated within the context of the selected
+stack frame in order to access data or call functions or methods of
+objects.</p>
+<p>In order for this to all work requires that subsequent requests back to
+the WSGI application always end up with the same process where the error
+originally occurred. With mod_wsgi this does however present a bit of a
+problem as Apache can create and use multiple child processes to handle
+requests.</p>
+<p>Because of this requirement, if you want to be able to use this browser
+based interactive debugger, if running your application in embedded mode of
+mod_wsgi, you will need to configure Apache such that it only starts up one
+child process to handle requests and that it never creates any additional
+processes. The Apache configuration directives required to achieve this are
+as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">StartServers</span> <span class="mi">1</span>
+<span class="n">ServerLimit</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The directives must be placed at global scope within the main Apache
+configuration files and will affect the whole Apache web server.</p>
+<p>If you are using the worker MPM on a UNIX system, restricting Apache to
+just a single process may not be an issue, at least during development. If
+however you are using the prefork MPM on a UNIX system, you may see issues
+if you are using an AJAX intensive page that relies on being able to
+execute parallel requests, as only one request at a time will be able to be
+handled by the Apache web server.</p>
+<p>If using Apache 2.X on a UNIX system, a better approach is to use daemon
+mode of mod_wsgi and delegate your application to run in a single daemon
+process. This process may be single or multithreaded as per any threading
+requirements of your application.</p>
+<p>Which ever configuration is used, if the browser based interactive debugger
+is used it should only be used on a development system and should never be
+deployed on a production system or in a web hosting environment. This is
+because the debugger will allow one to execute arbitrary Python code within
+the context of your application from a remote client.</p>
+</div>
+<div class="section" id="debugging-crashes-with-gdb">
+<h2>Debugging Crashes With GDB<a class="headerlink" href="#debugging-crashes-with-gdb" title="Permalink to this headline">¶</a></h2>
+<p>In cases where Apache itself crashes for no apparent reason, the above
+techniques are not always particularly useful. This is especially the case
+where the crash occurs in non Python code outside of your WSGI application.</p>
+<p>The most common cause of Apache crashing, besides any still latent bugs
+that may exist in mod_wsgi, of which hopefully there aren&#8217;t any, are shared
+library version mismatches. Another major cause of crashes is third party C
+extension modules for Python which are not compatible with being used in a
+Python sub interpreter which isn&#8217;t the first interpreter created when
+Python is initialised, or modules which are not compatible with Python sub
+interpreters being destroyed and the module then being used in a new Python
+sub interpreter.</p>
+<p>Examples of where shared library version mismatches are known to occur are
+between the version of the &#8216;expat&#8217; library used by Apache and that embedded
+within the Python &#8216;pyexpat&#8217; module. Another is between the version of the
+MySQL client libraries used by PHP and the Python MySQL module.</p>
+<p>Both these can be a cause of crashes where the different components are
+compiled and linked against different versions of the shared library for
+the packages in question. It is vitally important that all packages making
+use of a shared library were compiled against and use the same version of
+a shared library.</p>
+<p>Another problematic package is Subversion. In this case there can be
+conflicts between the version of Subversion libraries used by mod_dav_svn
+and the Python Subversion bindings. Certain versions of the Python
+Subversion modules also cause problems because they appear to be
+incompatible with use in a Python sub interpreter which isn&#8217;t the first
+interpreter created when Python is initialised.</p>
+<p>In this latter issue, the sub interpreter problems can often be solved by
+forcing the WSGI application using the Python Subversion modules to run in
+the &#8216;%{GLOBAL}&#8217; application group. This solution often also resolves issues
+with SWIG generated bindings, especially where the <code class="docutils literal"><span class="pre">-thread</span></code> option was
+supplied to &#8216;swig&#8217; when the bindings were generated.</p>
+<p>Whatever the reason, in some cases the only way to determine why Apache or
+Python is crashing is to use a C code debugger such as &#8216;gdb&#8217;. Now although
+it is possible to attach &#8216;gdb&#8217; to a running process, the preferred method
+for using &#8216;gdb&#8217; in conjunction with Apache is to run Apache in single
+process debug mode from within &#8216;gdb&#8217;.</p>
+<p>To do this it is necessary to first shutdown Apache. The &#8216;gdb&#8217; debugger can
+then be started against the &#8216;httpd&#8217; executable and then the process started
+up from inside of &#8216;gdb&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ /usr/local/apache/bin/apachectl stop
+$ sudo gdb /usr/local/apache/bin/httpd
+GNU gdb 6.1-20040303 (Apple version gdb-384) (Mon Mar 21 00:05:26 GMT 2005)
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type &quot;show copying&quot; to see the conditions.
+There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.
+This GDB was configured as &quot;powerpc-apple-darwin&quot;...Reading symbols for shared
+libraries ........ done
+
+(gdb) run -X
+Starting program: /usr/local/apache/bin/httpd -X
+Reading symbols for shared libraries .+++ done
+Reading symbols for shared libraries ..................... done
+</pre></div>
+</div>
+<p>If Apache is normally started as the &#8216;root&#8217; user, this also will need to be
+run as the &#8216;root&#8217; user otherwise the Apache web server will not have the
+required permissions to write to its log directories etc.</p>
+<p>If Apache was crashing on startup, you should immediately encounter the
+error, otherwise use your web browser to access the URL which is causing
+the crash to occur. You can then commence trying to debug why the crash is
+occurring.</p>
+<p>Note that you should ensure that you have not assigned your WSGI
+application to run in a mod_wsgi daemon process using the WSGIDaemonProcess
+and WSGIProcessGroup directives. This is because the above procedure will
+only catch crashes which occur when the application is running in embedded
+mode. If it turns out that the application only crashes when run in mod_wsgi
+daemon mode, an alternate method of using &#8216;gdb&#8217; will be required.</p>
+<p>In this circumstance you should run Apache as normal, but ensure that you
+only create one mod_wsgi daemon process and have it use only a single
+thread:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">debug</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">debug</span>
+</pre></div>
+</div>
+<p>If not running the daemon process as a distinct user where you can tell
+which process it is, then you will also need to ensure that Apache
+!LogLevel directive has been set to &#8216;info&#8217;. This is to ensure that
+information about daemon processes created by mod_wsgi are logged to the
+Apache error log. This is necessary, as you will need to consult the Apache
+error logs to determine the process ID of the daemon process that has been
+created for that daemon process group:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mod_wsgi</span> <span class="p">(</span><span class="n">pid</span><span class="o">=</span><span class="mi">666</span><span class="p">):</span> <span class="n">Starting</span> <span class="n">process</span> <span class="s1">&#39;debug&#39;</span> <span class="k">with</span> <span class="n">threads</span><span class="o">=</span><span class="mf">1.</span>
+</pre></div>
+</div>
+<p>Knowing the process ID, you should then run &#8216;gdb&#8217;, telling it to attach
+directly to the daemon process:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo gdb /usr/local/apache/bin/httpd 666
+GNU gdb 6.1-20040303 (Apple version gdb-384) (Mon Mar 21 00:05:26 GMT 2005)
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type &quot;show copying&quot; to see the conditions.
+There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.
+This GDB was configured as &quot;powerpc-apple-darwin&quot;...Reading symbols for shared
+libraries ........ done
+
+/Users/grahamd/666: No such file or directory.
+Attaching to program: `/usr/local/apache/bin/httpd&#39;, process 666.
+Reading symbols for shared libraries .+++..................... done
+0x900c7060 in sigwait ()
+(gdb) cont
+Continuing.
+</pre></div>
+</div>
+<p>Once &#8216;gdb&#8217; has been started and attached to the process, then initiate the
+request with the URL that causes the application to crash.</p>
+<p>Attaching to the running daemon process can also be useful where a single
+request or the whole process is appearing to hang. In this case one can
+force a stack trace to be output for all running threads to try and
+determine what code is getting stuck. The appropriate gdb command in this
+instance is &#8216;thread apply all bt&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo gdb /usr/local/apache-2.2/bin/httpd 666
+GNU gdb 6.3.50-20050815 (Apple version gdb-477) (Sun Apr 30 20:06:22 GMT 2006)
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type &quot;show copying&quot; to see the conditions.
+There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for details.
+This GDB was configured as &quot;powerpc-apple-darwin&quot;...Reading symbols
+for shared libraries ....... done
+
+/Users/grahamd/666: No such file or directory.
+Attaching to program: `/usr/local/apache/bin/httpd&#39;, process 666.
+Reading symbols for shared libraries .+++..................... done
+0x900c7060 in sigwait ()
+(gdb) thread apply all bt
+
+Thread 4 (process 666 thread 0xd03):
+#0  0x9001f7ac in select ()
+#1  0x004189b4 in apr_pollset_poll (pollset=0x1894650,
+    timeout=-1146117585187099488, num=0xf0182d98, descriptors=0xf0182d9c)
+    at poll/unix/select.c:363
+#2  0x002a57f0 in wsgi_daemon_thread (thd=0x1889660, data=0x18895e8)
+    at mod_wsgi.c:6980
+#3  0x9002bc28 in _pthread_body ()
+
+Thread 3 (process 666 thread 0xc03):
+#0  0x9001f7ac in select ()
+#1  0x0041d224 in apr_sleep (t=1000000) at time/unix/time.c:246
+#2  0x002a2b10 in wsgi_deadlock_thread (thd=0x0, data=0x2aee68) at
+    mod_wsgi.c:7119
+#3  0x9002bc28 in _pthread_body ()
+
+Thread 2 (process 666 thread 0xb03):
+#0  0x9001f7ac in select ()
+#1  0x0041d224 in apr_sleep (t=299970002) at time/unix/time.c:246
+#2  0x002a2dec in wsgi_monitor_thread (thd=0x0, data=0x18890e8) at
+    mod_wsgi.c:7197
+#3  0x9002bc28 in _pthread_body ()
+
+Thread 1 (process 666 thread 0x203):
+#0  0x900c7060 in sigwait ()
+#1  0x0041ba9c in apr_signal_thread (signal_handler=0x2a29a0
+    &lt;wsgi_check_signal&gt;) at threadproc/unix/signals.c:383
+#2  0x002a3728 in wsgi_start_process (p=0x1806418, daemon=0x18890e8)
+    at mod_wsgi.c:7311
+#3  0x002a6a4c in wsgi_hook_init (pconf=0x1806418, ptemp=0x0,
+    plog=0xc8, s=0x18be8d4) at mod_wsgi.c:7716
+#4  0x0000a5b0 in ap_run_post_config (pconf=0x1806418, plog=0x1844418,
+    ptemp=0x180e418, s=0x180da78) at config.c:91
+#5  0x000033d4 in main (argc=3, argv=0xbffffa8c) at main.c:706
+</pre></div>
+</div>
+<p>It is suggested when trying to debug such issues that the daemon process be
+made to run with only a single thread. This will reduce how many stack
+traces one needs to analyse.</p>
+<p>If you are running with multiple processes within the daemon process group
+and all requests are hanging, you will need to get a snapshot of what is
+happening in all processes in the daemon process group. Because doing this
+by hand will be tedious, it is better to automate it.</p>
+<p>To automate capturing the stack traces, first create a file called &#8216;gdb.cmds&#8217;
+which contains the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">pagination</span> <span class="mi">0</span>
+<span class="n">thread</span> <span class="n">apply</span> <span class="nb">all</span> <span class="n">bt</span>
+<span class="n">detach</span>
+<span class="n">quit</span>
+</pre></div>
+</div>
+<p>This can then be used in conjunction with &#8216;gdb&#8217; to avoid needing to enter
+the commands manually. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">gdb</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="mf">2.2</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">httpd</span> <span class="o">-</span><span class="n">x</span> <span class="n">gdb</span><span class="o">.</span><span class="n">cmds</span> <span class="o">-</span><span class="n">p</span> <span class="mi">666</span>
+</pre></div>
+</div>
+<p>To be able to automate this further and apply it to all processes in a
+daemon process group, then first off ensure that daemon processes are named
+in &#8216;ps&#8217; output by using the &#8216;display-name&#8217; option to WSGIDaemonProcess
+directive.</p>
+<p>For example, to apply default naming strategy as implemented by mod_wsgi, use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">xxx</span> <span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In the output of a BSD derived &#8216;ps&#8217; command, this will now show the process
+as being named &#8216;(wsgi:xxx)&#8217;:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ps -cxo command,pid | grep wsgi
+(wsgi:xxx)        666
+</pre></div>
+</div>
+<p>Note that the name may be truncated as the resultant name can be no longer
+than what was the length of the original executable path for Apache. You
+may therefore like to name it explicitly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">xxx</span> <span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="p">(</span><span class="n">wsgi</span><span class="p">:</span><span class="n">xxx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Having named the processes in the daemon process group, we can now parse the
+output of &#8216;ps&#8217; to identify the process and apply the &#8216;gdb&#8217; command script to
+each:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>for pid in `ps -cxo command,pid | awk &#39;{ if ($0 ~ /wsgi:xxx/ &amp;&amp; $1 !~ /grep/) print $NF }&#39;`; do sudo gdb -x gdb.cmds -p $pid; done
+</pre></div>
+</div>
+<p>The actual name given to the daemon process group using the &#8216;display-name&#8217;
+option should be replaced in this command line. That is, change &#8216;wsgi:xxx&#8217;
+appropriately.</p>
+<p>If you are having problems with process in daemon process groups hanging,
+you might consider implementing a monitoring system which automatically
+detects somehow when the processes are no longer responding to requests and
+automatically trigger this dump of the stack traces before restarting the
+daemon process group or Apache.</p>
+</div>
+<div class="section" id="extracting-python-stack-traces">
+<h2>Extracting Python Stack Traces<a class="headerlink" href="#extracting-python-stack-traces" title="Permalink to this headline">¶</a></h2>
+<p>Using gdb to get stack traces as described above only gives you information
+about what is happening at the C code level. This will not tell where in the
+actual Python code execution was at. Your only clue is going to be where a
+call out was being made to some distinct C function in a C extension module
+for Python.</p>
+<p>One can get stack traces for Python code by using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_stacktraces</span><span class="p">():</span>
+   <span class="n">code</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="k">for</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">stack</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">_current_frames</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+       <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"># ThreadID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">threadId</span><span class="p">)</span>
+       <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">traceback</span><span class="o">.</span><span class="n">extract_stack</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+           <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;File: &quot;</span><span class="si">%s</span><span class="s1">&quot;, line </span><span class="si">%d</span><span class="s1">, in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                   <span class="n">lineno</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+           <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+               <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+
+   <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">code</span><span class="p">:</span>
+       <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>The caveat here obviously is that the process has to still be running. There
+is also the issue of how you trigger that function to dump stack traces for
+executing Python threads.</p>
+<p>If the problem you have is that some request handler threads are stuck,
+either blocked, or stuck in an infinite loop, and you want to know what they
+are doing, then so long as there are still some handler threads left and
+the application is still responding to requests, then you could trigger it
+from a request handler triggered by making a request against a specific URL.</p>
+<p>This though depends on you only running your application within a single
+process because as soon as you have multiple processes you have no guarantee
+that a request will go to the process you want to debug.</p>
+<p>A better method therefore is to have a perpetually running background thread
+which monitors for a specific file in the file system. When that file is
+created or the modification time changes, then the background thread would
+dump the stack traces for the process.</p>
+<p>Sample code which takes this approach is included below. This code could be
+placed temporarily at the end of your WSGI script file if you know you are
+going to need it because of a recurring problem:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="n">FILE</span> <span class="o">=</span> <span class="s1">&#39;/tmp/dump-stack-traces.txt&#39;</span>
+
+<span class="n">_interval</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">_stacktraces</span><span class="p">():</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">threadId</span><span class="p">,</span> <span class="n">stack</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">_current_frames</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"># ProcessId: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+        <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;# ThreadID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">threadId</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">traceback</span><span class="o">.</span><span class="n">extract_stack</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+            <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;File: &quot;</span><span class="si">%s</span><span class="s1">&quot;, line </span><span class="si">%d</span><span class="s1">, in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">lineno</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">code</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">line</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mtime</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">mtime</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">_monitor</span><span class="p">():</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">global</span> <span class="n">mtime</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">current</span> <span class="o">!=</span> <span class="n">mtime</span><span class="p">:</span>
+            <span class="n">mtime</span> <span class="o">=</span> <span class="n">current</span>
+            <span class="n">_stacktraces</span><span class="p">()</span>
+
+        <span class="c1"># Go to sleep for specified interval.</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">_interval</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_monitor</span><span class="p">)</span>
+<span class="n">_thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_exiting</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">_exiting</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_start</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">_interval</span>
+    <span class="k">if</span> <span class="n">interval</span> <span class="o">&lt;</span> <span class="n">_interval</span><span class="p">:</span>
+        <span class="n">_interval</span> <span class="o">=</span> <span class="n">interval</span>
+
+    <span class="k">global</span> <span class="n">_running</span>
+    <span class="n">_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_running</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;monitor (pid=</span><span class="si">%d</span><span class="s1">):&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+        <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> Starting stack trace monitor.&#39;</span> <span class="o">%</span> <span class="n">prefix</span>
+        <span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+<span class="n">_start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once your WSGI script file has been loaded, then touching the file
+&#8216;/tmp/dump-stack-traces.txt&#8217; will cause stack traces for active Python
+threads to be output to the Apache error log.</p>
+<p>Note that the sample code doesn&#8217;t deal with possibility that with multiple
+processes for same application, that all processes may attempt to dump
+information at the same time. As such, you may get interleaving of output
+from multiple processes in Apache error logs at the same time.</p>
+<p>What you may want to do is modify this code to dump out to some special
+directory, distinct files containing the trace where the names of the file
+include the process ID and a date/time. That way each will be separate.</p>
+<p>An example of what one might expect to see from the above code is as
+follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># ProcessId: 666</span>
+<span class="c1"># ThreadID: 4352905216</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/threading.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">497</span><span class="p">,</span> <span class="ow">in</span> <span class="n">__bootstrap</span>
+  <span class="bp">self</span><span class="o">.</span><span class="n">__bootstrap_inner</span><span class="p">()</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/threading.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">522</span><span class="p">,</span> <span class="ow">in</span> <span class="n">__bootstrap_inner</span>
+  <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/threading.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">477</span><span class="p">,</span> <span class="ow">in</span> <span class="n">run</span>
+  <span class="bp">self</span><span class="o">.</span><span class="n">__target</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__kwargs</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/htdocs/project.wsgi&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">72</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_monitor</span>
+  <span class="n">_stacktraces</span><span class="p">()</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/htdocs/project.wsgi&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">47</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_stacktraces</span>
+  <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">traceback</span><span class="o">.</span><span class="n">extract_stack</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+
+<span class="c1"># ThreadID: 4322832384</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/htdocs/project.wsgi&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">21</span><span class="p">,</span> <span class="ow">in</span> <span class="n">application</span>
+  <span class="k">return</span> <span class="n">_application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/core/handlers/wsgi.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">245</span><span class="p">,</span> <span class="ow">in</span> <span class="n">__call__</span>
+  <span class="n">response</span> <span class="o">=</span> <span class="n">middleware_method</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/contrib/sessions/middleware.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">36</span><span class="p">,</span> <span class="ow">in</span> <span class="n">process_response</span>
+  <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/contrib/sessions/backends/db.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">63</span><span class="p">,</span> <span class="ow">in</span> <span class="n">save</span>
+  <span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="n">must_create</span><span class="p">,</span> <span class="n">using</span><span class="o">=</span><span class="n">using</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/db/models/base.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">434</span><span class="p">,</span> <span class="ow">in</span> <span class="n">save</span>
+  <span class="bp">self</span><span class="o">.</span><span class="n">save_base</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="n">using</span><span class="p">,</span> <span class="n">force_insert</span><span class="o">=</span><span class="n">force_insert</span><span class="p">,</span> <span class="n">force_update</span><span class="o">=</span><span class="n">force_update</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/db/models/base.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">527</span><span class="p">,</span> <span class="ow">in</span> <span class="n">save_base</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">return_id</span><span class="o">=</span><span class="n">update_pk</span><span class="p">,</span> <span class="n">using</span><span class="o">=</span><span class="n">using</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/db/models/manager.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">195</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_insert</span>
+  <span class="k">return</span> <span class="n">insert_query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/db/models/query.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1479</span><span class="p">,</span> <span class="ow">in</span> <span class="n">insert_query</span>
+  <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">get_compiler</span><span class="p">(</span><span class="n">using</span><span class="o">=</span><span class="n">using</span><span class="p">)</span><span class="o">.</span><span class="n">execute_sql</span><span class="p">(</span><span class="n">return_id</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/db/models/sql/compiler.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">783</span><span class="p">,</span> <span class="ow">in</span> <span class="n">execute_sql</span>
+  <span class="n">cursor</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SQLInsertCompiler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">execute_sql</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/django/db/models/sql/compiler.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">727</span><span class="p">,</span> <span class="ow">in</span> <span class="n">execute_sql</span>
+  <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/debug_toolbar/panels/sql.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">95</span><span class="p">,</span> <span class="ow">in</span> <span class="n">execute</span>
+  <span class="n">stacktrace</span> <span class="o">=</span> <span class="n">tidy_stacktrace</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">extract_stack</span><span class="p">())</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/Library/WebServer/Sites/django-1/lib/python2.6/site-packages/debug_toolbar/panels/sql.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">40</span><span class="p">,</span> <span class="ow">in</span> <span class="n">tidy_stacktrace</span>
+  <span class="n">s_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/posixpath.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">355</span><span class="p">,</span> <span class="ow">in</span> <span class="n">realpath</span>
+  <span class="k">if</span> <span class="n">islink</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+<span class="n">File</span><span class="p">:</span> <span class="s2">&quot;/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/posixpath.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">132</span><span class="p">,</span> <span class="ow">in</span> <span class="n">islink</span>
+  <span class="n">st</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">lstat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that one of the displayed threads will be that for the thread which is
+dumping the stack traces. That stack trace can obviously be ignored.</p>
+<p>One could extend the above recipe in more elaborate ways by using a WSGI
+middleware that capture details of each request from the WSGI environment
+and also dumping out from that the URL for the request being handled by
+any threads. This may assist in working out whether problems are related
+to a specific URL.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="processes-and-threading.html" class="btn btn-neutral float-right" title="Processes And Threading" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="checking-your-installation.html" class="btn btn-neutral" title="Checking Your Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

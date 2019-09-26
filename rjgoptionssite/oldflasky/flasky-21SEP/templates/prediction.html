@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block active5 %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post">
+                <div class="panel">
+                    <label for="tickers">Stock:</label>
+                    <input name="tickers" id="tickers" value="{{tickers or ''}}">
+
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" hidden>
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" hidden>
+
+                    <select name="weeks" id="weeks" class="selectpicker">
+                         {% for week in [6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51] %}
+                            {%if week == selected_week%}
+                                <option selected>{{week}}</option>
+                            {% else %}
+                                 <option>{{week}}</option>
+                            {% endif %}
+                         {% endfor %}
+
+                    </select>
+
+                    <button name="submit" >Simulate!</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+
+    <div >
+        {% if test_img1 is not none %}
+
+            <div class="panel panel-default">
+                <h2>Predictive Simulation for the next year</h2>
+                <img src="{{test_img1}}" width="100%">
+            </div>
+            <div class="panel panel-default">
+                <h2>Simulation of the price at Week {{selected_week}}</h2>
+                <img src="{{test_img2}}" width="100%">
+            </div>
+
+            <div class="panel panel-default">
+                <h2>Week {{selected_week}} Values</h2>
+                {% for final_price in final_prices%}
+                    {{final_price | round(1, 'floor')}}
+                {% endfor%}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

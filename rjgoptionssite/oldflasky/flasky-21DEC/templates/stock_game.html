@@ -1,0 +1,79 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block stock_game_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    {% if ticker_data is not none %}
+        <div class="row panel panel-default">
+            <div class="panel-body">
+
+                <table border="1" class="dataframe table">
+                    <thead>
+                        <th>rank</th>
+                        <th>ticker</th>
+                        <th>start</th>
+                        <th>high</th>
+                        <th>last</th>
+                        <th>slope</th>
+                        <th>r_squared</th>
+                        <th>delete</th>
+                    </thead>
+                    {% for index, row in ticker_data.iterrows() %}
+                    <tr>
+                        <td>{{row["rank"]}}</td>
+                        <td>{{row["ticker"]}}</td>
+                        <td>{{"{:.2f}".format(row["start"])}}</td>
+                        <td>{{"{:.2f}".format(row["high"])}}</td>
+                        <td>{{"{:.2f}".format(row["last"])}}</td>
+                        <td>{{"{:.4f}".format(row["slope"])}}</td>
+
+                        {% if row["r_squared"] > 0.66%}
+                            <td bgcolor="green">{{"{:.5f}".format(row["r_squared"])}}</td>
+                        {% else %}
+                            {% if row["r_squared"] < 0.33%}
+                                <td bgcolor="red">{{"{:.5f}".format(row["r_squared"])}}</td>
+                            {% else %}
+                                <td bgcolor="yellow">{{"{:.5f}".format(row["r_squared"])}}</td>
+                            {% endif %}
+                        {% endif %}
+
+                        <td>{{row["delete_link"] | safe }}</td>
+                    </tr>
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    {% else %}
+        no data yet
+    {% endif %}
+
+    <div class="row panel panel-default">
+        <form name="add_industry" action="/stock_game/add" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <input name="new_ticker" id="new_ticker" value="" placeholder="add new ticker">
+                    </td>
+                    <td>
+                        <input type="submit" value="add" class="btn btn-success btn-xs">
+                    </td>
+                    <td width="15%">
+                        &nbsp
+                    </td>
+                    <td>
+                        <a href="/stock_game">refresh </a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+     </div>
+{% endblock %}
+

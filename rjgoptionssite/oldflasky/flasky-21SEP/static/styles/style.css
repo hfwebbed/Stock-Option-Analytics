@@ -1,0 +1,14 @@
+.floatlefttable{
+    float:left;
+    border: 1px solid green;
+    box-sizing: border-box;
+    width:40%;
+
+}
+
+h2{
+    text-align: center;
+    color: red;
+}
+
+

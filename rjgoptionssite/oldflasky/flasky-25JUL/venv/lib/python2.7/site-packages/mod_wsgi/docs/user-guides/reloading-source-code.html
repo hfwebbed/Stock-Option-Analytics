@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reloading Source Code &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Virtual Environments" href="virtual-environments.html"/>
+        <link rel="prev" title="Processes And Threading" href="processes-and-threading.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Reloading Source Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embedded-mode-vs-daemon-mode">Embedded Mode Vs Daemon Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reloading-in-embedded-mode">Reloading In Embedded Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restarting-apache-processes">Restarting Apache Processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reloading-in-daemon-mode">Reloading In Daemon Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restarting-daemon-processes">Restarting Daemon Processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#monitoring-for-code-changes">Monitoring For Code Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restarting-windows-apache">Restarting Windows Apache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Reloading Source Code</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/reloading-source-code.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reloading-source-code">
+<h1>Reloading Source Code<a class="headerlink" href="#reloading-source-code" title="Permalink to this headline">¶</a></h1>
+<p>This document contains information about mechanisms available in mod_wsgi
+for automatic reloading of source code when an application is changed and
+any issues related to those mechanisms.</p>
+<div class="section" id="embedded-mode-vs-daemon-mode">
+<h2>Embedded Mode Vs Daemon Mode<a class="headerlink" href="#embedded-mode-vs-daemon-mode" title="Permalink to this headline">¶</a></h2>
+<p>What is achievable in the way of automatic source code reloading depends on
+which mode your WSGI application is running.</p>
+<p>If your WSGI application is running in embedded mode then what happens when
+you make code changes is largely dictated by how Apache works, as it
+controls the processes handling requests. In general, if using embedded
+mode you will have no choice but to manually restart Apache in order for code
+changes to be used.</p>
+<p>If using daemon mode, because mod_wsgi manages directly the processes
+handling requests and in which your WSGI application runs, there is more
+avenue for performing automatic source code reloading.</p>
+<p>As a consequence, it is important to understand what mode your WSGI
+application is running in.</p>
+<p>If you are running on Windows, are using Apache 1.3, or have not used
+WSGIDaemonProcess/WSGIProcessGroup directives to delegate your WSGI
+application to a mod_wsgi daemon mode process, then you will be using
+embedded mode.</p>
+<p>If you are not sure whether you are using embedded mode or daemon mode,
+then substitute your WSGI application entry point with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;mod_wsgi.process_group&#39;</span><span class="p">]:</span>
+      <span class="n">output</span> <span class="o">=</span> <span class="s1">u&#39;EMBEDDED MODE&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">output</span> <span class="o">=</span> <span class="s1">u&#39;DAEMON MODE&#39;</span>
+
+    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)))]</span>
+
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">output</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>If your WSGI application is running in embedded mode, this will output to
+the browser &#8216;EMBEDDED MODE&#8217;. If your WSGI application is running in daemon
+mode, this will output to the browser &#8216;DAEMON MODE&#8217;.</p>
+</div>
+<div class="section" id="reloading-in-embedded-mode">
+<h2>Reloading In Embedded Mode<a class="headerlink" href="#reloading-in-embedded-mode" title="Permalink to this headline">¶</a></h2>
+<p>However you have configured Apache to mount your WSGI application, you will
+have a script file which contains the entry point for the WSGI application.
+This script file is not treated exactly like a normal Python module and
+need not even use a &#8216;.py&#8217; extension. It is even preferred that a &#8216;.py&#8217;
+extension not be used for reasons described below.</p>
+<p>For embedded mode, one of the properties of the script file is that by
+default it will be reloaded whenever the file is changed. The primary
+intent with the file being reloaded is to provide a second chance at
+getting any configuration in it and the mapping to the application correct.
+If the script weren&#8217;t reloaded in this way, you would need to restart
+Apache even for a trivial change to the script file.</p>
+<p>Do note though that this script reloading mechanism is not intended as a
+general purpose code reloading mechanism. Only the script file itself is
+reloaded, no other Python modules are reloaded. This means that if modifying
+normal Python code files which are used by your WSGI application, you will
+need to trigger a restart of Apache. For example, if you are using Django
+in embedded mode and needed to change your &#8216;settings.py&#8217; file, you would
+still need to restart Apache.</p>
+<p>That only the script file and not the whole process is reloaded also has a
+number of implications and imposes certain restrictions on what code in the
+script file can do or how it should be implemented.</p>
+<p>The first issue is that when the script file is imported, if the code makes
+modifications to <code class="docutils literal"><span class="pre">sys.path</span></code> or other global data structures and the
+changes are additive, checks should first be made to ensure that the change
+has not already been made, else duplicate data will be added every time the
+script file is reloaded.</p>
+<p>This means that when updating <code class="docutils literal"><span class="pre">sys.path</span></code>, instead of using:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/usr/local/wsgi/modules&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>the more correct way would be to use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/usr/local/wsgi/modules&#39;</span>
+<span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will ensure that the path doesn&#8217;t get added multiple times.</p>
+<p>Even where the script file is named so as to have a &#8216;.py&#8217; extension, that
+the script file is not treated like a normal module means that you should
+never try to import the file from another code file using the &#8216;import&#8217;
+statement or any other import mechanism. The easiest way to avoid this is
+not use the &#8216;.py&#8217; extension on script files or never place script files in
+a directory which is located on the standard module search path, nor add
+the directory containing the script into <code class="docutils literal"><span class="pre">sys.path</span></code> explicitly.</p>
+<p>If an attempt is made to import the script file as a module the result will
+be that it will be loaded a second time as an independent module. This is
+because script files are loaded under a module name which is keyed to the
+full absolute path for the script file and not just the basename of the
+file. Importing the script file directly and accessing it will therefore
+not result in the same data being accessed as exists in the script file
+when loaded.</p>
+<p>Because the script file is not treated like a normal Python module also has
+implications when it comes to using the &#8220;pickle&#8221; module in conjunction
+with objects contained within the script file.</p>
+<p>In practice what this means is that neither function objects, class objects
+or instances of classes which are defined in the script file should be
+stored using the &#8220;pickle&#8221; module.</p>
+<p>The technical reasons for the limitations on the use of the &#8220;pickle&#8221; module
+in conjunction with objects defined in the script file are further
+discussed in the document <a class="reference internal" href="issues-with-pickle-module.html"><span class="doc">Issues With Pickle Module</span></a>.</p>
+<p>The act of reloading script files also means that any data previously held
+by the module corresponding to the script file will be deleted. If such
+data constituted handles to database connections, and the connections are
+not able to clean up themselves when deleted, it may result in resource
+leakage.</p>
+<p>One should therefore be cautious of what data is kept in a script file.
+Preferably the script file should only act as a bridge to code and data
+residing in a normal Python module imported from an entirely different
+directory.</p>
+</div>
+<div class="section" id="restarting-apache-processes">
+<h2>Restarting Apache Processes<a class="headerlink" href="#restarting-apache-processes" title="Permalink to this headline">¶</a></h2>
+<p>As explained above, the only facility that mod_wsgi provides for reloading
+source code files in embedded mode, is the reloading of just the script
+file providing the entry point for your WSGI application.</p>
+<p>If you don&#8217;t have a choice but to use embedded mode and still desire some
+measure of automatic source code reloading, one option available which
+works for both Windows and UNIX systems is to force Apache to recycle the
+Apache server child process that handles the request automatically after
+the request has completed.</p>
+<p>To enable this, you need to modify the value of the MaxRequestsPerChild
+directive in the Apache configuration. Normally this would be set to a
+value of &#8216;0&#8217;, indicating that the process should never be restarted as a
+result of the number of requests processed. To have it restart a process
+after every request, set it to the value &#8216;1&#8217; instead:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MaxRequestsPerChild</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Do note however that this will cause the process to be restarted after any
+request. That is, the process will even be restarted if the request was for
+a static file or a PHP application and wasn&#8217;t even handled by your WSGI
+application. The restart will also occur even if you have made no changes
+to your code.</p>
+<p>Because a restart happens regardless of the request type, using this method
+is not recommended.</p>
+<p>Because of how the Apache server child processes are monitored and restarts
+handled, it is technically possible that this method will yield performance
+which is worse than CGI scripts. For that reason you may even be better off
+using a CGI/WSGI bridge to host your WSGI application. At least that way
+the handling of other types of requests, such as for static files and PHP
+applications will not be affected.</p>
+</div>
+<div class="section" id="reloading-in-daemon-mode">
+<h2>Reloading In Daemon Mode<a class="headerlink" href="#reloading-in-daemon-mode" title="Permalink to this headline">¶</a></h2>
+<p>If using mod_wsgi daemon mode, what happens when the script file is changed
+is different to what happens in embedded mode. In daemon mode, if the
+script file changed, rather than just the script file being reloaded, the
+daemon process which contains the application will be shutdown and
+restarted automatically.</p>
+<p>Detection of the change in the script file will occur at the time of the
+first request to arrive after the change has been made. The way that the
+restart is performed does not affect the handling of the request, with it
+still being processed once the daemon process has been restarted.</p>
+<p>In the case of there being multiple daemon processes in the process group,
+then a cascade effect will occur, with successive processes being restarted
+until the request is again routed to one of the newly restarted processes.</p>
+<p>In this way, restarting of a WSGI application when a change has been made
+to the code is a simple matter of touching the script file if daemon mode
+is being used. Any daemon processes will then automatically restart without
+the need to restart the whole of Apache.</p>
+<p>So, if you are using Django in daemon mode and needed to change your
+&#8216;settings.py&#8217; file, once you have made the required change, also touch the
+script file containing the WSGI application entry point. Having done that,
+on the next request the process will be restarted and your Django
+application reloaded.</p>
+</div>
+<div class="section" id="restarting-daemon-processes">
+<h2>Restarting Daemon Processes<a class="headerlink" href="#restarting-daemon-processes" title="Permalink to this headline">¶</a></h2>
+<p>If you are using daemon mode of mod_wsgi, restarting of processes can to a
+degree also be controlled by a user, or by the WSGI application itself,
+without restarting the whole of Apache.</p>
+<p>To force a daemon process to be restarted, if you are using a single daemon
+process with many threads for the application, then you can embed a page in
+your application (password protected hopefully), that sends an appropriate
+signal to itself.</p>
+<p>This should only be done for daemon processes and not within the Apache
+child processes, as sending such a signal within a child process may
+interfere with the operation of Apache. That the code is executing within a
+daemon process can be determined by checking the &#8216;mod_wsgi.process_group&#8217;
+variable in the WSGI environment passed to the application. The value will
+be non empty if a daemon process:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;mod_wsgi.process_group&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">signal</span><span class="o">,</span> <span class="nn">os</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will cause the daemon process your application is in to shutdown. The
+Apache process supervisor will then automatically restart your process
+ready for subsequent requests. On the restart it will pick up your new
+code. This way you can control a reload from your application through some
+special web page specifically for that purpose.</p>
+<p>You can also send this signal from an external application, but a problem
+there may be identifying which process to send the signal to. If you are
+running the daemon process(es) as a distinct user/group to Apache and each
+application is running as a different user then you could just look for the
+Apache (httpd) processes owned by the user the application is running as,
+as opposed to the Apache user, and send them all signals.</p>
+<p>If the daemon process is running as the same user as Apache or there are
+distinct applications running in different daemon processes but as the same
+user, knowing which daemon processes to send the signal may be harder to
+determine.</p>
+<p>Either way, to make it easier to identify which processes belong to a
+daemon process group, you can use the &#8216;display-name&#8217; option to the
+WSGIDaemonProcess to name the process. On many platforms, when this option
+is used, that name will then appear in the output from the &#8216;ps&#8217; command
+and not the name of the actual Apache server binary.</p>
+</div>
+<div class="section" id="monitoring-for-code-changes">
+<h2>Monitoring For Code Changes<a class="headerlink" href="#monitoring-for-code-changes" title="Permalink to this headline">¶</a></h2>
+<p>The use of signals to restart a daemon process could also be employed in a
+mechanism which automatically detects changes to any Python modules or
+dependent files. This could be achieved by creating a thread at startup
+which periodically looks to see if file timestamps have changed and trigger
+a restart if they have.</p>
+<p>Example code for such an automatic restart mechanism which is compatible
+with how mod_wsgi works is shown below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">Queue</span> <span class="k">as</span> <span class="nn">queue</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">queue</span>
+
+<span class="n">_interval</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">_times</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">_queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+<span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">_restart</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;monitor (pid=</span><span class="si">%d</span><span class="s1">):&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> Change detected to </span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> Triggering process restart.&#39;</span> <span class="o">%</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_modified</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># If path doesn&#39;t denote a file and were previously</span>
+        <span class="c1"># tracking it, then it has been removed or the file type</span>
+        <span class="c1"># has changed so force a restart. If not previously</span>
+        <span class="c1"># tracking the file then we can ignore it as probably</span>
+        <span class="c1"># pseudo reference such as when file extracted from a</span>
+        <span class="c1"># collection of modules contained in a zip file.</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_times</span>
+
+        <span class="c1"># Check for when file last modified.</span>
+
+        <span class="n">mtime</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">st_mtime</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_times</span><span class="p">:</span>
+            <span class="n">_times</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="n">mtime</span>
+
+        <span class="c1"># Force restart when modification time has changed, even</span>
+        <span class="c1"># if time now older, as that could indicate older file</span>
+        <span class="c1"># has been restored.</span>
+
+        <span class="k">if</span> <span class="n">mtime</span> <span class="o">!=</span> <span class="n">_times</span><span class="p">[</span><span class="n">path</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="c1"># If any exception occured, likely that file has been</span>
+        <span class="c1"># been removed just before stat(), so force a restart.</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">_monitor</span><span class="p">():</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># Check modification times on all files in sys.modules.</span>
+
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s1">&#39;__file__&#39;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s1">&#39;__file__&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.pyc&#39;</span><span class="p">,</span> <span class="s1">&#39;.pyo&#39;</span><span class="p">,</span> <span class="s1">&#39;.pyd&#39;</span><span class="p">]:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">_modified</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_restart</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Check modification times on files which have</span>
+        <span class="c1"># specifically been registered for monitoring.</span>
+
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_modified</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_restart</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Go to sleep for specified interval.</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">_interval</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_monitor</span><span class="p">)</span>
+<span class="n">_thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_exiting</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">_exiting</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">_files</span><span class="p">:</span>
+        <span class="n">_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">_interval</span>
+    <span class="k">if</span> <span class="n">interval</span> <span class="o">&lt;</span> <span class="n">_interval</span><span class="p">:</span>
+        <span class="n">_interval</span> <span class="o">=</span> <span class="n">interval</span>
+
+    <span class="k">global</span> <span class="n">_running</span>
+    <span class="n">_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_running</span><span class="p">:</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;monitor (pid=</span><span class="si">%d</span><span class="s1">):&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> Starting change monitor.&#39;</span> <span class="o">%</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This would be used by importing into the script file the Python module
+containing the above code, starting the monitoring system and adding any
+additional non Python files which should be tracked:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">monitor</span>
+<span class="n">monitor</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">monitor</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s1">&#39;site.cf&#39;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Where needing to add many non Python files in a directory hierarchy, such
+as template files which would otherwise be cached within the running
+process, the <code class="docutils literal"><span class="pre">os.path.walk()</span></code> function could be used to traverse
+all files and add required files based on extension or other criteria
+using the &#8216;track()&#8217; function.</p>
+<p>This mechanism would generally work adequately where a single daemon
+process is used within a process group. You would need to be careful
+however when multiple daemon processes are used. This is because it may not
+be possible to synchronise the checks exactly across all of the daemon
+processes. As a result you may end up with the daemon processes running a
+mixture of old and new code until they all synchronise with the new code
+base. This problem can be minimised by defining a short interval time
+between scans, however that will increase the overhead of the checks.</p>
+<p>Using such an approach may in some cases be useful if using mod_wsgi as a
+development platform. It certainly would not be recommended you use this
+mechanism for a production system.</p>
+<p>The reasons for not using it on a production system is due to the
+additional overhead and chance that daemon processes are restarted when you
+are not expecting them to be. For example, in a production environment
+where requests are coming in all the time, you do not want a restart
+triggered when you are part way through making a set of changes which cover
+multiple files as likely then that an inconsistent set of code will be
+loaded and the application will fail.</p>
+<p>Note that you should also not use this mechanism on a system where you have
+configured mod_wsgi to preload your WSGI application as soon as the daemon
+process has started. If you do that, then the monitor thread will be recreated
+immediately and so for every single code change on a preloaded file you
+make, the daemon process will be restarted, even if there is no intervening
+request.</p>
+<p>If preloading was really required, the example code would need to be
+modified so as to not use signals to restart the daemon process, but reset
+to zero the variable saved away in the WSGI script file that records the
+modification time of the script file. This will have the affect of delaying
+the restart until the next request has arrived. Because that variable holding
+the modification time is an internal implementation detail of mod_wsgi and
+not strictly part of its published API or behaviour, you should only use
+that approach if it is warranted.</p>
+</div>
+<div class="section" id="restarting-windows-apache">
+<h2>Restarting Windows Apache<a class="headerlink" href="#restarting-windows-apache" title="Permalink to this headline">¶</a></h2>
+<p>On the Windows platform there is no daemon mode only embedded mode. The MPM
+used on Apache is the &#8216;winnt&#8217; MPM. This MPM is like the worker MPM on UNIX
+systems except that there is only one process.</p>
+<p>Being embedded mode, modifying the WSGI script file only results in the WSGI
+script file itself being reloaded, the process as a whole is not reloaded.
+Thus there is no way normally through modifying the WSGI script file or any
+other Python code file used by the application, of having the whole
+application reloaded automatically.</p>
+<p>The recipe in the previous section can be used with daemon mode on UNIX
+systems to implement an automated scheme for restarting the daemon
+processes when any code change is made, but because Windows lacks the
+&#8216;fork()&#8217; system call daemon mode isn&#8217;t supported in the first place.</p>
+<p>Thus, the only way one can have code changes picked up on Windows is to
+restart Apache as a whole. Although a full restart is required, Apache on
+Windows only uses a single child server process and so the impact isn&#8217;t as
+significant as on UNIX platforms, where many processes may need to be
+shutdown and restarted.</p>
+<p>With that in mind, it is actually possible to modify the prior recipe for
+restarting a daemon process to restart Apache itself. To achieve this slight
+of hand, it is necessary to use the Python &#8216;ctypes&#8217; module to get access to
+a special internal Apache function which is available in the Windows version
+of Apache called &#8216;ap_signal_parent()&#8217;.</p>
+<p>The required change to get this to work is to replace the restart
+function in the previous code with the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_restart</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;monitor (pid=</span><span class="si">%d</span><span class="s1">):&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> Change detected to </span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> Triggering Apache restart.&#39;</span> <span class="o">%</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">ctypes</span>
+    <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">libhttpd</span><span class="o">.</span><span class="n">ap_signal_parent</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Other than that, the prior code would be used exactly as before. Now when
+any change is made to Python code used by the application or any other
+monitored files, Apache will be restarted automatically for you.</p>
+<p>As before, probably recommended that this only be used during development
+and not on a production system.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="virtual-environments.html" class="btn btn-neutral float-right" title="Virtual Environments" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="processes-and-threading.html" class="btn btn-neutral" title="Processes And Threading" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

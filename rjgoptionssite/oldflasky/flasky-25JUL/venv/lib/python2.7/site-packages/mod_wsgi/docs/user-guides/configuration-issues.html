@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuration Issues &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="Application Issues" href="application-issues.html"/>
+        <link rel="prev" title="Installation Issues" href="installation-issues.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration Issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#location-of-unix-sockets">Location Of UNIX Sockets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-control-mechanisms.html">Access Control Mechanisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Configuration Issues</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/configuration-issues.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration-issues">
+<h1>Configuration Issues<a class="headerlink" href="#configuration-issues" title="Permalink to this headline">¶</a></h1>
+<p>Many Linux distributions in particular do not structure an Apache
+installation in the default manner as dictated by the original Apache code
+distributed by the Apache Software Foundation. This fact, and differences
+between different operating systems and distributions means that the
+configuration for mod_wsgi may sometimes have to be tweaked.</p>
+<p>The purpose of this document is to capture all the known problems that can
+arise in respect of configuration.</p>
+<p>If you are having a problem which doesn&#8217;t seem to be covered by this
+document, also make sure you see <a class="reference internal" href="installation-issues.html"><span class="doc">Installation Issues</span></a>
+and <a class="reference internal" href="application-issues.html"><span class="doc">Application Issues</span></a>.</p>
+<div class="section" id="location-of-unix-sockets">
+<h2>Location Of UNIX Sockets<a class="headerlink" href="#location-of-unix-sockets" title="Permalink to this headline">¶</a></h2>
+<p>When mod_wsgi is used in &#8216;daemon&#8217; mode, UNIX sockets are used to
+communicate between the Apache child processes and the daemon processes
+which are to handle a request.</p>
+<p>These sockets and any related mutex lock files will be placed in the
+standard Apache runtime directory. This is the same directory that the
+Apache log files would normally be placed.</p>
+<p>For some Linux distributions, restrictive permissions are placed on the
+standard Apache runtime directory such that the directory is not readable
+to others. This can cause problems with mod_wsgi because the user that the
+Apache child processes run as will subsequently not have the required
+permissions to access the directory to be able to connect to the sockets.</p>
+<p>When this occurs, a &#8216;503 Service Temporarily Unavailable&#8217; error response
+would be received by the client. The Apache error log file would show
+messages of the form:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">13</span><span class="p">)</span><span class="n">Permission</span> <span class="n">denied</span><span class="p">:</span> <span class="n">mod_wsgi</span> <span class="p">(</span><span class="n">pid</span><span class="o">=</span><span class="mi">26962</span><span class="p">):</span> <span class="n">Unable</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">WSGI</span> \
+ <span class="n">daemon</span> <span class="n">process</span> <span class="s1">&#39;&lt;process-name&gt;&#39;</span> <span class="n">on</span> <span class="s1">&#39;/etc/httpd/logs/wsgi.26957.0.1.sock&#39;</span> \
+ <span class="n">after</span> <span class="n">multiple</span> <span class="n">attempts</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>To resolve the problem, the WSGISocketPrefix directive should be defined to
+point at an alternate location. The value may be a location relative to the
+Apache root directory, or an absolute path.</p>
+<p>On systems which restrict access to the standard Apache runtime directory,
+they normally provide an alternate directory for placing sockets and lock
+files used by Apache modules. This directory is usually called &#8216;run&#8217; and
+to make use of this directory the WSGISocketPrefix directive would be set
+as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGISocketPrefix</span> <span class="n">run</span><span class="o">/</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>Although this may be present, do be aware that some Linux distributions,
+notably RedHat, also lock down the permissions of this directory as well so
+not readable to processes running as a non root user. In this situation you
+will be forced to use the operating system level &#8216;/var/run&#8217; directory
+rather than the HTTP specific directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGISocketPrefix</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>Note, do not put the sockets in the system temporary working directory.
+That is, do not go making the prefix &#8216;/tmp/wsgi&#8217;. The directory should be
+one that is only writable by &#8216;root&#8217; user, or if not starting Apache as
+&#8216;root&#8217;, the user that Apache is started as.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="application-issues.html" class="btn btn-neutral float-right" title="Application Issues" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation-issues.html" class="btn btn-neutral" title="Installation Issues" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

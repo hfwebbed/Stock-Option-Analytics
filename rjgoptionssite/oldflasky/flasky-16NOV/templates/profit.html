@@ -1,0 +1,81 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block profit_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-4 panel panel-default">
+            <div class="panel-body">
+                <h2>Use this to see how you may profit</h2><br>
+                <form id="profit_calculator">
+                    <table>
+                        <tr><td>DEAL</td>                               <td></td></tr>
+                        <tr><td>Commission per trade</td>               <td><input name="trade_fee" id="trade_fee" type="number" min="0.00" step="0.01" value="0.00">$</td></tr>
+                        <tr><td>Calls I am going buy (contract)</td>    <td><input name="contract_count" id="contract_count" type="number" min="0.00" step="1" value="0"></td></tr>
+                        <tr><td>Each worth (stock price)</td>           <td><input name="contract_price" id="contract_price" type="number" min="0.00" step="0.01" value="0.00" >$</td></tr>
+                        <tr><td>Options</td>                            <td><input name="options"        id="options"        type="number" value="100" value="0" disabled></td></tr>
+
+                        <tr><td>Total of call Cost</td>                 <td><input name="contract_cost"  id="contract_cost"  type="number" disabled>$</td></tr>
+                        <tr><td>Total of all cost with commission</td>  <td><input name="contract_cost_with_fee"  id="contract_cost_with_fee"  type="number" disabled>$</td></tr>
+                        <tr><td>Charge per contract</td>                <td><input name="charge_per_contract"  id="charge_per_contract"  type="number" min="0.00" step="0.01" value="0">$</td></tr>
+                        <tr><td>Charge per contract * contract</td>     <td><input name="charge_per_contract_total"  id="charge_per_contract_total" type="number" disabled>$</td></tr>
+                        <tr><td>TOTAL COST OF TRADE</td>                <td><input name="grand_total_cost"  id="grand_total_cost" type="number" disabled>$</td></tr>
+                        <tr></tr>
+                        <tr><td>PROFIT</td>                             <td></td></tr>
+                        <tr><td>Expiry price</td>                       <td><input name="expiry_price" id="expiry_price" type="number" min="0.00" step="0.01" value="0.00" >$</td></tr>
+                        <tr><td>Total</td>                              <td><input name="expiry_total" id="expiry_total" type="number" value="0.00" disabled>$</td></tr>
+                        <tr><td>Sell Cost</td>                          <td><input name="sell_cost"    id="sell_cost"    type="number" value="0.00" disabled>$</td></tr>
+                        <tr><td>Profit/loss</td>                        <td><input name="profit_or_loss" id="profit_or_lost" type="number" value="0.00" disabled>%</td></tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $('#profit_calculator :input').change(function(){
+            let trade_fee = $("#trade_fee").val() * 1;
+            let contract_count = $("#contract_count").val() * 1;
+            let contract_price = $("#contract_price").val()  * 1;
+            let options = $("#options").val() * 1;
+
+            let contract_cost = contract_count * contract_price * options;
+            $("#contract_cost").val(contract_cost.toFixed(2));
+
+            let contract_cost_with_fee = contract_cost + trade_fee;
+            $("#contract_cost_with_fee").val(contract_cost_with_fee.toFixed(2));
+
+            let charge_per_contract = $("#charge_per_contract").val() * 1;
+            let charge_per_contract_total = charge_per_contract * contract_count;
+            $("#charge_per_contract_total").val(charge_per_contract_total.toFixed(2));
+
+            let grand_total_cost = contract_cost_with_fee + charge_per_contract_total;
+            $("#grand_total_cost").val(grand_total_cost.toFixed(2));
+
+            let expiry_price = $("#expiry_price").val() * 1;
+
+            let expiry_total = contract_count * expiry_price * options;
+            $("#expiry_total").val(expiry_total.toFixed(2));
+
+            let sell_cost = (expiry_total - grand_total_cost) - (trade_fee + charge_per_contract_total);
+            $("#sell_cost").val(sell_cost.toFixed(2));
+
+            //alert(sell_cost + " " + grand_total_cost);
+            let profit_or_loss = (sell_cost / grand_total_cost) * 100;
+            console.log(profit_or_loss);
+
+            //alert(profit_or_loss);
+            $("#profit_or_lost").val(profit_or_loss.toFixed(2));
+
+            console.log("input content is " + $("#profit_or_lost").val());
+        });
+    </script>
+
+{% endblock %}

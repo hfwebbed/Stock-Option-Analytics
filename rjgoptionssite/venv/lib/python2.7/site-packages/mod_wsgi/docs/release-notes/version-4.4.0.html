@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 4.4.0 &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Release Notes" href="../release-notes.html"/>
+        <link rel="next" title="Version 4.3.2" href="version-4.3.2.html"/>
+        <link rel="prev" title="Version 4.4.1" href="version-4.4.1.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release-notes.html">Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.17.html">Version 4.5.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.16.html">Version 4.5.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.15.html">Version 4.5.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.14.html">Version 4.5.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.13.html">Version 4.5.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.12.html">Version 4.5.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.11.html">Version 4.5.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.10.html">Version 4.5.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.9.html">Version 4.5.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.8.html">Version 4.5.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.7.html">Version 4.5.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.6.html">Version 4.5.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.5.html">Version 4.5.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.4.html">Version 4.5.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.3.html">Version 4.5.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.2.html">Version 4.5.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.1.html">Version 4.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.0.html">Version 4.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.23.html">Version 4.4.23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.22.html">Version 4.4.22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.21.html">Version 4.4.21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.20.html">Version 4.4.20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.19.html">Version 4.4.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.18.html">Version 4.4.18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.17.html">Version 4.4.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.16.html">Version 4.4.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.15.html">Version 4.4.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.14.html">Version 4.4.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.13.html">Version 4.4.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.12.html">Version 4.4.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.11.html">Version 4.4.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.10.html">Version 4.4.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.9.html">Version 4.4.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.8.html">Version 4.4.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.7.html">Version 4.4.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.6.html">Version 4.4.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.5.html">Version 4.4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.4.html">Version 4.4.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.3.html">Version 4.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.2.html">Version 4.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.1.html">Version 4.4.1</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 4.4.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bugs-fixed">Bugs Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-changed">Features Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New Features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.2.html">Version 4.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.1.html">Version 4.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.0.html">Version 4.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.8.html">Version 4.2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.7.html">Version 4.2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.6.html">Version 4.2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.5.html">Version 4.2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.4.html">Version 4.2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.3.html">Version 4.2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.2.html">Version 4.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.1.html">Version 4.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.0.html">Version 4.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.3.html">Version 4.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.2.html">Version 4.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.1.html">Version 4.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.0.html">Version 4.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.0.html">Version 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.5.html">Version 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.4.html">Version 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.3.html">Version 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.2.html">Version 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.1.html">Version 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.0.html">Version 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.8.html">Version 2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.7.html">Version 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.6.html">Version 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.5.html">Version 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.4.html">Version 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.3.html">Version 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.2.html">Version 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.1.html">Version 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.0.html">Version 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.6.html">Version 1.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.5.html">Version 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.4.html">Version 1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../release-notes.html">Release Notes</a> &raquo;</li>
+      
+    <li>Version 4.4.0</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/release-notes/version-4.4.0.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-4-4-0">
+<h1>Version 4.4.0<a class="headerlink" href="#version-4-4-0" title="Permalink to this headline">¶</a></h1>
+<p>Version 4.4.0 of mod_wsgi can be obtained from:</p>
+<blockquote>
+<div><a class="reference external" href="https://codeload.github.com/GrahamDumpleton/mod_wsgi/tar.gz/4.4.0">https://codeload.github.com/GrahamDumpleton/mod_wsgi/tar.gz/4.4.0</a></div></blockquote>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<p>1. The makefiles for building mod_wsgi on Windows are currently broken and
+need updating. As most new changes relate to mod_wsgi daemon mode, which is
+not supported under Windows, you should keep using the last available
+binary for version 3.X on Windows instead.</p>
+</div>
+<div class="section" id="bugs-fixed">
+<h2>Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permalink to this headline">¶</a></h2>
+<p>1. When an exception occurs during the yielding of data from a generator
+returned from the WSGI application, and chunked transfer encoding was used
+on the response, then a &#8216;0&#8217; chunk would be errornously added at the end of
+the response content even though the response was likely incomplete. The
+result would be that clents wouldn&#8217;t be able to properly detect that the
+response was truncated due to an error. This issue is now fixed for when
+embedded mode is being used. Fixing it for daemon mode is a bit trickier.</p>
+<p>2. Response headers returned from the WSGI application running in daemon
+mode were being wrongly attached to the internal Apache data structure for
+<code class="docutils literal"><span class="pre">err_headers_out</span></code> instead of <code class="docutils literal"><span class="pre">headers_out</span></code>. This meant that the
+<code class="docutils literal"><span class="pre">Header</span></code> directive of the <code class="docutils literal"><span class="pre">mod_headers</span></code> module, with its default
+condition of only checking <code class="docutils literal"><span class="pre">onsuccess</span></code> headers would not work as
+expected.</p>
+<p>In order to be able to check for or modify the response headers one would
+have had to use the <code class="docutils literal"><span class="pre">Header</span></code> directive with the <code class="docutils literal"><span class="pre">always</span></code> condition and
+if also working with an embedded WSGI application, also define a parallel
+<code class="docutils literal"><span class="pre">Header</span></code> directive but with the <code class="docutils literal"><span class="pre">onsuccess</span></code> condition.</p>
+<p>For daemon mode, response headers will now be correctly associated with
+<code class="docutils literal"><span class="pre">headers_out</span></code> and the <code class="docutils literal"><span class="pre">onsuccess</span></code> condition of the <code class="docutils literal"><span class="pre">Header</span></code> directive.
+The only exception to this in either embedded or daemon mode now is that
+of the <code class="docutils literal"><span class="pre">WWW-Authenticate</span></code> header, which remains associated with
+<code class="docutils literal"><span class="pre">err_headers_out</span></code> so that the header will survive an internal redirect
+such as to an <code class="docutils literal"><span class="pre">ErrorDocument</span></code>.</p>
+<p>3. When optional support for chunked requests was enabled, it was only
+working properly for embedded mode. The feature now also works properly for
+daemon mode.</p>
+<p>The directive to enable support for chunked request content is
+<code class="docutils literal"><span class="pre">WSGIChunkedRequest</span></code>. The command line option when using mod_wsgi express
+is <code class="docutils literal"><span class="pre">--chunked-request</span></code>.</p>
+<p>This is an optional feature, as the WSGI specification is arguably broken
+in not catering properly for mutating input filters or chunked request
+content. Support for chunked request content could be enabled by default,
+but then WSGI applications which don&#8217;t simply read all available content
+and instead rely entirely on <code class="docutils literal"><span class="pre">CONTENT_LENGTH</span></code>, would likely see a chunked
+request as having no content at all, as it would interpret the lack of
+the <code class="docutils literal"><span class="pre">CONTENT_LENGTH</span></code> as meaning the length of the content is zero.</p>
+<p>An attempt to get the WSGI specification ammended to be more sensible and
+allow what is a growing requirement to support chunked request content was
+ignored. Thus support is optional. You will need to enable this if you wish
+to rely on features of any WSGI framework that take the more sensible
+approach of ignoring <code class="docutils literal"><span class="pre">CONTENT_LENGTH</span></code> as a true indicator of content
+length. One such WSGI framework which provides some support for chunked
+request content is Flask/Werkzeug. Check its documentation or the code for
+Flask/Werkzeug to to see if any additional <code class="docutils literal"><span class="pre">SetEnv</span></code> directive may be
+required to enable the support in Flask/Werkzeug.</p>
+<p>4. Fixed a potential request content data corruption issue when running a
+WSGI application in daemon mode. The bug in the code is quite obvious, yet
+unable to trigger it on older mod_wsgi versions. It was though triggering
+quite easily in the current release on MacOS X, prior to it being fixed,
+due to the changes made to support chunked request content for daemon
+processes.</p>
+<p>Suspect it is still a latent bug in older mod_wsgi versions, but the
+conditions under which it would trigger must have been harder to induce.
+The lack of reported problems may have been aided by virtue of Linux UNIX
+socket buffer size being quite large, in comparison to MacOS X, and so
+harder to create a condition where not all data could be written onto the
+UNIX socket in one call. Yet, when buffer sizes for the UNIX socket on
+MacOS X were increased, it was still possible to induce the bug.</p>
+<p>5. When the <code class="docutils literal"><span class="pre">--working-directory</span></code> option for <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> was
+given a relative path name, that wasn&#8217;t being translated to an absolute
+path name when substituting the <code class="docutils literal"><span class="pre">home</span></code> option of <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code>
+causing server startup to fail.</p>
+<p>6. When using <code class="docutils literal"><span class="pre">--debug-mode</span></code> of <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> the working
+directory for the application was not being added to <code class="docutils literal"><span class="pre">sys.path</span></code>. This
+meant that if the WSGI script was referenced from a different directory,
+any module imports for other modules in that directory would fail.</p>
+</div>
+<div class="section" id="features-changed">
+<h2>Features Changed<a class="headerlink" href="#features-changed" title="Permalink to this headline">¶</a></h2>
+<p>1. Until recently, a failed attempt to change the working directory for a
+daemon process to the user the process runs as would be ignored. Now it
+will cause a hard failure that will prevent the daemon process from
+starting. This would cause issues where the user, usually the default
+Apache user, has not valid home directory. Now what will happens is that
+any attempt will only be made to change the working directory to the home
+directory of the user the daemon process runs as, if the &#8216;user&#8217; option had
+been explicitly set to define the user and the user is different to the
+user that Apache child worker processes run as. In other words, is
+different to the default Apache user.</p>
+<p>2. The support for the <code class="docutils literal"><span class="pre">wdb</span></code> debugger was removed. Decided that it wasn&#8217;t
+mainstream enough and not ideal that still required a separate service and
+port to handle debugging sessions.</p>
+</div>
+<div class="section" id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h2>
+<p>1. Added new feature to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> implementing timeouts on the
+reading of the request, including headers, and the request body. This
+feature uses the Apache module <code class="docutils literal"><span class="pre">mod_reqtimeout</span></code> to implement the feature.</p>
+<p>By default a read timeout on the initial request including headers of 15
+seconds is used. This can dynamically increase up to a maximum of 30
+seconds if the request data is received at a minimum required rate.</p>
+<p>By default a read timeout on the request body of 15 seconds is used. This
+can dynamically increase if the request data is received at a minimum
+required rate.</p>
+<p>The options to override the defaults are <code class="docutils literal"><span class="pre">--header-timeout</span></code>,
+<code class="docutils literal"><span class="pre">--header-max-timeout</span></code>, <code class="docutils literal"><span class="pre">--header-min-rate</span></code>, <code class="docutils literal"><span class="pre">--body-timeout</span></code>,
+<code class="docutils literal"><span class="pre">--body-max-timeout</span></code> and <code class="docutils literal"><span class="pre">--body-min-rate</span></code>. For a more detailed
+explaination of this feature, consult the documentation for the Apache
+<code class="docutils literal"><span class="pre">mod_reqtimeout</span></code> module.</p>
+<p>2. Added a new <code class="docutils literal"><span class="pre">%{HOST}</span></code> label that can be used when specifying the
+application group (Python sub interpreter context) to run the WSGI
+application in, via the <code class="docutils literal"><span class="pre">WSGIApplicationGroup</span></code> directive, or the
+<code class="docutils literal"><span class="pre">application-group</span></code> option to <code class="docutils literal"><span class="pre">WSGIScriptAlias</span></code>.</p>
+<p>This new label will result in an application group being used with a name
+that corresponds to the name of the site as identified by the HTTP request
+<code class="docutils literal"><span class="pre">Host</span></code> header. Where the accepting port number is other than 80 or 443,
+then the name of the application group will be suffixed with the port
+number separated by a colon.</p>
+<p>Note that extreme care must be exercised when using this new label to
+specify the application group. This is because the HTTP request <code class="docutils literal"><span class="pre">Host</span></code>
+header is under the control of the user of the site.</p>
+<p>As such, it should only be used in conjunction with a configuration which
+adequately blocks access to anything but the expected hosts.</p>
+<p>For example, it would be dangerous to use this inside of a <code class="docutils literal"><span class="pre">VirtualHost</span></code>
+where the <code class="docutils literal"><span class="pre">ServerAlias</span></code> directive is used with a wildcard. This is
+because a user could pick arbitrary host names matching the wildcard and so
+force a new sub interpreter context to be created each time and so blow out
+memory usage.</p>
+<p>Similarly, caution should be exercised with <code class="docutils literal"><span class="pre">mod_vhost_alias</span></code>, with any
+configuration forbidding any host which doesn&#8217;t specifically match some
+specified resource such as a directory.</p>
+<p>Finally, this should probably never be used when not using either
+<code class="docutils literal"><span class="pre">VirtualHost</span></code> or <code class="docutils literal"><span class="pre">mod_vhost_alias</span></code> as in that case the server is likely
+going to accept any <code class="docutils literal"><span class="pre">Host</span></code> header value without exclusions.</p>
+<p>3. Allow <code class="docutils literal"><span class="pre">%{RESOURCE}</span></code>, <code class="docutils literal"><span class="pre">%{SERVER}</span></code> and <code class="docutils literal"><span class="pre">%{HOST}</span></code> labels to be used
+with the <code class="docutils literal"><span class="pre">WSGIProcessGroup</span></code> directive, or the <code class="docutils literal"><span class="pre">process-group</span></code> option of
+the <code class="docutils literal"><span class="pre">WSGIScriptAlias</span></code> directive.</p>
+<p>For this to work, it is still necessary to have setup an appropriate
+mod_wsgi daemon process group using the <code class="docutils literal"><span class="pre">WSGIDaemonProcess</span></code> directive,
+with name that will match the expanded value for the respective labels.
+If there is no matching mod_wsgi daemon process group specified, then
+a generic HTTP 500 internal server error response would be returned and
+the reason, lack of matching mod_wsgi daemon process group, being logged in
+the Apache error log.</p>
+<p>4. Error messages and exceptions raised when there is a failure to read
+request content, or write back a response now provide the internal error
+indication from Apache as to why. For the <code class="docutils literal"><span class="pre">IOError</span></code> exceptions which are
+raised, that the exception originates within Apache/mod_wsgi is now flagged
+in the description associated with the exception.</p>
+<p>5. When using mod_wsgi daemon mode and there is a timeout when reading
+request content in order to proxy it to the daemon process, a 408 request
+timeout HTTP response is now returned where as previously a generic 500
+internal server error HTTP response was returned.</p>
+<p>Note that this doesn&#8217;t mean that the WSGI application wasn&#8217;t actually run.
+The WSGI application in the daemon process would have run as soon as the
+headers had been received.</p>
+<p>If the WSGI application had actually attempted to read the request content,
+it should also have eventually received an exception of type <code class="docutils literal"><span class="pre">IOError</span></code>
+when accessing <code class="docutils literal"><span class="pre">wsgi.input</span></code> to read the request content, due to a
+timeout or due to the proxy connection being closed before all request
+content was able to be read.</p>
+<p>If the WSGI application wasn&#8217;t expecting any request content and had
+ignored it, even though some was present, it would still have run to
+completion and generated a response, but because the Apache child worker
+process was blocked waiting for content, when the timeout occurred the
+client would get the 408 HTTP response rather than the actual response
+generated by the WSGI application.</p>
+<p>6. Added the <code class="docutils literal"><span class="pre">--log-to-terminal</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> to allow
+the error log output to be directed to standard error for the controlling
+terminal, and the access log output, if enabled, to be directed to standard
+output. Similarly, the startup log output, if enabled, will be sent to
+standard error also.</p>
+<p>This should not be used in conjunction with <code class="docutils literal"><span class="pre">--setup-only</span></code> option when
+using the generated <code class="docutils literal"><span class="pre">apachectl</span></code> script, unless the <code class="docutils literal"><span class="pre">-DFOREGROUND</span></code>
+option is also being supplied to <code class="docutils literal"><span class="pre">apachectl</span></code> at the time it is run with
+the <code class="docutils literal"><span class="pre">start</span></code> command.</p>
+<p>7. Added the <code class="docutils literal"><span class="pre">--access-log-format</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. By
+default if the access log is enabled, entries will follow the &#8216;common&#8217; log
+format as typically used by Apache. You have two options of how you can use
+the <code class="docutils literal"><span class="pre">--access-log-format</span></code>. The first is to give it the argument
+&#8216;combined&#8217;, which will then cause it to use this alternate log format
+which is again often used with Apache. The other is to specify the log
+format string yourself.</p>
+<p>The format string can contain format string components as would be used
+with the <code class="docutils literal"><span class="pre">LogFormat</span></code> directive. For example, to specify the equivalent to
+the &#8216;common&#8217; log format, you could use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">access</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="nb">format</span> <span class="s2">&quot;%h %l </span><span class="si">%u</span><span class="s2"> %t </span><span class="se">\&quot;</span><span class="si">%r</span><span class="se">\&quot;</span><span class="s2"> %&gt;s %b&quot;</span>
+</pre></div>
+</div>
+<p>This &#8216;common&#8217; log format is identified via a nickname in the same way
+&#8216;combined&#8217; is, so if you did have to specify it explicitly for some reason,
+you could just have instead used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">access</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="nb">format</span> <span class="n">common</span>
+</pre></div>
+</div>
+<p>8. Added the <code class="docutils literal"><span class="pre">--newrelic-config-file</span></code> and <code class="docutils literal"><span class="pre">--newrelic-environment</span></code>
+options to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. This allows these to be set using command
+line options rather than requiring the New Relic environment variables.
+Importantly, when the options are used, the values will be embedded in the
+generated files if using <code class="docutils literal"><span class="pre">--setup-only</span></code>. Thus they will still be set when
+later using the <code class="docutils literal"><span class="pre">apachectl</span></code> control script to start the server.</p>
+<p>Note that when these options are used, they will cause the equivalent New
+Relic environment variable for that option to be ignored, both if running
+the server immediately, or if using <code class="docutils literal"><span class="pre">--setup-only</span></code> and running the server
+later using <code class="docutils literal"><span class="pre">apachectl</span></code>.</p>
+<p>9. Added the <code class="docutils literal"><span class="pre">--enable-debugger</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. When
+specified and at the same time the <code class="docutils literal"><span class="pre">--debug-mode</span></code> option is specified,
+then when an exception is raised from the initial execution of the WSGI
+application, when consuming the response iterable, or when calling any
+<code class="docutils literal"><span class="pre">close()</span></code> method of the response iterable, then post mortem debugging of
+the exception will be triggered. Post mortem debugging is performed using
+the Python debugger (pdb).</p>
+<p>10. Added the <code class="docutils literal"><span class="pre">--enable-coverage</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. When
+specified and at the same time the <code class="docutils literal"><span class="pre">--debug-mode</span></code> option is specified,
+then coverage analysis is enabled. When the server is exited, then the HTML
+reports will be output to the <code class="docutils literal"><span class="pre">htmlcov</span></code> directory under the server
+working directory, or the directory specified using the
+<code class="docutils literal"><span class="pre">--coverage-directory</span></code> option. The <code class="docutils literal"><span class="pre">coverage</span></code> module must be installed
+for this feature to work.</p>
+<p>11. Added the <code class="docutils literal"><span class="pre">--enable-profiler</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code>. When
+specified and at the same time the <code class="docutils literal"><span class="pre">--debug-mode</span></code> option is specified,
+then coverage analysis is enabled. When the server is exited, then the
+profiler data will be output to the <code class="docutils literal"><span class="pre">pstats.dat</span></code> file under the server
+working directory, or the file specified using the <code class="docutils literal"><span class="pre">--profiler-output-file</span></code>
+option.</p>
+<p>12. Added the <code class="docutils literal"><span class="pre">--python-path</span></code> option to <code class="docutils literal"><span class="pre">mod_wsgi-express</span></code> to specify
+additional directories that should be added to the Python module search path.</p>
+<p>Note that these directories will not be processed for <code class="docutils literal"><span class="pre">.pth</span></code> files. If
+processing of <code class="docutils literal"><span class="pre">.pth</span></code> files is required, then the <code class="docutils literal"><span class="pre">PYTHONPATH</span></code> environment
+variable should be set and exported in a script file referred to using the
+<code class="docutils literal"><span class="pre">--envvars-script</span></code> option.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="version-4.3.2.html" class="btn btn-neutral float-right" title="Version 4.3.2" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="version-4.4.1.html" class="btn btn-neutral" title="Version 4.4.1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

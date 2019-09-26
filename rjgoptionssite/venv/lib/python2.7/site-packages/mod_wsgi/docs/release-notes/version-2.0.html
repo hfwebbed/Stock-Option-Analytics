@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Version 2.0 &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="Release Notes" href="../release-notes.html"/>
+        <link rel="next" title="Version 1.6" href="version-1.6.html"/>
+        <link rel="prev" title="Version 2.1" href="version-2.1.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guides.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../release-notes.html">Release Notes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.17.html">Version 4.5.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.16.html">Version 4.5.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.15.html">Version 4.5.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.14.html">Version 4.5.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.13.html">Version 4.5.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.12.html">Version 4.5.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.11.html">Version 4.5.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.10.html">Version 4.5.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.9.html">Version 4.5.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.8.html">Version 4.5.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.7.html">Version 4.5.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.6.html">Version 4.5.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.5.html">Version 4.5.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.4.html">Version 4.5.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.3.html">Version 4.5.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.2.html">Version 4.5.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.1.html">Version 4.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.5.0.html">Version 4.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.23.html">Version 4.4.23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.22.html">Version 4.4.22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.21.html">Version 4.4.21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.20.html">Version 4.4.20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.19.html">Version 4.4.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.18.html">Version 4.4.18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.17.html">Version 4.4.17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.16.html">Version 4.4.16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.15.html">Version 4.4.15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.14.html">Version 4.4.14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.13.html">Version 4.4.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.12.html">Version 4.4.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.11.html">Version 4.4.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.10.html">Version 4.4.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.9.html">Version 4.4.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.8.html">Version 4.4.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.7.html">Version 4.4.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.6.html">Version 4.4.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.5.html">Version 4.4.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.4.html">Version 4.4.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.3.html">Version 4.4.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.2.html">Version 4.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.1.html">Version 4.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.4.0.html">Version 4.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.2.html">Version 4.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.1.html">Version 4.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.3.0.html">Version 4.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.8.html">Version 4.2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.7.html">Version 4.2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.6.html">Version 4.2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.5.html">Version 4.2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.4.html">Version 4.2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.3.html">Version 4.2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.2.html">Version 4.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.1.html">Version 4.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.2.0.html">Version 4.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.3.html">Version 4.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.2.html">Version 4.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.1.html">Version 4.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.1.0.html">Version 4.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-4.0.html">Version 4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.5.html">Version 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.4.html">Version 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.3.html">Version 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.2.html">Version 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.1.html">Version 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-3.0.html">Version 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.8.html">Version 2.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.7.html">Version 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.6.html">Version 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.5.html">Version 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.4.html">Version 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.3.html">Version 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.2.html">Version 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-2.1.html">Version 2.1</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Version 2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-changed">Features Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-removed">Features Removed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#features-added">Features Added</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.6.html">Version 1.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.5.html">Version 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.4.html">Version 1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version-1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../release-notes.html">Release Notes</a> &raquo;</li>
+      
+    <li>Version 2.0</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/release-notes/version-2.0.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="version-2-0">
+<h1>Version 2.0<a class="headerlink" href="#version-2-0" title="Permalink to this headline">¶</a></h1>
+<p>Version 2.0 of mod_wsgi can be obtained from:</p>
+<blockquote>
+<div><a class="reference external" href="http://modwsgi.googlecode.com/files/mod_wsgi-2.0.tar.gz">http://modwsgi.googlecode.com/files/mod_wsgi-2.0.tar.gz</a></div></blockquote>
+<p>Note that mod_wsgi 2.0 was originally derived from mod_wsgi 1.0. It has
+though all changes from later releases in the 1.X branch. Thus also see:</p>
+<ul class="simple">
+<li><a class="reference internal" href="version-1.1.html"><span class="doc">Version 1.1</span></a></li>
+<li><a class="reference internal" href="version-1.2.html"><span class="doc">Version 1.2</span></a></li>
+<li><a class="reference internal" href="version-1.3.html"><span class="doc">Version 1.3</span></a></li>
+</ul>
+<div class="section" id="bug-fixes">
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h2>
+<p>1. Work around bug in Apache where &#8216;100 Continue&#8217; response was sent as
+part of response content if no attempt to read request input before headers
+and response were generated.</p>
+</div>
+<div class="section" id="features-changed">
+<h2>Features Changed<a class="headerlink" href="#features-changed" title="Permalink to this headline">¶</a></h2>
+<p>1. The WSGICaseSensitivity directive can now only be used at global scope
+within the Apache configuration. This means that individual directories can
+not be designated as being case sensitive or not. For correct operation
+therefore, the path names of all script files should treat case the same,
+one cannot have a mixture.</p>
+<p>2. How the WSGIPythonPath directive is interpreted has changed in that
+&#8216;.pth&#8217; files in the desiginated directories are honoured. See item 10 in
+new features section for more information.</p>
+<p>3. Removed support for output buffering outside of WSGI specification. In
+other words, removed the WSGIOutputBuffering directive and associated code.
+If using a WSGI application which does poor buffering itself, to the extent
+that performance is affected, you will need to wrap it in a WSGI middleware
+component that does buffering on its behalf.</p>
+</div>
+<div class="section" id="features-removed">
+<h2>Features Removed<a class="headerlink" href="#features-removed" title="Permalink to this headline">¶</a></h2>
+<p>1. The &#8216;Interpreter&#8217; option to WSGIReloadMechanism has been removed. This
+option for interpreter reloading was of limited practical value as many
+third party modules for Python aren&#8217;t written in a way to cope with
+destruction of Python interpreters in a running process. The presence
+of the feature was just making it harder to implement various new features.</p>
+<p>2. The WSGIPythonHome directive is no longer available on Windows systems
+as Python would ignore it anyway.</p>
+<p>3. The WSGIPythonExecutable directive has been removed. This didn&#8217;t work
+on Windows or MacOS X systems. On UNIX systems, the WSGIPythonHome
+directive should be used instead. Not known how one can achieve same on
+Windows systems.</p>
+</div>
+<div class="section" id="features-added">
+<h2>Features Added<a class="headerlink" href="#features-added" title="Permalink to this headline">¶</a></h2>
+<p>1. The WSGIReloadMechanism now provides the &#8216;Process&#8217; option for enabling
+process reloading when the WSGI script file is changed. Note that this only
+applies to WSGI script files used for WSGI applications which have been
+delegated to a mod_wsgi daemon process. Additionally, as of 2.0c5 the use
+of &#8216;Process&#8217; option has been made the default for daemon mode processes.
+If specifically requiring existing default behaviour, the &#8216;Module&#8217; option
+will need to be specified to indicate script file reloading.</p>
+<p>If this option is specified for WSGI application run in embedded mode
+within Apache child processes, the existing default behaviour of reloading
+just the script file will apply.</p>
+<p>For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/ReloadingSourceCode">http://code.google.com/p/modwsgi/wiki/ReloadingSourceCode</a></div></blockquote>
+<p>2. When application is running in embedded mode, and WSGIApacheExtensions
+directive is set to On, then a Python CObject reference is added to the
+WSGI application environment as &#8216;apache.request_rec&#8217;. This can be passed to
+C extension modules and can be converted back to a reference to internal
+Apache request_rec structure thereby allow C extension modules to work
+against the internal Apache C APIs to implement special features.</p>
+<p>One example of such special extensions are the Python SWIG bindings for the
+Apache C API implemented in the separate &#8216;ap_swig_py&#8217; package. Because SWIG
+is being used, and due to thread support within SWIG generated bindings
+possibly only being usable within the first Python interpreter instance
+created, it may be the case that the &#8216;ap_swig_py&#8217; package an only be used
+when WSGIApplicationGroup has been set to &#8216;%{GLOBAL}&#8217;.</p>
+<p>The &#8216;ap_swig_py&#8217; package has not yet been released and is still in
+development. The package can be obtained from the Subversion repository
+at:</p>
+<blockquote>
+<div><a class="reference external" href="https://bitbucket.org/grahamdumpleton/apswigpy/wiki/Home">https://bitbucket.org/grahamdumpleton/apswigpy/wiki/Home</a></div></blockquote>
+<p>With the SWIG binding for the Apache API, the intention is that many of
+the internal features of Apache would then be available. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">apache.httpd</span><span class="o">,</span> <span class="nn">apache.http_core</span>
+
+<span class="n">req</span> <span class="o">=</span> <span class="n">apache</span><span class="o">.</span><span class="n">httpd</span><span class="o">.</span><span class="n">request_rec</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;apache.request_rec&quot;</span><span class="p">])</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">apache</span><span class="o">.</span><span class="n">http_core</span><span class="o">.</span><span class="n">ap_document_root</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this feature is experimental and may be removed from a future
+version if insufficient interest in it or in developing SWIG bindings.</p>
+<p>3. When Apache 2.0/2.2 is being used, Python script can now be provided to
+perform the role of an Apache auth provider. This would allow user
+authentication underlying HTTP Basic (2.0 and 2.2) or Digest (2.2 only)
+authentication schemes to be done by a Python web application. Do note
+though that at present the provided authentication script will always
+run in the context of the Apache child processes and can not be delegated
+to a distinct daemon process.</p>
+<p>Apache configuration for defining an auth provider for Basic authentication
+when using Apache 2.2 would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">AuthBasicProvider</span> <span class="n">wsgi</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>For Apache 2.0 it would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">AuthAuthoritative</span> <span class="n">Off</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>The &#8216;auth.wsgi&#8217; script would then need to contain a &#8216;check_password()&#8217;
+function with a sample as shown below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">password</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>If using Apache 2.2 and Digest authentication support is built into Apache,
+then that also may be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Digest</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">AuthDigestProvider</span> <span class="n">wsgi</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>The name of the required authentication function for Digest authentication
+is &#8216;get_realm_hash()&#8217;. The result of the function must be &#8216;None&#8217; if the
+user doesn&#8217;t exist, or a hash string encoding the user name, authentication
+realm and password:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">md5</span>
+
+<span class="k">def</span> <span class="nf">get_realm_hash</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">realm</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">md5</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+        <span class="c1"># user:realm:password</span>
+        <span class="n">value</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">realm</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">))</span>
+        <span class="nb">hash</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">hash</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>By default the auth providers are executed in context of first interpreter
+created by Python. This can be overridden using the &#8216;application-group&#8217;
+option to the script directive. The namespace for authentication groups is
+shared with that for application groups defined by WSGIApplicationGroup.</p>
+<p>If mod_authn_alias is being loaded into Apache, then an aliased auth
+provider can also be defined:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">AuthnProviderAlias</span> <span class="n">wsgi</span> <span class="n">django</span><span class="o">&gt;</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">django</span><span class="o">/</span><span class="n">mysite</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span> \
+ <span class="n">application</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">django</span>
+<span class="o">&lt;/</span><span class="n">AuthnProviderAlias</span><span class="o">&gt;</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">django</span><span class="o">/</span><span class="n">mysite</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">django</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">django</span><span class="o">/</span><span class="n">mysite</span><span class="o">/</span><span class="n">apache</span><span class="o">&gt;</span>
+<span class="n">Order</span> <span class="n">deny</span><span class="p">,</span><span class="n">allow</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+
+<span class="n">WSGIApplicationGroup</span> <span class="n">django</span>
+
+<span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Django Site&quot;</span>
+<span class="n">AuthBasicProvider</span> <span class="n">django</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>An authentication script for Django might then be something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/usr/local/django&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;mysite.settings&#39;</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">db</span>
+
+<span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">reset_queries</span><span class="p">()</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If the WSGIApacheExtensions directive is set to On then &#8216;apache.request_rec&#8217;
+will be passed in &#8216;environ&#8217; to the auth provider functions. This may be used
+in conjunction with C extension modules such as &#8216;ap_swig_py&#8217;. For example,
+it may be used to set attributes in &#8216;req.subprocess_env&#8217; which are then in
+turn passed to the WSGI application through the WSGI environment. Passing
+of these settings will occur even if the WSGI application itself is running
+in a daemon process.</p>
+<p>A further example where this can be useful is where which daemon process
+is used is dependent on some attribute of the user. For example, if using
+the Apache configuration:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">django</span><span class="o">-</span><span class="n">admin</span>
+<span class="n">WSGIDaemonProcess</span> <span class="n">django</span><span class="o">-</span><span class="n">users</span>
+
+<span class="n">WSGIProcessGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">ENV</span><span class="p">:</span><span class="n">PROCESS_GROUP</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>which daemon process the request is delegated to can be controlled from
+the auth provider:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">apache.httpd</span>
+
+<span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">reset_queries</span><span class="p">()</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">apache</span><span class="o">.</span><span class="n">httpd</span><span class="o">.</span><span class="n">request_rec</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;apache.request_rec&quot;</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_staff</span><span class="p">:</span>
+                <span class="n">req</span><span class="o">.</span><span class="n">subprocess_env</span><span class="p">[</span><span class="s2">&quot;PROCESS_GROUP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;django-admin&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">req</span><span class="o">.</span><span class="n">subprocess_env</span><span class="p">[</span><span class="s2">&quot;PROCESS_GROUP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;django-users&#39;</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/AccessControlMechanisms">http://code.google.com/p/modwsgi/wiki/AccessControlMechanisms</a></div></blockquote>
+<p>4. When Apache 2.2 is being used, now possible to provide a script file
+containing a callable which returns the groups that a user is a member of.
+This can be used in conjunction with a &#8216;group&#8217; option to the Apache
+&#8216;Require&#8217; directive. Note that up to mod_wsgi 2.0c3 the option was actually
+&#8216;wsgi-group&#8217;.</p>
+<p>Apache configuration for defining an auth provider for Basic authentication
+and subsequent group authorisation would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">AuthBasicProvider</span> <span class="n">wsgi</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">WSGIAuthGroupScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">Require</span> <span class="n">group</span> <span class="n">secret</span><span class="o">-</span><span class="n">agents</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>The &#8216;auth.wsgi&#8217; script would then need to contain a &#8216;check_password()&#8217;
+and &#8216;groups_for_user()&#8217; function with a sample as shown below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">password</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">groups_for_user</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;secret-agents&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/AccessControlMechanisms">http://code.google.com/p/modwsgi/wiki/AccessControlMechanisms</a></div></blockquote>
+<p>5. Implemented WSGIDispatchScript directive. This directive can be used
+to designate a script file in which can be optionally defined any of the
+functions:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_group</span><span class="p">(</span><span class="n">environ</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;%</span><span class="si">{GLOBAL}</span><span class="s2">&quot;</span>
+
+<span class="k">def</span> <span class="nf">application_group</span><span class="p">(</span><span class="n">environ</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;%</span><span class="si">{GLOBAL}</span><span class="s2">&quot;</span>
+
+<span class="k">def</span> <span class="nf">callable_object</span><span class="p">(</span><span class="n">environ</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;application&quot;</span>
+</pre></div>
+</div>
+<p>This allows for the process group, application group and callable object
+name for a WSGI application to be programmatically defined rather than be
+exclusively drawn from the configuration.</p>
+<p>Each function if wishing to override the value defined by the configuration
+should return a string object. If None is returned then value defined by
+the configuration will still be used.</p>
+<p>By default the script file code will be executed within the context of the
+&#8216;%{GLOBAL}&#8217; application group within the Apache child processes (never in
+the daemon processes). The application group used can be overridden by
+defining the &#8216;application-group&#8217; option to the script directive. Note that
+up to 2.0c3 the WSGIServerGroup directive was instead provided, but this
+has now been removed.</p>
+<p>This feature could be used as part of a mechanism for distributing requests
+across a number of daemon process groups, but always directing requests from
+a specific user to the same daemon process.</p>
+<p>6. Implemented inactivity-timeout option for WSGIDaemonProcess directive.
+For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">trac</span> <span class="n">processes</span><span class="o">=</span><span class="mi">1</span> <span class="n">threads</span><span class="o">=</span><span class="mi">15</span> \
+  <span class="n">maximum</span><span class="o">-</span><span class="n">requests</span><span class="o">=</span><span class="mi">1000</span> <span class="n">inactivity</span><span class="o">-</span><span class="n">timeout</span><span class="o">=</span><span class="mi">300</span>
+</pre></div>
+</div>
+<p>When this option is used, the daemon process will be shutdown, and thence
+restarted, after no request activity for the defined period (in seconds).</p>
+<p>The purpose of this option is to allow amount of memory being used by a
+process to be dropped back to the initial idle state level. This option
+would be used where the application delegated to the daemon process was
+used infrequently and thus it would be preferable to reclaim the memory
+when the application is not in use.</p>
+<p>7. In daemon processes, the HOME environment variable is now overridden
+such that its initial value when a new Python sub interpreter is created
+is the same as the home directory of the user that the daemon process is
+running as. This is to give some certainty as to its value as otherwise
+the HOME environment variable may be that of the root user, a particular
+user, or the user that ran &#8216;sudo&#8217; to start Apache. This is because HOME
+environment variable will be inherited from environment of user that Apache
+is started as and has no relationship to the user that the process is
+actually run as.</p>
+<p>Note that the HOME environment variable is not updated for embedded mode as
+this would change the environment of code running under different Apache
+modules, such as mod_php and mod_perl. Not seen as being good practice to
+modify the environment of other systems.</p>
+<p>Once consequence of the HOME environment variable being set correctly for
+daemon processes at least, is that the default location calculated for
+Python egg cache should then be correct. If running in embedded mode, would
+still be necessary to manually override Python egg cache location.</p>
+<p>8. In daemon processes, the initial current working directory of the
+process will be set to the home directory of the user that the process
+runs as, or as specified by the &#8216;home&#8217; option to the WSGIDaemonProcess
+directive.</p>
+<p>9. Added &#8216;stack-size&#8217; option to WSGIDaemonProcess so that per thread stack
+size can be overridden for processes in the daemon process group.</p>
+<p>This can be required on Linux where the default stack size for threads is
+the same as the default user process stack size, that being 8MB. When
+running in a VPS provided by a web hosting company, where they for some
+reason seem to take into consideration the virtual memory size as well as
+the resident memory size when calculating your process limits, it is better
+to drop the per thread stack size down to a value closer to 512KB. For
+example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">example</span> <span class="n">processes</span><span class="o">=</span><span class="mi">2</span> <span class="n">threads</span><span class="o">=</span><span class="mi">25</span> <span class="n">stack</span><span class="o">-</span><span class="n">size</span><span class="o">=</span><span class="mi">524288</span>
+</pre></div>
+</div>
+<p>10. Added some direct support into mod_wsgi for virtual environments for
+Python such as virtualenv and workingenv.</p>
+<p>The first approach to configuration is to use WSGIPythonPath directive at
+global scope in apache configuration. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># workingenv</span>
+<span class="n">WSGIPythonPath</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">3</span>
+
+<span class="c1"># virtualenv</span>
+<span class="n">WSGIPythonPath</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">3</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span>
+</pre></div>
+</div>
+<p>The path you have to specify is slightly different depending on whether you
+use workingenv or virtualenv packages.</p>
+<p>Previously the WSGIPythonPath directive would just override the
+<code class="docutils literal"><span class="pre">PYTHONPATH</span></code> environment variable. Instead it now calls
+<code class="docutils literal"><span class="pre">site.addsitedir()</span></code> for any specified directories, thus triggering the
+reading of any .pth files and the subsequent addition of further
+directories there specified to sys.path.</p>
+<p>Note that directories added with WSGIPythonPath only apply to applications
+running in embedded mode.</p>
+<p>If you want to specify directories for daemon processes, you can use the
+&#8216;python-path&#8217; option to WSGIDaemonProcess. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">turbogears</span> <span class="n">processes</span><span class="o">=</span><span class="mi">5</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1</span> \
+  <span class="n">user</span><span class="o">=</span><span class="n">site1</span> <span class="n">group</span><span class="o">=</span><span class="n">site1</span> <span class="n">maximum</span><span class="o">-</span><span class="n">requests</span><span class="o">=</span><span class="mi">1000</span> \
+  <span class="n">python</span><span class="o">-</span><span class="n">path</span><span class="o">=/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">3</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">turbogears</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="n">WSGIProcessGroup</span> <span class="n">turbogears</span>
+<span class="n">WSGIApplicationGroup</span> <span class="o">%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span>
+<span class="n">WSGIReloadMechanism</span> <span class="n">Process</span>
+</pre></div>
+</div>
+<p>Do note that anything defined in the standard Python site-packages
+directories takes precedence over directories added using the mechanisms
+described above. Thus, if wanting to use these virtual environments all the
+time, your standard Python installation effectively needs to have an empty
+site-packages directory. Alternatively, on UNIX systems you can use the
+WSGIPythonHome directive to point to a virtual environment which contains
+an empty &#8216;site-packages&#8217;.</p>
+<p>End result is that with these options, should be very easy to have
+different daemon process groups using different Python virtual
+environments without any fiddles having to be done in the WSGI script
+file itself.</p>
+<p>For more details see:</p>
+<blockquote>
+<div><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/VirtualEnvironments">http://code.google.com/p/modwsgi/wiki/VirtualEnvironments</a></div></blockquote>
+<p>11. Added WSGIPythonEggs directive and corresponding &#8216;python-eggs&#8217; option
+for WSGIDaemonProcess directive. These allow the location of the Python
+egg cache directive to be set for applications running in embedded mode or
+in the designated daemon processes. These options have the same affect as
+if the &#8216;PYTHON_EGG_CACHE&#8217; environment variable had been set.</p>
+<p>12. Implement &#8216;deadlock-timeout&#8217; option for WSGIDaemonProcess for detecting
+Python programs that hold the GIL for extended periods, thus perhaps
+indicating that process has frozen or has become unresponsive. The default
+value for the timeout is 300 seconds.</p>
+<p>13. Added support for providing an access control script. This equates to
+the access handler phase of Apache and would be use to deny access to a
+subset of URLs based on the details of the remote client. The path to the
+script is defined using the WSGIAccessScript directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIAccessScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">script</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>The name of the function that must exist in the script file is &#8216;allow_access()&#8217;.
+It must return True or False:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">allow_access</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">host</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;::1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This function will always be executed in the context of the Apache child
+processes even if it is controlling access to a WSGI application which has
+been delegated to a daemon process. By default the function will be executed
+in the context of the main Python interpreter, ie., &#8216;%{GLOBAL}&#8217;. This can
+be overridden by using the &#8216;application-group&#8217; option to the WSGIAccessScript
+directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIAccessScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">script</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">wsgi</span> <span class="n">application</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">admin</span>
+</pre></div>
+</div>
+<p>For more details see documentation on
+[AccessControlMechanisms Access Control Mechanisms]</p>
+<p>14. Added support for loading a script file at the time that process is
+first started. This would allow modules related to an application to be
+preloaded into an interpreter immediately rather than it only occuring when
+the first request arrives for that application.</p>
+<p>The directive for designating the script to load is WSGIImportScript. The
+directive can only be used at global scope within the Apache configuration.
+It is necessary to designate both the application group, and if dameon mode
+support is available, the process group:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIImportScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">script</span><span class="o">/</span><span class="n">import</span><span class="o">.</span><span class="n">wsgi</span> \
+ <span class="n">process</span><span class="o">-</span><span class="n">group</span><span class="o">=%</span><span class="p">{</span><span class="n">GLOBAL</span><span class="p">}</span> <span class="n">application</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">django</span>
+</pre></div>
+</div>
+<p>14. Add &#8220;&#8211;disable-embedded&#8221; option to &#8220;configure&#8221; script so that ability
+to run a WSGI application in embedded mode can be disabled completely.
+Also added the directive WSGIRestrictEmbedded so that ability to run a
+WSGI application in embedded mode can be disabled easily if support for
+embedde mode is still compiled in.</p>
+<p>15. Added support for optional WSGI extension wsgi.file_wrapper. On UNIX
+systems and when Apache 2.X is being used, if the wrapped file like object
+relates to a regular file then additional optimisations will be applied to
+improve the performance of returning the file in a response.</p>
+<p>16. Added &#8216;display-name&#8217; option for WSGIDaemonProcess. On operating systems
+where it works, this should allow displayed name of daemon process shown by
+&#8216;ps&#8217; to be changed. Note that name will be truncated to whatever the existing
+length of &#8216;argv[0]&#8217; was for the process.</p>
+<p>17. When WSGI application generates more content than what was defined by
+response content length header, excess is discarded. If Apache log level is
+set to debug, messages will be logged to Apache error log file warning of
+when generated content length differs to specified content length.</p>
+<p>18. Allow WSGIPassAuthorization to be used in .htaccess file if !FileInfo
+override has been set. This has been allowed as !FileInfo enables ability to
+use both mod_rewrite and mod_headers, which both provide means of getting
+at the authorisation header anyway, so no point trying to block it.</p>
+<p>19. Optimise sending of WSGI environment across to daemon process by
+reducing number of writes to socket. For daemon mode and a simple hello
+world application this improves base performance by 40% moving it
+significantly closer to performance of embedded mode.</p>
+<p>20. Always change a HEAD request into a GET request. This is to ensure that
+a WSGI application always generates response content. If this isn&#8217;t done
+then any Apache output filters will not get to see the response content and
+if they need to see the response content to generate headers based on it,
+then the response headers from a HEAD request would be incorrect and not
+match a GET request as required.</p>
+<p>If Apache 2.X, this will not however be done if there are no Apache output
+filters registered which could change the response headers or content.</p>
+<p>21. Add option &#8220;send-buffer-size&#8221; and &#8220;receive-buffer-size&#8221; to
+WSGIDaemonProcess for controlling the send and receive buffer sizes of the
+UNIX socket used to communicate with mod_wsgi daemon processes. This is to
+work around or limit deadlock problems that can occur in certain cases
+when the operating system defines a very small default UNIX socket buffer
+size.</p>
+<p>22. When no request content has been read and headers are to be sent back,
+force a zero length read in order to flush out any &#8216;100 Continue&#8217; response
+if expected by client. This is only done for 2xx and 3xx response status
+values.</p>
+<p>23. A negative value for content length in response wasn&#8217;t being rejected.
+Where invalid header was being returned in response original response
+status was being returned instead of a 500 error.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="version-1.6.html" class="btn btn-neutral float-right" title="Version 1.6" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="version-2.1.html" class="btn btn-neutral" title="Version 2.1" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

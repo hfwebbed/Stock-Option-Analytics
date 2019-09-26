@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block stock_game_active %}
+    class="active"
+{%endblock%}
+{% block content %}
+
+    {% if ticker_data is not none %}
+        <div class="row panel panel-default">
+            <div class="panel-body">
+                {{ticker_data.to_html(classes="table",escape=False) | safe }}
+            </div>
+        </div>
+    {% else %}
+        no data yet
+    {% endif %}
+
+    <div class="row panel panel-default">
+        <form name="add_industry" action="/stock_game/add" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <input name="new_ticker" id="new_ticker" value="" placeholder="add new ticker">
+                    </td>
+                    <td>
+                        <input type="submit" value="add" class="btn btn-success btn-xs">
+                    </td>
+                    <td width="15%">
+                        &nbsp
+                    </td>
+                    <td>
+                        <a href="/stock_game">refresh </a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+     </div>
+{% endblock %}
+

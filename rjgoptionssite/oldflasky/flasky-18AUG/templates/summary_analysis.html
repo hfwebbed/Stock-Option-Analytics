@@ -1,0 +1,239 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block active2 %}
+    class="active"
+{%endblock%}
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post">
+                <div class="panel">
+                    <label for="tickers">Stock:</label>
+                    <input name="tickers" id="tickers" value="{{tickers or ''}}">
+
+                    <!--<label for="from_date" >From:</label>-->
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" hidden>
+
+                    <!--<label for="till_date">Till:</label>-->
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" hidden>
+
+                    <button name="submit" >Fetch!</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+
+    {% if bullish_vs_bearish_totals is not none %}
+        <div class="panel panel-default">
+            {{bullish_vs_bearish_totals.to_html(classes="table") | safe }}
+        </div>
+    {%endif%}
+
+    {% if slope_and_rsquare_totals is not none %}
+        <div class="panel panel-default">
+            {{slope_and_rsquare_totals.render() | safe }}
+        </div>
+    {%endif%}
+
+    <div class="row">
+        {% if price_changes is not none %}
+            <div class="panel panel-default col-lg-6">
+                <h2>Change in price based on volatility</h2>
+               <table>
+                    <tr>
+                        <th>Current Close</th>
+                        <td>{{price_changes["last_close"]}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <th>Change in price based on the month volatility</th>
+                        <th>Change in price based on the Year volatility</th>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>Upward Price based on 30 days</th>
+                        <td>{{price_changes["expected_monthly_grow"]}}</td>
+                        <td>{{price_changes["expected_yearly_grow"]}}</td>
+                        <th>Upward Price based on a year</th>
+                    </tr>
+
+                    <tr>
+                        <th>Downward Price based on 30 days</th>
+                        <td>{{price_changes["expected_monthly_drop"]}}</td>
+                        <td>{{price_changes["expected_yearly_drop"]}}</td>
+                        <th>Downward Price based on a year</th>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-lg-2 panel panel-default">
+                <h2>Call option recommendation</h2><br>
+
+
+                <form name="call_option_recommendation" id="call_option_recommendation" >
+                    Up/Down:<br>
+                    <select name="up_down" id = "up_down" class="selectpicker">
+                        <option>Up - bullish</option>
+                        <option>Down - Bearish</option>
+                        <option>Neutral</option>
+                    </select>
+                    <br><br>
+                    Regression:<br>
+                    <select name="regression" id="regression" class="selectpicker">
+                        <option>Up - Regression is low</option>
+                        <option>Up - Regression is ok</option>
+                        <option>Up - Regression is great</option>
+                        <option>Down - Regression is low</option>
+                        <option>Down - Regression is ok</option>
+                        <option>Down - Regression is great</option>
+                    </select>
+                    <br><br>
+                    My Recommendation:<br>
+                    <input name="call_option_recommendation_text" id="call_option_recommendation_text" disabled size=25 >
+                    <br><br>
+                </form>
+
+            </div>
+            <div class="col-lg-4 panel panel-default">
+                <h2>Use this to see how you may profit</h2><br>
+                <form id="profit_calculator">
+                    <table>
+                        <tr><td>DEAL</td>                               <td></td></tr>
+                        <tr><td>Commission per trade</td>               <td><input name="trade_fee" id="trade_fee" type="number" min="0.00" step="0.01" value="0.00">$</td></tr>
+                        <tr><td>Calls I am going buy (contract)</td>    <td><input name="contract_count" id="contract_count" type="number" min="0.00" step="1" value="0"></td></tr>
+                        <tr><td>Each worth (stock price)</td>           <td><input name="contract_price" id="contract_price" type="number" min="0.00" step="0.01" value="0.00" >$</td></tr>
+                        <tr><td>Options</td>                            <td><input name="options"        id="options"        type="number" value="100" value="0" disabled></td></tr>
+
+                        <tr><td>Total of call Cost</td>                 <td><input name="contract_cost"  id="contract_cost"  type="number" disabled>$</td></tr>
+                        <tr><td>Total of all cost with commission</td>  <td><input name="contract_cost_with_fee"  id="contract_cost_with_fee"  type="number" disabled>$</td></tr>
+                        <tr><td>Charge per contract</td>                <td><input name="charge_per_contract"  id="charge_per_contract"  type="number" min="0.00" step="0.01" value="0">$</td></tr>
+                        <tr><td>Charge per contract * contract</td>     <td><input name="charge_per_contract_total"  id="charge_per_contract_total" type="number" disabled>$</td></tr>
+                        <tr><td>TOTAL COST OF TRADE</td>                <td><input name="grand_total_cost"  id="grand_total_cost" type="number" disabled>$</td></tr>
+                        <tr></tr>
+                        <tr><td>PROFIT</td>                             <td></td></tr>
+                        <tr><td>Expiry price</td>                       <td><input name="expiry_price" id="expiry_price" type="number" min="0.00" step="0.01" value="0.00" >$</td></tr>
+                        <tr><td>Total</td>                              <td><input name="expiry_total" id="expiry_total" type="number" value="0.00" disabled>$</td></tr>
+                        <tr><td>Sell Cost</td>                          <td><input name="sell_cost"    id="sell_cost"    type="number" value="0.00" disabled>$</td></tr>
+                        <tr><td>Profit/loss</td>                        <td><input name="profit_or_loss" id="profit_or_lost" type="number" value="0.00" disabled>%</td></tr>
+                    </table>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+
+
+
+
+    <script>
+        $( document ).ready(function() {
+            $('table').addClass('table')
+        });
+
+        $('select').change(function(){
+
+            let regression = $("#regression").val();
+            let up_down = $("#up_down").val();
+
+            let recommendation = "-";
+
+            if(up_down == "Up - Bullish"){
+                if(regression == "Up - Regression is great"){
+                    recommendation = "Call Option Try OTM";
+                }
+                if(regression == "Up - Regression is ok"){
+                    recommendation = "Call Option ITM";
+                }
+                if(regression == "Down - Regression is low"){
+                    recommendation = "Call Option";
+                }
+                if(regression == "Down - Regression is ok"){
+                    recommendation = "Call Option ITM";
+                }
+            }
+            if(up_down == "Neutral"){
+                if(regression == "Up - Regression is low"){
+                    recommendation = "Call Option ITM close to ATM";
+                }
+                if(regression == "Down - Regression is low"){
+                    recommendation = "Put Option ITM close to ATM";
+                }
+                if(regression == "Up - Regression is great"){
+                    recommendation = "Call Option ITM close to ATM";
+                }
+                if(regression == "Down - Regression is great"){
+                    recommendation = "Put Option ITM close to ATM";
+                }
+            }
+
+            if(up_down == "Down - Bearish"){
+                if(regression == "Down - Regression is ok"){
+                    recommendation = "Put Option ITM";
+                }
+                if(regression == "Down - Regression is great"){
+                    recommendation = "Put Option try OTM";
+                }
+
+                if(regression == "Up - Regression is ok"){
+                    recommendation = "Put Option ITM";
+                }
+                if(regression == "Up - Regression is low"){
+                    recommendation = "Put Option";
+                }
+                if(regression == "Up - Regression is great"){
+                    recommendation = "Put Option ITM close to ATM";
+                }
+            }
+
+            $("#call_option_recommendation_text").val(recommendation);
+
+        });
+
+
+        $('#profit_calculator :input').change(function(){
+            let trade_fee = $("#trade_fee").val() * 1;
+            let contract_count = $("#contract_count").val() * 1;
+            let contract_price = $("#contract_price").val()  * 1;
+            let options = $("#options").val() * 1;
+
+            let contract_cost = contract_count * contract_price * options;
+            $("#contract_cost").val(contract_cost.toFixed(2));
+
+            let contract_cost_with_fee = contract_cost + trade_fee;
+            $("#contract_cost_with_fee").val(contract_cost_with_fee.toFixed(2));
+
+            let charge_per_contract = $("#charge_per_contract").val() * 1;
+            let charge_per_contract_total = charge_per_contract * contract_count;
+            $("#charge_per_contract_total").val(charge_per_contract_total.toFixed(2));
+
+            let grand_total_cost = contract_cost_with_fee + charge_per_contract_total;
+            $("#grand_total_cost").val(grand_total_cost.toFixed(2));
+
+            let expiry_price = $("#expiry_price").val() * 1;
+
+            let expiry_total = contract_count * expiry_price * options;
+            $("#expiry_total").val(expiry_total.toFixed(2));
+
+            let sell_cost = (expiry_total - grand_total_cost) - (trade_fee + charge_per_contract_total);
+            $("#sell_cost").val(sell_cost.toFixed(2));
+
+            //alert(sell_cost + " " + grand_total_cost);
+            let profit_or_loss = (sell_cost / grand_total_cost) * 100;
+            console.log(profit_or_loss);
+
+            //alert(profit_or_loss);
+            $("#profit_or_lost").val(profit_or_loss.toFixed(2));
+
+            console.log("input content is " + $("#profit_or_lost").val());
+        });
+
+
+    </script>
+{% endblock %}

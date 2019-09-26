@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Access Control Mechanisms &mdash; mod_wsgi 4.5.17 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="mod_wsgi 4.5.17 documentation" href="../index.html"/>
+        <link rel="up" title="User Guides" href="../user-guides.html"/>
+        <link rel="next" title="File Wrapper Extension" href="file-wrapper-extension.html"/>
+        <link rel="prev" title="Virtual Environments" href="virtual-environments.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mod_wsgi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                4.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../project-status.html">Project Status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../security-issues.html">Security Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guides.html">User Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quick-installation-guide.html">Quick Installation Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-on-macosx.html">Installation On MacOS X</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-configuration-guide.html">Quick Configuration Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-guidelines.html">Configuration Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation-issues.html">Installation Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration-issues.html">Configuration Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application-issues.html">Application Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frequently-asked-questions.html">Frequently Asked Questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checking-your-installation.html">Checking Your Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging-techniques.html">Debugging Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processes-and-threading.html">Processes And Threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reloading-source-code.html">Reloading Source Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="virtual-environments.html">Virtual Environments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Access Control Mechanisms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#http-user-authentication">HTTP User Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apache-authentication-provider">Apache Authentication Provider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apache-group-authorisation">Apache Group Authorisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#host-access-controls">Host Access Controls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file-wrapper-extension.html">File Wrapper Extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registering-cleanup-code.html">Registering Cleanup Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assorted-tips-and-tricks.html">Assorted Tips And Tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-pickle-module.html">Issues With Pickle Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issues-with-expat-library.html">Issues With Expat Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../finding-help.html">Finding Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reporting-bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source-code.html">Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">mod_wsgi</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../user-guides.html">User Guides</a> &raquo;</li>
+      
+    <li>Access Control Mechanisms</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guides/access-control-mechanisms.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="access-control-mechanisms">
+<h1>Access Control Mechanisms<a class="headerlink" href="#access-control-mechanisms" title="Permalink to this headline">¶</a></h1>
+<p>This document contains information about mechanisms available in mod_wsgi
+for controlling who can access a WSGI application. This includes coverage
+of support for HTTP Basic and Digest authentication mechanisms, as well
+as server side mechanisms for authorisation and host access control.</p>
+<div class="section" id="http-user-authentication">
+<h2>HTTP User Authentication<a class="headerlink" href="#http-user-authentication" title="Permalink to this headline">¶</a></h2>
+<p>The HTTP protocol supports user authentication mechanisms for clients
+through the &#8216;Authorization&#8217; header. The two main examples for this are
+the Basic and Digest authentication mechanisms.</p>
+<p>Unlike other HTTP headers, the authorisation header is not passed through
+to a WSGI application by default. This is the case as doing so could leak
+information about passwords through to a WSGI application which should not
+be able to see them when Apache is performing authentication.</p>
+<p>If Apache is performing authentication, a WSGI application can still find
+out what type of authentication scheme was used by checking the variable
+<code class="docutils literal"><span class="pre">AUTH_TYPE</span></code> of the WSGI application environment. The login name of the
+authorised user can be determined by checking the variable
+<code class="docutils literal"><span class="pre">REMOTE_USER</span></code>.</p>
+<p>If it is desired that the WSGI application be responsible for handling user
+authentication, then it is necessary to explicitly configure mod_wsgi to
+pass the required headers through to the application. This can be done by
+specifying the WSGIPassAuthorization directive in the appropriate context
+and setting it to &#8216;On&#8217;. Note that prior to mod_wsgi version 2.0c5, this
+directive could not be used in .htaccess files.</p>
+<p>When passing of authorisation information is enabled, the authorisation
+headers are passed through to a WSGI application in the
+<code class="docutils literal"><span class="pre">HTTP_AUTHORIZATION</span></code> variable of the WSGI application environment when
+the equivalent HTTP request header is present. You will still need to
+provide your own code to process the header and perform the required hand
+shaking with the client to indicate whether the client is permitted access.</p>
+</div>
+<div class="section" id="apache-authentication-provider">
+<h2>Apache Authentication Provider<a class="headerlink" href="#apache-authentication-provider" title="Permalink to this headline">¶</a></h2>
+<p>When Apache 2.2 was released, it introduced the concept of authentication
+providers. That is, Apache implements the hand shaking with the client for
+authentication mechanisms such as Basic and Digest. All that the user
+server side code needs to provide is a means of authenticating the actual
+credentials of the user trying to gain access to the site.</p>
+<p>This greatly simplified the implementation of client authentication as the
+hand shaking for a particular authentication mechanism was implemented only
+once in Apache and it wasn&#8217;t necessary for each authentication module to
+duplicate it. This was particularly good for the Digest authentication
+mechanism which was non trivial to implement correctly.</p>
+<p>Using mod_wsgi 2.0 or later, it is possible using the WSGIAuthUserScript
+directive to define a Python script file containing code which performs the
+authenticating of user credentials as outlined.</p>
+<p>The required Apache configuration for defining the authentication provider
+for Basic authentication when using Apache 2.2 would be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">AuthBasicProvider</span> <span class="n">wsgi</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>The &#8216;auth.wsgi&#8217; script would then need to contain a &#8216;check_password()&#8217;
+function with a sample as shown below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">password</span> <span class="o">==</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>This function should validate that the user exists in the user database and
+that the password is correct. If the user does not exist at all, then the
+result should be &#8216;None&#8217;. If the user does exist, the result should be
+&#8216;True&#8217; or &#8216;False&#8217; depending on whether the password was valid.</p>
+<p>If wishing to use Digest authentication, the configuration for Apache 2.2
+would instead be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Digest</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">AuthDigestProvider</span> <span class="n">wsgi</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>The name of the required authentication function for Digest authentication
+is &#8216;get_realm_hash()&#8217;. The result of the function must be &#8216;None&#8217; if the
+user doesn&#8217;t exist, or a hash string encoding the user name, authentication
+realm and password:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">md5</span>
+
+<span class="k">def</span> <span class="nf">get_realm_hash</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">realm</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">md5</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+        <span class="c1"># user:realm:password</span>
+        <span class="n">value</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">realm</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">))</span>
+        <span class="nb">hash</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">hash</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>By default the auth providers are executed in context of first interpreter
+created by Python, ie., &#8216;%{GLOBAL}&#8217; and always in the Apache child
+processes, never in a daemon process. The interpreter can be overridden
+using the &#8216;application-group&#8217; option to the script directive. The namespace
+for authentication groups is shared with that for application groups
+defined by WSGIApplicationGroup.</p>
+<p>Because the auth provider is always run in the Apache child processes and
+never in the context of a mod_wsgi daemon process, if the authentication
+check is making use of the internals of some Python web framework, it is
+recommended that the application using that web framework also be run in
+embedded mode and the same application group. This is the case as the
+Python web frameworks often bring in a huge amount of code even if using
+only one small part of them. This will result in a lot of memory being used
+in the Apache child processes just to support the auth provider.</p>
+<p>If mod_authn_alias is being loaded into Apache, then an aliased auth
+%rovider can also be defined:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">AuthnProviderAlias</span> <span class="n">wsgi</span> <span class="n">django</span><span class="o">&gt;</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">django</span><span class="o">/</span><span class="n">mysite</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span> \
+ <span class="n">application</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">django</span>
+<span class="o">&lt;/</span><span class="n">AuthnProviderAlias</span><span class="o">&gt;</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">django</span><span class="o">/</span><span class="n">mysite</span><span class="o">/</span><span class="n">apache</span><span class="o">/</span><span class="n">django</span><span class="o">.</span><span class="n">wsgi</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">django</span><span class="o">/</span><span class="n">mysite</span><span class="o">/</span><span class="n">apache</span><span class="o">&gt;</span>
+<span class="n">Order</span> <span class="n">deny</span><span class="p">,</span><span class="n">allow</span>
+<span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+
+<span class="n">WSGIApplicationGroup</span> <span class="n">django</span>
+
+<span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Django Site&quot;</span>
+<span class="n">AuthBasicProvider</span> <span class="n">django</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>An authentication script for Django might then be something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/usr/local/django&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;mysite.settings&#39;</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">db</span>
+
+<span class="k">def</span> <span class="nf">check_password</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">reset_queries</span><span class="p">()</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For both Basic and Digest authentication providers, the &#8216;environ&#8217; dictionary
+passed as first argument is a cut down version of what would be supplied
+to the actual WSGI application. This includes the &#8216;wsgi.errors&#8217; object for
+the purposes of logging error messages associated with the request.</p>
+<p>Any configuration defined by !SetEnv directives is not passed in the
+&#8216;environ&#8217; dictionary because doing so would allow users to override the
+configuration specified in such a way from a &#8216;.htaccess&#8217; file.
+Configuration should as a result be placed into the script file itself.</p>
+<p>Although authentication providers were a new feature in Apache 2.2, the
+mod_wsgi module emulates the functionality so that the above can also be
+used with Apache 2.0. In using Apache 2.0, the required Apache configuration
+is however slightly different and needs to be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">WSGIAuthUserScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">AuthAuthoritative</span> <span class="n">Off</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>When using Apache 2.0 however, only support for Basic authentication
+mechanism is provided. It is not possible to use Digest authentication.
+When using Apache 1.3, this feature is not available at all.</p>
+<p>The benefit of using the Apache authentication provider mechanism rather
+than the WSGI application doing it all itself, is that it can be used to
+control access to a number of WSGI applications at the same time as well as
+static files or dynamic pages implemented by other Apache modules using
+other programming languages such as PHP or Perl. The mechanism could even
+be used to control access to CGI scripts.</p>
+</div>
+<div class="section" id="apache-group-authorisation">
+<h2>Apache Group Authorisation<a class="headerlink" href="#apache-group-authorisation" title="Permalink to this headline">¶</a></h2>
+<p>As compliment to the authentication provider mechanism, mod_wsgi 2.0 also
+provides a mechanism for implementing group authorisation using the Apache
+&#8216;Require&#8217; directive. To use this in conjunction with an inbuilt Apache
+authentication provider such as a password file, the following Apache
+configuration would be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Top Secret&quot;</span>
+<span class="n">AuthBasicProvider</span> <span class="n">dbm</span>
+<span class="n">AuthDBMUserFile</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">accounts</span><span class="o">.</span><span class="n">dbm</span>
+<span class="n">WSGIAuthGroupScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">wsgi</span>
+<span class="n">Require</span> <span class="n">group</span> <span class="n">secret</span><span class="o">-</span><span class="n">agents</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+<p>The &#8216;auth.wsgi&#8217; script would then need to contain a &#8216;groups_for_user()&#8217;
+function with a sample as shown below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">groups_for_user</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s1">&#39;spy&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;secret-agents&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The function should supply a list of groups the user is a member of or
+an empty list otherwise.</p>
+<p>The feature may be used with any authentication provider, including one
+defined using WSGIAuthUserScript.</p>
+<p>The &#8216;environ&#8217; dictionary passed as first argument is a cut down version of
+what would be supplied to the actual WSGI application. This includes the
+&#8216;wsgi.errors&#8217; object for the purposes of logging error messages associated
+with the request.</p>
+<p>Any configuration defined by !SetEnv directives is not passed in the
+&#8216;environ&#8217; dictionary because doing so would allow users to override the
+configuration specified in such a way from a &#8216;.htaccess&#8217; file.
+Configuration should as a result be placed into the script file itself.</p>
+<p>Configuration of group authorisation is the same whether Apache 2.0 or 2.2
+is used. The feature is not available when using Apache 1.3.</p>
+<p>By default the group authorisation code is always executed in the context
+of the first interpreter created by Python, ie., &#8216;%{GLOBAL}&#8217;, and always in
+the Apache child processes, never in a daemon process. The interpreter can
+be overridden using the &#8216;application-group&#8217; option to the script directive.</p>
+</div>
+<div class="section" id="host-access-controls">
+<h2>Host Access Controls<a class="headerlink" href="#host-access-controls" title="Permalink to this headline">¶</a></h2>
+<p>The authentication provider and group authorisation features help to control
+access based on the identity of a user. Using mod_wsgi 2.0 it is also
+possible to limit access based on the machine which the client is connecting
+from. The path to the script is defined using the WSGIAccessScript
+directive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WSGIAccessScript</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">script</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">wsgi</span>
+</pre></div>
+</div>
+<p>The name of the function that must exist in the script file is
+&#8216;allow_access()&#8217;.  It must return True or False:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">allow_access</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">host</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;::1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The &#8216;environ&#8217; dictionary passed as first argument is a cut down version of
+what would be supplied to the actual WSGI application. This includes the
+&#8216;wsgi.errors&#8217; object for the purposes of logging error messages associated
+with the request.</p>
+<p>Any configuration defined by !SetEnv directives is not passed in the
+&#8216;environ&#8217; dictionary because doing so would allow users to override the
+configuration specified in such a way from a &#8216;.htaccess&#8217; file.
+Configuration should as a result be placed into the script file itself.</p>
+<p>By default the access checking code is executed in context of the first
+interpreter created by Python, ie., &#8216;%{GLOBAL}&#8217;, and always in the Apache
+child processes, never in a daemon process. The interpreter used can be
+overridden using the &#8216;application-group&#8217; option to the script directive.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="file-wrapper-extension.html" class="btn btn-neutral float-right" title="File Wrapper Extension" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="virtual-environments.html" class="btn btn-neutral" title="Virtual Environments" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2007-2017, Graham Dumpleton.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'4.5.17',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

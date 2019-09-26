@@ -1,0 +1,10 @@
+
+
+a = 42
+b = a
+a = 9001
+
+question :
+what you consider right:
+1 - "b" should be equal to 42 because a was 42 when b became equal to a
+2 - "b" should be equal to 9001 because b is equal to a and a is 9001 now
