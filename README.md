@@ -1,9 +1,9 @@
-# Working files: 
+# Site is https://www.rjgoptions.com : 
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky
 You will find CSS and some Excel prototypes here: 
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky/static
 
-Site is https://www.rjgoptions.com 
+
 This site is based on an excel prototype I made. It also has pieces of excel I have extracted across the web and used here.
 
 My Stock Prediction Project (in the link below) contains the following elements (It's just data, no fancy CSS). - Analytics - Data Science - Recommendation Engine - Decision Making & Prediction - A bit of Game Theory - Machine Learning (soon-to-be)
