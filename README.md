@@ -1,4 +1,4 @@
-# Site is https://www.rjgoptions.com : 
+# Site is https://www.rjgoptions.com 
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky
 You will find CSS and some Excel prototypes here: 
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky/static
