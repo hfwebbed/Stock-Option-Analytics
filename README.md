@@ -1,8 +1,9 @@
 # Site is https://www.rjgoptions.com 
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky
-You will find CSS and some Excel prototypes here: 
+You will find CSS here 
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky/static
-
+Excel prototypes here (the basis of this being built)
+https://github.com/hfwebbed/Stock-Option-Analytics/blob/master/DecisionOptions_RG%20(1).xlsm
 
 This site is based on an excel prototype I made. It also has pieces of excel I have extracted across the web and used here.
 
