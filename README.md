@@ -11,6 +11,9 @@ https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/fl
 ## Excel prototypes here (the basis of this being built)
 https://github.com/hfwebbed/Stock-Option-Analytics/blob/master/DecisionOptions_RG%20(1).xlsm
 
+## For the 8th tab. The ML Requirements I was looking to do
+https://github.com/hfwebbed/Stock-Option-Analytics/blob/master/GAME_stock_Frozen.pptx
+
 This site is based on an excel prototype I made. It also has pieces of excel I have extracted across the web and used here.
 
 My Stock Prediction Project (in the link below) contains the following elements (It's just data, no fancy CSS). - Analytics - Data Science - Recommendation Engine - Decision Making & Prediction - A bit of Game Theory - Machine Learning (soon-to-be)
