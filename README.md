@@ -1,4 +1,4 @@
-# Site is https://www.rjgoptions.com 
+# Site is http://www.rjgoptions.com 
 
 ## The Main Folder
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky
