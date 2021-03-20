@@ -1,5 +1,5 @@
 Flask==0.12.2
-Jinja2==2.9.6
+Jinja2==2.11.3
 pandas==0.19.2
 pandas_datareader==0.4.0
 gunicorn==19.7.1
