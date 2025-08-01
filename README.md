@@ -1,5 +1,9 @@
-
-
+I am taking this older version of an excel which I reformatted into a python app to be modernized with AI.
+The issue with the old structure is that it still leverages the Excel for information and has limited ML.
+This is a work in progress and will be getting updated piece by piece.
+- Leveraging many different Python libraries
+- Will use Streamlit for the apps.
+-----------------------------------------------
 ## The Main Folder
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky
 
