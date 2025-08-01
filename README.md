@@ -3,6 +3,9 @@ The issue with the old structure is that it still leverages the Excel for inform
 This is a work in progress and will be getting updated piece by piece.
 - Leveraging many different Python libraries
 - Will use Streamlit for the apps.
+
+  <img width="659" height="634" alt="image" src="https://github.com/user-attachments/assets/fbfadb58-0085-4268-b51c-942f12ceb0ca" />
+
 -----------------------------------------------
 ## The Main Folder
 https://github.com/hfwebbed/Stock-Option-Analytics/tree/master/rjgoptionssite/flasky
